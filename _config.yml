@@ -3,18 +3,18 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Hexo
+title: Hiho's Blog
 subtitle:
 description:
-author: John Doe
+author: Kazuyuki Hiroshiba
 language:
-timezone:
+timezone: Asia/Tokyo
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://yoursite.com
-root: /
-permalink: :year/:month/:day/:title/
+url: https://hiroshiba.github.io
+root: /blog/
+permalink: :title/
 permalink_defaults:
 
 # Directory
@@ -42,7 +42,7 @@ highlight:
   line_number: true
   auto_detect: false
   tab_replace:
-  
+
 # Home page setting
 # path: Root path for your blogs index page. (default = '')
 # per_page: Posts displayed per page. (0 = disable pagination)
@@ -51,7 +51,7 @@ index_generator:
   path: ''
   per_page: 10
   order_by: -date
-  
+
 # Category & Tag
 default_category: uncategorized
 category_map:
@@ -72,9 +72,23 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: landscape
+theme: artemis
+theme_config:
+  logo:
+  favicon: images/favicon.png
+  # google_analytics: UA-12345678-9
+  copyright:
+    since: 2017
+    name: Hiroshiba
+    url: https://hiroshiba.github.io/blog
+  menu:
+    # About: /about
+    Archives: /archives
+    GitHub: https://github.com/Hiroshiba
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
-  type:
+  type: git
+  repo: git@github.com:Hiroshiba/hihoblog.git
+  branch: gh-pages

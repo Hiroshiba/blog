@@ -1,5 +1,4 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title>声優統計コーパスをアライメントしてみる | Hiho's Blog</title><meta name="description" content="声優統計コーパスをアライメントしてみる - Kazuyuki Hiroshiba"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/blog/images/favicon.png"><link rel="stylesheet" href="/blog/css/theme.css"><link rel="search" type="application/opensearchdescription+xml" href="/blog/atom.xml" title="Hiho's Blog"></head><body><div class="wrap"><header><h1 class="branding"><a href="/blog/" title="Hiho's Blog">Hiho's Blog</a></h1><ul class="nav nav-list"><li class="nav-list-item"><a class="nav-list-link" href="/blog/archives" target="_self">ARCHIVES</a></li><li class="nav-list-item"><a class="nav-list-link" href="https://github.com/Hiroshiba" target="_blank">GITHUB</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">声優統計コーパスをアライメントしてみる</h1><div class="post-info"><a></a>2017-11-03</div><div class="post-content"><a id="more"></a>
-<h3 id="目次"><a href="#目次" class="headerlink" title="目次"></a>目次</h3><ul>
+<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title>声優統計コーパスをアライメントしてみる | Hiho's Blog</title><meta name="description" content="声優統計コーパスをアライメントしてみる - Kazuyuki Hiroshiba"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/blog/images/favicon.png"><link rel="stylesheet" href="/blog/css/theme.css"><link rel="search" type="application/opensearchdescription+xml" href="/blog/atom.xml" title="Hiho's Blog"></head><body><div class="wrap"><header><h1 class="branding"><a href="/blog/" title="Hiho's Blog">Hiho's Blog</a></h1><ul class="nav nav-list"><li class="nav-list-item"><a class="nav-list-link" href="/blog/archives" target="_self">ARCHIVES</a></li><li class="nav-list-item"><a class="nav-list-link" href="https://github.com/Hiroshiba" target="_blank">GITHUB</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">声優統計コーパスをアライメントしてみる</h1><div class="post-info"><a></a>2017-11-03</div><div class="post-content"><h3 id="目次"><a href="#目次" class="headerlink" title="目次"></a>目次</h3><ul>
 <li>（背景）声質変換用のデータを作るために音声アライメントを試してみたい</li>
 <li>（手法）<a href="http://voice-statistics.github.io/" target="_blank" rel="external">声優統計コーパス</a>のデータを使用し、MFCCでアライメントした</li>
 <li>（結果）アライメント後の音声はところどころ伸びていた。無音とする閾値を下げると伸びは抑制された。</li>
@@ -15,7 +14,7 @@
   <figcaption>話者２のメルスペクトログラム</figcaption>
 </figure>
 
-<!-- more -->
+<a id="more"></a>
 <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>DeeeeepLearingを使って声質変換してみたい。
 どうやら最初に、違う話者による同じ発話内容の音声を揃える必要があるらしい。
 声質変換用のデータを作るために音声アライメントを試してみた。</p>

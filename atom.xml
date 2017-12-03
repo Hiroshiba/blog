@@ -6,7 +6,7 @@
   <link href="/blog/atom.xml" rel="self"/>
   
   <link href="https://hiroshiba.github.io/"/>
-  <updated>2017-11-03T11:07:22.020Z</updated>
+  <updated>2017-12-03T20:31:32.294Z</updated>
   <id>https://hiroshiba.github.io/</id>
   
   <author>
@@ -15,6 +15,42 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>マストドンアイドル チュートリアル</title>
+    <link href="https://hiroshiba.github.io/mastodon-idol-tutorial/"/>
+    <id>https://hiroshiba.github.io/mastodon-idol-tutorial/</id>
+    <published>2017-11-30T14:52:19.000Z</published>
+    <updated>2017-12-03T20:31:32.294Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="なに？"><a href="#なに？" class="headerlink" title="なに？"></a>なに？</h3><p>マストドンアイドルに厳格な定義はありません。その意味は、漠然と、<a href="https://github.com/tootsuite/mastodon" target="_blank" rel="external">マストドン</a>で人気のある人を指しています。狭義には、<a href="https://friends.nico/" target="_blank" rel="external">friends.nico</a>で生放送する人のことを指します。</p><h3 id="だれが？"><a href="#だれが？" class="headerlink" title="だれが？"></a>だれが？</h3><p>創作活動をしている、あるいはしたいと思っているが、モチベーションが湧かない人向けです。</p><h3 id="なぜ？"><a href="#なぜ？" class="headerlink" title="なぜ？"></a>なぜ？</h3><p>チャット感覚での交流が行われるマストドンは、創作活動のフィードバックを得られやすいためです。</p><a id="more"></a><p>何かしらの才能を持っているけど、それを日常でいまいち発揮できないクリエイターがたくさんいます。そういう人たちはたまに、ニコ動投稿者や、Youtuberを目指します。しかし、これらはファンの獲得が難しく、最初に人気を獲得するまでに挫折してしまうことが多いです。</p><p>それらのアイドルを目指す前に、SNSで一定のファンを得ておくと、初めたばかりでもフィードバックがもらえ、やる気に繋がります。そのSNSとして、チャット感覚でユーザー間交流ができるマストドンが適しています。</p><h3 id="どこで？"><a href="#どこで？" class="headerlink" title="どこで？"></a>どこで？</h3><p>ユーザー数が多い、クリエイターが多い、同趣味の人がいる可能性が高いマストドンインスタンスだと良いです。</p><p>創作活動の内容によって最適なインスタンスは変わります。専用のインスタンスでやっても良いですが、 <em>チャット文化が根付いていてユーザー数も多い<a href="https://friends.nico/" target="_blank" rel="external">friends.nico</a></em> で始めることをおすすめします。</p><h3 id="どうやって？"><a href="#どうやって？" class="headerlink" title="どうやって？"></a>どうやって？</h3><p>まずマストドンを初めてチャットベースで知り合いを増やします。続いて創作活動の経験があればその体験を、なければ抱負を語ります。興味を示してくれた知り合いが、あなたのファンです。</p><p>マストドンでのアイドル活動の流れを、例で紹介します。</p><h4 id="自信のある創作活動がある例（歌がうまい）"><a href="#自信のある創作活動がある例（歌がうまい）" class="headerlink" title="自信のある創作活動がある例（歌がうまい）"></a>自信のある創作活動がある例（歌がうまい）</h4><ol><li>マストドンを始める</li><li>ユーザーとチャットベースで交流し、知り合いを増やす</li><li>会話の流れで出た曲を歌った録音をアップロードするなど、歌がうまいことを伝える</li><li>知り合いが興味を持つ（＝ファン）</li><li>生放送など、よりコストの掛かる創作活動をする</li></ol><p>会話の流れで出た何かを使うことで、知り合いが興味を持ってくれやすくなります。会話はチャットベースで進みます。そのため脈絡のない発言は、ほとんどの場合で興味も持たれません。</p><p>脈絡があれば興味は持たれます。誰かのアイコンを描いたり、ショートストーリーを書いたり、誰かの放送の発言をMADにしたり、マストドン用の簡単なシステムを作ったり、手法は様々です。</p><h4 id="自信のある創作活動がないが、強い興味がある例（ゲーム作りたい）"><a href="#自信のある創作活動がないが、強い興味がある例（ゲーム作りたい）" class="headerlink" title="自信のある創作活動がないが、強い興味がある例（ゲーム作りたい）"></a>自信のある創作活動がないが、強い興味がある例（ゲーム作りたい）</h4><ol><li>マストドンを始める</li><li>ユーザーとチャットベースで交流し、知り合いを増やす</li><li>会話の流れで、ゲームを作りたいことを伝える</li><li>知り合いが興味を持つ（＝ファン）</li><li>ゲーム作成の本を買うなど、よりコストの掛かる創作活動をする</li></ol><p>これも同じく、会話の流れで発言することで興味を持ってくれやすくなります。突然言っても、スルーされたり反応が少なかったりします。</p><h3 id="いつ？"><a href="#いつ？" class="headerlink" title="いつ？"></a>いつ？</h3><h4 id="まだアカウントを持っていない場合"><a href="#まだアカウントを持っていない場合" class="headerlink" title="まだアカウントを持っていない場合"></a>まだアカウントを持っていない場合</h4><p>今すぐでも良いですが、新規参入者が多いタイミングで入るとより良いです。インスタンスには独自の文化が根づいています。新参が自分ひとりだと、昔からいる人たちの輪に入りづらいためです。friends.nicoであれば、ニコニコのバージョンアップの際が最も良いでしょう。他にも、大手ITサイトがマストドン関連の記事を出した際など、イベントがあったタイミングがベストです。</p><h4 id="既にアカウントがある場合"><a href="#既にアカウントがある場合" class="headerlink" title="既にアカウントがある場合"></a>既にアカウントがある場合</h4><p>ある程度仲の良い知り合いが増えた段階だと良いです。10人程度から挨拶を貰えるようになった段階が理想です。</p><h3 id="最後に"><a href="#最後に" class="headerlink" title="最後に"></a>最後に</h3><p>マストドンにいろんなクリエイターが集まって欲しいなー、という願いがあってこんな記事を書きました。</p><p>僕自身、friends.nicoでマストドンアイドル活動（創作活動＋生放送）やってます。内容は主にプログラミングやDeeeeeeepLearningです。良ければ<a href="http://com.nicovideo.jp/community/co3686550" target="_blank" rel="external">茶化しに来て</a>ください。</p><p>この記事は、<a href="https://adventar.org/calendars/2220" target="_blank" rel="external">friends.nicoアドベントカレンダー</a>初日の投稿記事です。12月1日の0時に間に合わせる予定でした。しかし、<a href="https://twitter.com/hiho_karuta/status/936153544800976896" target="_blank" rel="external">11月30日現在はタイに出張</a>しており、記事を書き始めた22時には日本時間で12月になってしまっていました。すみませんでした。でも、間に合わせるつもりでした。許してください。</p>]]></content>
+    
+    <summary type="html">
+    
+      &lt;h3 id=&quot;なに？&quot;&gt;&lt;a href=&quot;#なに？&quot; class=&quot;headerlink&quot; title=&quot;なに？&quot;&gt;&lt;/a&gt;なに？&lt;/h3&gt;&lt;p&gt;マストドンアイドルに厳格な定義はありません。
+その意味は、漠然と、&lt;a href=&quot;https://github.com/tootsuite/mastodon&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;マストドン&lt;/a&gt;で人気のある人を指しています。
+狭義には、&lt;a href=&quot;https://friends.nico/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;friends.nico&lt;/a&gt;で生放送する人のことを指します。&lt;/p&gt;
+&lt;h3 id=&quot;だれが？&quot;&gt;&lt;a href=&quot;#だれが？&quot; class=&quot;headerlink&quot; title=&quot;だれが？&quot;&gt;&lt;/a&gt;だれが？&lt;/h3&gt;&lt;p&gt;創作活動をしている、あるいはしたいと思っているが、モチベーションが湧かない人向けです。&lt;/p&gt;
+&lt;h3 id=&quot;なぜ？&quot;&gt;&lt;a href=&quot;#なぜ？&quot; class=&quot;headerlink&quot; title=&quot;なぜ？&quot;&gt;&lt;/a&gt;なぜ？&lt;/h3&gt;&lt;p&gt;チャット感覚での交流が行われるマストドンは、創作活動のフィードバックを得られやすいためです。&lt;/p&gt;
+    
+    </summary>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>CBHGを使って声質変換してみる</title>
+    <link href="https://hiroshiba.github.io/CBHG%E3%82%92%E4%BD%BF%E3%81%A3%E3%81%A6%E5%A3%B0%E8%B3%AA%E5%A4%89%E6%8F%9B%E3%81%97%E3%81%A6%E3%81%BF%E3%82%8B/"/>
+    <id>https://hiroshiba.github.io/CBHGを使って声質変換してみる/</id>
+    <published>2017-11-16T22:28:38.000Z</published>
+    <updated>2017-11-16T22:28:38.648Z</updated>
+    
+    <summary type="html">
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>声優統計コーパスをアライメントしてみる</title>

@@ -5,5 +5,3 @@ tags:
 categories:
 permalink:
 ---
-
-<!-- more -->

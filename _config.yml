@@ -5,7 +5,7 @@
 # Site
 title: Hiho's Blog
 subtitle:
-description:
+description: Hiroshibaのブログです。
 author: Kazuyuki Hiroshiba
 language:
 timezone: Asia/Tokyo
@@ -74,19 +74,7 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: artemis
-theme_config:
-  logo:
-  favicon: images/favicon.png
-  # google_analytics: UA-12345678-9
-  copyright:
-    since: 2017
-    name: Hiroshiba
-    url: https://hiroshiba.github.io/blog
-  menu:
-    # About: /about
-    Archives: /archives
-    GitHub: https://github.com/Hiroshiba
+theme: vexo
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html

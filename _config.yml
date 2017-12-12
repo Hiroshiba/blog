@@ -76,6 +76,10 @@ pagination_dir: page
 ## Themes: https://hexo.io/themes/
 theme: vexo
 
+markdown:
+  plugins:
+    - markdown-it-footnote
+
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:

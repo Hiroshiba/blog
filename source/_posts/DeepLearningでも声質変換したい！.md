@@ -186,7 +186,7 @@ STFTは画像なので、画像生成分野の手法をそのままこれに適�
 </figure>
 
 <figure>
-  <figcaption>入力音声（[@lamazeP](https://friends.nico/@lamazeP)）「ありがとうございます」</figcaption>
+  <figcaption>入力音声（@lamazeP）「ありがとうございます」</figcaption>
   <audio src="input-test-chino-thankyou.mp3" controls></audio>
 </figure>
 
@@ -196,7 +196,7 @@ STFTは画像なので、画像生成分野の手法をそのままこれに適�
 </figure>
 
 <figure>
-  <figcaption>入力音声（[@AKIKAZEMOMIJInico](https://friends.nico/@AKIKAZEMOMIJInico)）「ありがとうございます」</figcaption>
+  <figcaption>入力音声（@AKIKAZEMOMIJInico）「ありがとうございます」</figcaption>
   <audio src="input-test-momiji-thankyou.mp3" controls></audio>
 </figure>
 

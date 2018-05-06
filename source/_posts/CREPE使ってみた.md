@@ -1,5 +1,5 @@
 ---
-title: CREPE使ってみた
+title: CREPE(A Convolutional REpresentation for Pitch Estimation)使ってみた
 permalink: using-crepe
 description: 畳み込みニューラルネットを使ったピッチ推定手法、CREPEが提案された。PyPIが用意されていて、発話音声にも簡単に適用できそうだったので試してみた。
 date: 2018-05-03 17:34:05

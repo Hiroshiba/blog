@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="自分の声を結月ゆかりにしたい。前回はあまりクオリティが良くなかったので、手法を変えて質を上げたい。声質変換を、低音質変換と高音質化の二段階に分けてそれぞれ学習させた。画像分野で有名なモデルを使った。性能が飛躍的に向上し、かなり聞き取れるものになった。精度はまだ改善の余地があり、多対多声質変換にすることで精度が向上すると考えられる。今回の結果を論文化したい。">
+  <meta name="keyword" content="">
+  
+    <link rel="shortcut icon" type="image/ico" href="images/favicon.png"/>
+  
+  <title>ディープラーニングの力で結月ゆかりの声になってみた | Hiho&#39;s Blog</title>
+  <meta name="description" content="自分の声を結月ゆかりにしたい。前回はあまりクオリティが良くなかったので、手法を変えて質を上げたい。声質変換を、低音質変換と高音質化の二段階に分けてそれぞれ学習させた。画像分野で有名なモデルを使った。性能が飛躍的に向上し、かなり聞き取れるものになった。精度はまだ改善の余地があり、多対多声質変換にすることで精度が向上すると考えられる。今回の結果を論文化したい。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ディープラーニングの力で結月ゆかりの声になってみた">
+<meta property="og:url" content="http://blog.hiroshiba.jp/became-yuduki-yukari-with-deep-learning-power/index.html">
+<meta property="og:site_name" content="Hiho&#39;s Blog">
+<meta property="og:description" content="自分の声を結月ゆかりにしたい。前回はあまりクオリティが良くなかったので、手法を変えて質を上げたい。声質変換を、低音質変換と高音質化の二段階に分けてそれぞれ学習させた。画像分野で有名なモデルを使った。性能が飛躍的に向上し、かなり聞き取れるものになった。精度はまだ改善の余地があり、多対多声質変換にすることで精度が向上すると考えられる。今回の結果を論文化したい。">
+<meta property="og:image" content="http://blog.hiroshiba.jp/became-yuduki-yukari-with-deep-learning-power/0-output-spectrogram.svg">
+<meta property="og:image" content="http://blog.hiroshiba.jp/became-yuduki-yukari-with-deep-learning-power/1-output-spectrogram.svg">
+<meta property="og:image" content="http://blog.hiroshiba.jp/became-yuduki-yukari-with-deep-learning-power/2-output-spectrogram.svg">
+<meta property="og:image" content="http://blog.hiroshiba.jp/became-yuduki-yukari-with-deep-learning-power/3-input-spectrogram.svg">
+<meta property="og:image" content="http://blog.hiroshiba.jp/became-yuduki-yukari-with-deep-learning-power/3-output-spectrogram.svg">
+<meta property="og:updated_time" content="2019-02-22T17:10:09.744Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ディープラーニングの力で結月ゆかりの声になってみた">
+<meta name="twitter:description" content="自分の声を結月ゆかりにしたい。前回はあまりクオリティが良くなかったので、手法を変えて質を上げたい。声質変換を、低音質変換と高音質化の二段階に分けてそれぞれ学習させた。画像分野で有名なモデルを使った。性能が飛躍的に向上し、かなり聞き取れるものになった。精度はまだ改善の余地があり、多対多声質変換にすることで精度が向上すると考えられる。今回の結果を論文化したい。">
+<meta name="twitter:image" content="http://blog.hiroshiba.jp/became-yuduki-yukari-with-deep-learning-power/0-output-spectrogram.svg">
+<meta name="twitter:creator" content="@hiho_karuta">
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+  <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdn.bootcss.com/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
+  <script src="/js/qrious.js"></script>
+<script src="/js/gitment.js"></script>
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+</head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Hiho's Blog</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="https://twitter.com/hiho_karuta" class="item-link">Twitter</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="https://github.com/Hiroshiba" class="item-link">Github</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="https://twitter.com/hiho_karuta" class="menu-link">Twitter</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="https://github.com/Hiroshiba" class="menu-link">Github</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>ディープラーニングの力で結月ゆかりの声になってみた</h2>
+  <p class="post-date">2018-02-13</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><h3 id="目次"><a href="#目次" class="headerlink" title="目次"></a>目次</h3><ul>
+<li>（背景）自分の声を結月ゆかりにしたい。前回はあまりクオリティが良くなかったので、手法を変えて質を上げたい。</li>
+<li>（手法）声質変換を、低音質変換と高音質化の二段階に分けてそれぞれ学習させた。画像分野で有名なモデルを使った。</li>
+<li>（結果）性能が飛躍的に向上し、かなり聞き取れるものになった。</li>
+<li>（考察）精度はまだ改善の余地があり、多対多声質変換にすることで精度が向上すると考えられる。今回の結果を論文化したい。</li>
+</ul>
+<a id="more"></a>
+<h3 id="デモ動画"><a href="#デモ動画" class="headerlink" title="デモ動画"></a>デモ動画</h3><p><script type="application/javascript" src="https://embed.nicovideo.jp/watch/sm32724409/script?w=640&h=360"></script><noscript><a href="http://www.nicovideo.jp/watch/sm32724409" target="_blank" rel="external">ディープラーニングの力で結月ゆかりの声になってみた</a></noscript></p>
+<h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>多くの人が可愛い女の子になりたいと思っている。
+ＣＧ技術やモーションキャプチャ技術の向上により、姿は女の子に仮想化できるようになってきた。
+しかし、声に関してはまだまだ課題が多い。
+声質変換は「遅延」「音質」「複数話者」などの難しい課題がある。
+今回は、自分の声を結月ゆかりにするための、低遅延で実現可能な高音質声質変換を目指した。</p>
+<h3 id="手法"><a href="#手法" class="headerlink" title="手法"></a>手法</h3><p>大きく分けて３つの工夫をした。</p>
+<ol>
+<li>画像ディープラーニング分野で性能の良かったモデルを使用した</li>
+<li>声質変換を「低音質声質変換」部分と「高音質化」部分に分けた</li>
+<li>音響特徴量の変換では１次元のpix2pixモデルを、スペクトログラムの変換では２次元のpix2pixモデルを使った</li>
+</ol>
+<h4 id="画像ディープラーニング分野で性能の良かったモデルを使用した"><a href="#画像ディープラーニング分野で性能の良かったモデルを使用した" class="headerlink" title="画像ディープラーニング分野で性能の良かったモデルを使用した"></a>画像ディープラーニング分野で性能の良かったモデルを使用した</h4><p>画像ディープラーニング分野は音声より数年早く進んでおり、
+解きたいタスクに対して使用すれば良いモデルが知られている。
+今回のように、対応関係のあるもの（音声分野で言うところのパラレルデータ）の変換を、
+少ないデータ数で学習させるには、<a href="https://phillipi.github.io/pix2pix/" target="_blank" rel="external">pix2pixモデル</a>が適している。
+今回はこのpix2pixモデルを使って声質変換タスクを解いた。</p>
+<h4 id="声質変換を「低音質声質変換」部分と「高音質化」部分に分けた"><a href="#声質変換を「低音質声質変換」部分と「高音質化」部分に分けた" class="headerlink" title="声質変換を「低音質声質変換」部分と「高音質化」部分に分けた"></a>声質変換を「低音質声質変換」部分と「高音質化」部分に分けた</h4><p>声質変換には、複数話者によるペア音声を用意する必要があるが、
+結月ゆかりは大量の音声データを簡単に得られるのに対し、自分の声を大量に用意するのは容易ではない。
+そこで、少ないペア音声を使って低音質な声質変換するタスクと、
+大量の音声を使って高音質化するタスクを分けた。
+低音質声質変換では、WORLDを用いて自分の音響特徴量から結月ゆかりの音響特徴量を推定する学習を行った。
+高音質化では、低解像度なスペクトログラムから高解像度なスペクトログラムを推定する学習を行った。</p>
+<h4 id="音響特徴量の変換では１次元のpix2pixモデルを、スペクトログラムの変換では２次元のpix2pixモデルを使った"><a href="#音響特徴量の変換では１次元のpix2pixモデルを、スペクトログラムの変換では２次元のpix2pixモデルを使った" class="headerlink" title="音響特徴量の変換では１次元のpix2pixモデルを、スペクトログラムの変換では２次元のpix2pixモデルを使った"></a>音響特徴量の変換では１次元のpix2pixモデルを、スペクトログラムの変換では２次元のpix2pixモデルを使った</h4><p>スペクトログラムは時間×周波数辺りの音声振幅であり、どちらの次元でも隣接情報に相関がある。
+そのため、スペクトログラムを１チャンネルの２次元画像とみなし、その変換には画像用のpix2pixモデルをそのまま適用した。
+一方、音響特徴量は時間辺りの特徴量であるため、画像用のpix2pixネットワークが適用できない。
+そこで、新たに1次元用のpix2pixネットワーク構造を提案し、これを音響特徴量の変換に適用した。</p>
+<h3 id="結果"><a href="#結果" class="headerlink" title="結果"></a>結果</h3><p>以前の結果と、高音質化やpix2pixモデルでの特徴量変換の結果を比較した。
+この記事で用いたコードは<a href="https://github.com/Hiroshiba/become-yukarin" target="_blank" rel="external">become-yukarin Githubリポジトリ</a>で公開している。</p>
+<h4 id="前回の結果"><a href="#前回の結果" class="headerlink" title="前回の結果"></a>前回の結果</h4><p>ベースとなる<a href="../voice-conversion-deep-leanring-and-other-delusions">前回</a>の結果は以下のようになっていた。
+（発話内容は「僕の声をディープラーニングの力を借りて結月ゆかりにするプロジェクト」）</p>
+<figure>
+  <figcaption>入力音声</figcaption>
+  <audio src="0-input.wav" controls></audio>
+</figure>
+
+<figure>
+  <figcaption>ベース手法での変換結果</figcaption>
+  <audio src="0-output.wav" controls></audio>
+</figure>
+
+<figure>
+  <figcaption>ベース手法での変換結果スペクトログラム</figcaption>
+  <img src="/became-yuduki-yukari-with-deep-learning-power/0-output-spectrogram.svg" alt="0-output-spectrogram.svg" title="">
+</figure>
+
+<p>変換結果は結月ゆかりに近いが、発話内容が明細ではなく、音質も良くない。</p>
+<h4 id="高音質化の結果"><a href="#高音質化の結果" class="headerlink" title="高音質化の結果"></a>高音質化の結果</h4><p>ベース手法の結果に高音質化を適用すると以下のようになった。</p>
+<figure>
+  <figcaption>高音質化手法での変換結果</figcaption>
+  <audio src="1-output.wav" controls></audio>
+</figure>
+
+<figure>
+  <figcaption>高音質化手法での変換結果スペクトログラム</figcaption>
+  <img src="/became-yuduki-yukari-with-deep-learning-power/1-output-spectrogram.svg" alt="1-output-spectrogram.svg" title="">
+</figure>
+
+<p>音質は改善したが、発話内容がまだわかりにくい。</p>
+<h4 id="音響特徴量変換pix2pixモデルの結果"><a href="#音響特徴量変換pix2pixモデルの結果" class="headerlink" title="音響特徴量変換pix2pixモデルの結果"></a>音響特徴量変換pix2pixモデルの結果</h4><p>音響特徴量変換をpix2pixモデルにすると以下のようになった。</p>
+<figure>
+  <figcaption>pix2pixモデルでの変換結果</figcaption>
+  <audio src="2-output.wav" controls></audio>
+</figure>
+
+<figure>
+  <figcaption>pix2pixモデルでの変換結果スペクトログラム</figcaption>
+  <img src="/became-yuduki-yukari-with-deep-learning-power/2-output-spectrogram.svg" alt="2-output-spectrogram.svg" title="">
+</figure>
+
+<p>発話内容が明確にわかるようになった。</p>
+<h4 id="おまけ"><a href="#おまけ" class="headerlink" title="おまけ"></a>おまけ</h4><p>入力データには全く関係のない音声を入力した結果は以下のようになった。</p>
+<figure>
+  <figcaption>入力音声（<a href="http://www.nicovideo.jp/watch/sm28276238" target="_blank" rel="external">チュルリラ・チュルリラ・ダッダッダ！</a>の一部）</figcaption>
+  <audio src="3-input-spectrogram.wav" controls></audio>
+</figure>
+
+<figure>
+  <figcaption>変換結果</figcaption>
+  <audio src="3-output-spectrogram.wav" controls></audio>
+</figure>
+
+<figure>
+  <figcaption>入力音声スペクトログラム</figcaption>
+  <img src="/became-yuduki-yukari-with-deep-learning-power/3-input-spectrogram.svg" alt="3-input-spectrogram.svg" title="">
+</figure>
+
+<figure>
+  <figcaption>変換結果スペクトログラム</figcaption>
+  <img src="/became-yuduki-yukari-with-deep-learning-power/3-output-spectrogram.svg" alt="3-output-spectrogram.svg" title="">
+</figure>
+
+<p>入力音声にかかわらず、変換結果が学習データに近くなるように学習されていることがわかった。</p>
+<h3 id="考察"><a href="#考察" class="headerlink" title="考察"></a>考察</h3><p>pix2pixモデルを適用することで、高音質化ができ、変換結果の視聴性が上がった。</p>
+<p>高音質化が上手く行ったのは、pix2pixモデルがかなり広い範囲（時間方向に5ミリ秒×128≒0.6秒、周波数方向に12000Hz÷1024×128≒1500Hz）の入力を元に推定できること、
+音声スペクトルは周波数方向に周期性があってスペクトログラムと多層CNNの相性が良いこと、
+そもそもタスク（結月ゆかり音声合成の高音質化）が簡単だったことが理由に考えられる。</p>
+<p>低音質声質変換が上手く行ったのは、特徴量の次元を下げたことで過学習を防ぎつつGANが有効に働いたこと、
+pix2pixモデルが時間方向で広い範囲の入力を元に推定できることが理由に考えられる。</p>
+<p>まだ精度は改善の余地がある。
+実使用時の基本周波数推定のエラーが課題の１つとして挙げられる。
+スペクトログラムベースのend-to-endな声質変換モデルにしたいが、
+ディープラーニングを使って位相推定できる上手な手法が思いつかない。</p>
+<p>今後は解析を進めつつ、多対多声質変換を目指したい。また、可能そうであれば論文にしたい。</p>
+<p>（別の記事に試行錯誤や雑多なメモを日記として書きます）</p>
+<h3 id="宣伝＆謝辞"><a href="#宣伝＆謝辞" class="headerlink" title="宣伝＆謝辞"></a>宣伝＆謝辞</h3><p>この記事の内容は、ニコニコ生放送でライブコーディングしていました。
+僕の<a href="http://com.nicovideo.jp/community/co3686550" target="_blank" rel="external">ニコニココミュ</a>で朝6:30くらいから生放送しているのでよかったらいらしてください。（特に音声信号処理に詳しい方！）</p>
+<p>デモ動画の作成にあたって、上記放送に来て議論してくださった方々にはとても感謝しています。
+特にサムネイル絵を頂いた@Kyowsukeさんに深く感謝します。ありがとうございます。</p>
+</section>
+    <!-- Tags START -->
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/class-design-at-research-and-development-using-chainer/">
+        <span class="nav-arrow">← </span>
+        
+          Chainerを使った研究開発時のクラス設計
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/became-yuduki-yukari-with-cycle-gan-power/">
+        
+          CycleGANノンパラレル結月ゆかり声質変換やってみた
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+    <!-- 二维码 END -->
+    
+      <!-- No Comment -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://blog.hiroshiba.jp/became-yuduki-yukari-with-deep-learning-power/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    }
+    $('.header').removeClass('fixed-header')
+
+     // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+
+    // qrcode
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+
+    // gitment
+    var gitmentConfig = "";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "ディープラーニングの力で結月ゆかりの声になってみた",
+        owner: "",
+        repo: "",
+        oauth: {
+          client_id: "",
+          client_secret: ""
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  })();
+</script>
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2019 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+<script src="/js/script.js"></script>
+
+  </body>
+</html>

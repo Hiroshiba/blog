@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="結月ゆかりと会話したいが、結月ゆかりの人格は世界に存在しない。自分が人工知能になり、余った自分の魂を結月ゆかりに宿らせて、自分と結月ゆかりが会話する手法を提案する。結月ゆかりと会話することができた。次は結月ゆかりの人工知能を作りたい。">
+  <meta name="keyword" content="">
+  
+    <link rel="shortcut icon" type="image/ico" href="images/favicon.png"/>
+  
+  <title>ディープラーニングの力で人工知能になって結月ゆかりと会話してみた | Hiho&#39;s Blog</title>
+  <meta name="description" content="結月ゆかりと会話したいが、結月ゆかりの人格は世界に存在しない。自分が人工知能になり、余った自分の魂を結月ゆかりに宿らせて、自分と結月ゆかりが会話する手法を提案する。結月ゆかりと会話することができた。次は結月ゆかりの人工知能を作りたい。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ディープラーニングの力で人工知能になって結月ゆかりと会話してみた">
+<meta property="og:url" content="http://blog.hiroshiba.jp/talk-to-yuduki-yukari-with-deep-learning-power/index.html">
+<meta property="og:site_name" content="Hiho&#39;s Blog">
+<meta property="og:description" content="結月ゆかりと会話したいが、結月ゆかりの人格は世界に存在しない。自分が人工知能になり、余った自分の魂を結月ゆかりに宿らせて、自分と結月ゆかりが会話する手法を提案する。結月ゆかりと会話することができた。次は結月ゆかりの人工知能を作りたい。">
+<meta property="og:updated_time" content="2019-03-02T16:39:41.549Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ディープラーニングの力で人工知能になって結月ゆかりと会話してみた">
+<meta name="twitter:description" content="結月ゆかりと会話したいが、結月ゆかりの人格は世界に存在しない。自分が人工知能になり、余った自分の魂を結月ゆかりに宿らせて、自分と結月ゆかりが会話する手法を提案する。結月ゆかりと会話することができた。次は結月ゆかりの人工知能を作りたい。">
+<meta name="twitter:creator" content="@hiho_karuta">
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+  <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdn.bootcss.com/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
+  <script src="/js/qrious.js"></script>
+<script src="/js/gitment.js"></script>
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+</head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Hiho's Blog</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="https://twitter.com/hiho_karuta" class="item-link">Twitter</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="https://github.com/Hiroshiba" class="item-link">Github</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="https://twitter.com/hiho_karuta" class="menu-link">Twitter</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="https://github.com/Hiroshiba" class="menu-link">Github</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>ディープラーニングの力で人工知能になって結月ゆかりと会話してみた</h2>
+  <p class="post-date">2019-03-03</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><h3 id="目次"><a href="#目次" class="headerlink" title="目次"></a>目次</h3><ul>
+<li>（背景）結月ゆかりと会話したいが、結月ゆかりの人格は世界に存在しない。</li>
+<li>（手法）自分が人工知能になり、余った自分の魂を結月ゆかりに宿らせて、自分と結月ゆかりが会話する手法を提案する。</li>
+<li>（結果）結月ゆかりと会話することができた。</li>
+<li>（展望）次は結月ゆかりの人工知能を作りたい。</li>
+</ul>
+<a id="more"></a>
+<p><script type="application/javascript" src="https://embed.nicovideo.jp/watch/sm34712379/script?w=640&h=360"></script><noscript><a href="https://www.nicovideo.jp/watch/sm34712379" target="_blank" rel="external">ディープラーニングの力で人工知能になって結月ゆかりと会話してみた</a></noscript></p>
+<h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>多くの人が結月ゆかりと会話したいと思っている。
+結月ゆかりと会話するには、結月ゆかりの人工知能を作ることで解決できる。
+しかし、結月ゆかりの真の人格は世界に存在しない。
+そのため、結月ゆかりのデータを集めることができず、人工知能を作ることは難しいという問題があった。</p>
+<h3 id="手法"><a href="#手法" class="headerlink" title="手法"></a>手法</h3><p>発想を転換し、結月ゆかりの人工知能を作るのではなく、自分の人工知能を作ることを考えた。
+そして自分が結月ゆかりになり、その人工知能と会話する。
+これで、自分と結月ゆかりが会話できる。</p>
+<p>最初に自分の人工知能の作り方を説明し、続いて結月ゆかりになる手法を説明する。</p>
+<h4 id="自分の人工知能を作る"><a href="#自分の人工知能を作る" class="headerlink" title="自分の人工知能を作る"></a>自分の人工知能を作る</h4><p>人工知能と会話するためには、人工知能用のテキスト音声合成・会話応答・音声認識が必要になる。
+それぞれの手法を説明する。
+（手法の詳細は<a href="https://qiita.com/Hiroshiba/items/b4daca0176af5fd352a2" target="_blank" rel="external">過去の解説記事</a>にある。）</p>
+<p>テキスト音声合成には<a href="https://r9y9.github.io/nnmnkwii/latest/nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM%20based%20RNNs%20for%20speech%20synthesis%20%28en%29.html" target="_blank" rel="external">ディープラーニングを使った既存手法</a>を用いた。
+文章５００文を読み上げた自分の音声データを学習データセットとした。</p>
+<p>会話応答は、「問いかけの文章を自分なりの言葉にして返すもの」とし、ディープラーニングを使ったオートエンコーダを用いた。
+doc2vecを使ってテキストから特徴量を抽出し、その特徴量から元のテキストを生成する学習を行った。
+<a href="https://friends.nico/@hiho_karuta" target="_blank" rel="external">SNS（マストドン）で発言したテキスト約１１万文</a>を学習データセットとした。</p>
+<p>音声認識はchromeに備わっているWeb Speech APIを用いた。
+デモを行う際、自分の発言の字幕をリアルタイムで表示するためにこれを採用した。</p>
+<p>学習のためのコードや、これらをWebAPI化するコード、
+人工知能と会話できるWebフロントアプリ、全てをオープンソースで公開した。</p>
+<ul>
+<li><a href="https://github.com/Hiroshiba/hihobot" target="_blank" rel="external">会話応答（hihobot）</a></li>
+<li><a href="https://github.com/Hiroshiba/hihobot-synthesis" target="_blank" rel="external">音声合成（hihobot-synthesis）</a></li>
+<li><a href="https://github.com/Hiroshiba/hihobot-tts" target="_blank" rel="external">APIサーバー（hihobot-tts）</a></li>
+<li><a href="https://github.com/Hiroshiba/hihobot-front" target="_blank" rel="external">フロントエンド（hihobot-front）</a></li>
+</ul>
+<h4 id="結月ゆかりになる"><a href="#結月ゆかりになる" class="headerlink" title="結月ゆかりになる"></a>結月ゆかりになる</h4><p>結月ゆかりになるには、自分の声をリアルタイムで結月ゆかりの声に変換する必要がある。
+これには<a href="../became-yuduki-yukari-with-deep-learning-power/">過去に開発した声質変換手法</a>を用いた。</p>
+<h3 id="結果"><a href="#結果" class="headerlink" title="結果"></a>結果</h3><p>自分の人工知能と会話した結果を紹介する。
+<a href="https://twitter.com/i/status/1068656559406821376" target="_blank" rel="external">実際に会話した動画</a></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">自分　　　：おはよう</div><div class="line">人工知能　：おはようございます</div><div class="line">自分　　　：今日もいい天気ですね　気分はいかがですか</div><div class="line">人工知能　：今日は休日ですか</div><div class="line">自分　　　：土曜日なんで休日ですね</div><div class="line">人工知能　：２月１２日なんですかね</div><div class="line">自分　　　：それは僕の誕生日ですね</div><div class="line">人工知能　：今日は僕の誕生日ですね</div><div class="line">自分　　　：今日は僕の誕生日ではないですね</div><div class="line">人工知能　：僕は今日ですね</div><div class="line">自分　　　：あそうか確かにあなたの誕生日は今日かもしれない</div></pre></td></tr></table></figure>
+<p>この結果から、人工知能が、質問に対し自分なりの言葉にして返事できていることがわかる。</p>
+<p>また、自分が結月ゆかりになり、自分の人工知能と会話することで、
+自分と結月ゆかりが会話することができた。
+<a href="https://www.nicovideo.jp/watch/sm34712379" target="_blank" rel="external">デモ動画</a></p>
+<p>実際に行った素直な感想としては、特に自分と会話している気持ちにはならず、
+ただただポンコツな何かに対して壁打ちのように会話している気分になった。
+会話後に、録画した映像を見直すと、ところどころゆかりさんが可愛くて、
+自分の人工知能を煽っているシーンなどが羨ましく感じることもあった。</p>
+<h3 id="考察・展望"><a href="#考察・展望" class="headerlink" title="考察・展望"></a>考察・展望</h3><h4 id="会話応答の品質が良くない点"><a href="#会話応答の品質が良くない点" class="headerlink" title="会話応答の品質が良くない点"></a>会話応答の品質が良くない点</h4><p>今回は、質問文に対し、自分なりの言葉でその文章を返す学習を行った。
+その結果、質問文をオウム返しする傾向にあり、会話が成り立たないケースが多くあった。
+データｔ番目を入力、データｔ＋１番目を出力するように学習すれば、
+ある程度文脈を理解した会話ができるかもしれない。</p>
+<h4 id="展望"><a href="#展望" class="headerlink" title="展望"></a>展望</h4><p>次は自分が思う理想の結月ゆかり人工知能を作りたい。
+結月ゆかり人工知能を作るには次の２つの課題がある。</p>
+<ol>
+<li>結月ゆかり用のテキストデータが大量に存在しない点</li>
+<li>そもそも結月ゆかりの人格が世界に存在しない点</li>
+</ol>
+<p>これらの課題を解決するために、様々な人の発言データを用いて人格空間を作成し、
+その中から自分が思う理想の結月ゆかりの人格を探せるような手法を考えている。
+時間があれば取り掛かりたい。</p>
+</section>
+    <!-- Tags START -->
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/brainware_idea_challenge_2018/">
+        <span class="nav-arrow">← </span>
+        
+          Brainwave Idea Challenge（脳波アイデアソン）見てきた
+        
+      </a>
+    
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+    <!-- 二维码 END -->
+    
+      <!-- No Comment -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://blog.hiroshiba.jp/talk-to-yuduki-yukari-with-deep-learning-power/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    }
+    $('.header').removeClass('fixed-header')
+
+     // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+
+    // qrcode
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+
+    // gitment
+    var gitmentConfig = "";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "ディープラーニングの力で人工知能になって結月ゆかりと会話してみた",
+        owner: "",
+        repo: "",
+        oauth: {
+          client_id: "",
+          client_secret: ""
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  })();
+</script>
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2019 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+<script src="/js/script.js"></script>
+
+  </body>
+</html>

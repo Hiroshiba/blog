@@ -1,1 +1,268 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title>Hiho's Blog</title><meta name="description" content="A Blog Powered By Hexo"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/blog/images/favicon.png"><link rel="stylesheet" href="/blog/css/theme.css"><link rel="search" type="application/opensearchdescription+xml" href="/blog/atom.xml" title="Hiho's Blog"></head><body><div class="wrap"><header><h1 class="branding"><a href="/blog/" title="Hiho's Blog">Hiho's Blog</a></h1><ul class="nav nav-list"><li class="nav-list-item"><a class="nav-list-link" href="/blog/archives" target="_self">ARCHIVES</a></li><li class="nav-list-item"><a class="nav-list-link" href="https://github.com/Hiroshiba" target="_blank">GITHUB</a></li></ul></header><main class="container"><div class="archive"><h2 class="archive-year">2017</h2><div class="post-item"><div class="post-info"><a></a>2017-11-30</div><a class="post-title-link" href="/blog/mastodon-idol-tutorial/">マストドンアイドル チュートリアル</a></div><div class="post-item"><div class="post-info"><a></a>2017-11-17</div><a class="post-title-link" href="/blog/CBHGを使って声質変換してみる/">CBHGを使って声質変換してみる</a></div><div class="post-item"><div class="post-info"><a></a>2017-11-03</div><a class="post-title-link" href="/blog/sandbox-alignment-voice-actress-data/">声優統計コーパスをアライメントしてみる</a></div></div></main><footer><div class="paginator"></div><div class="copyright"><p>&copy; 2017 <a href="https://hiroshiba.github.io/blog">Hiroshiba</a>.<br>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> &amp; <a href="https://github.com/Dreyer/hexo-theme-artemis" target="_blank">Artemis</a>.</p></div></footer></div></body></html>
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="Hiroshibaのブログです。">
+  <meta name="keyword" content="">
+  
+    <link rel="shortcut icon" type="image/ico" href="images/favicon.png"/>
+  
+  <title>Hiho&#39;s Blog</title>
+  <meta name="description" content="Hiroshibaのブログです。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Hiho&#39;s Blog">
+<meta property="og:url" content="http://blog.hiroshiba.jp/archives/2017/11/index.html">
+<meta property="og:site_name" content="Hiho&#39;s Blog">
+<meta property="og:description" content="Hiroshibaのブログです。">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Hiho&#39;s Blog">
+<meta name="twitter:description" content="Hiroshibaのブログです。">
+<meta name="twitter:creator" content="@hiho_karuta">
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+  <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdn.bootcss.com/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
+  <script src="/js/qrious.js"></script>
+<script src="/js/gitment.js"></script>
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+</head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Hiho's Blog</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="https://twitter.com/hiho_karuta" class="item-link">Twitter</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="https://github.com/Hiroshiba" class="item-link">Github</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="https://twitter.com/hiho_karuta" class="menu-link">Twitter</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="https://github.com/Hiroshiba" class="menu-link">Github</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>Archives</h2>
+</div>
+<main class="app-body" id="archives">
+  
+  
+  
+    <section class="time-section">
+  <h1 class="section-year">
+    2019
+  </h1>
+  <div class="section-list">
+    
+    
+      <div class="section-list-item">
+        <a href="/talk-to-yuduki-yukari-with-deep-learning-power/" class="archive-title">ディープラーニングの力で人工知能になって結月ゆかりと会話してみた</a>
+        <p class="archive-date">03-03</p>
+      </div>
+    
+  </div>
+</section>
+  
+    <section class="time-section">
+  <h1 class="section-year">
+    2018
+  </h1>
+  <div class="section-list">
+    
+    
+      <div class="section-list-item">
+        <a href="/brainware_idea_challenge_2018/" class="archive-title">Brainwave Idea Challenge（脳波アイデアソン）見てきた</a>
+        <p class="archive-date">11-19</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/using-crepe/" class="archive-title">CREPE(A Convolutional REpresentation for Pitch Estimation)使ってみた</a>
+        <p class="archive-date">05-03</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/became-yuduki-yukari-with-cycle-gan-power/" class="archive-title">CycleGANノンパラレル結月ゆかり声質変換やってみた</a>
+        <p class="archive-date">04-22</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/became-yuduki-yukari-with-deep-learning-power/" class="archive-title">ディープラーニングの力で結月ゆかりの声になってみた</a>
+        <p class="archive-date">02-13</p>
+      </div>
+    
+  </div>
+</section>
+  
+    <section class="time-section">
+  <h1 class="section-year">
+    2017
+  </h1>
+  <div class="section-list">
+    
+    
+      <div class="section-list-item">
+        <a href="/class-design-at-research-and-development-using-chainer/" class="archive-title">Chainerを使った研究開発時のクラス設計</a>
+        <p class="archive-date">12-23</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/voice-conversion-deep-leanring-and-other-delusions/" class="archive-title">DeepLearningでも声質変換したい！</a>
+        <p class="archive-date">12-10</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/mastodon-idol-tutorial/" class="archive-title">マストドンアイドル チュートリアル</a>
+        <p class="archive-date">11-30</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/sandbox-alignment-voice-actress-data/" class="archive-title">声優統計コーパスをアライメントしてみる</a>
+        <p class="archive-date">11-03</p>
+      </div>
+    
+      <div class="section-list-item">
+        <a href="/first-commit/" class="archive-title">ブログ作りました</a>
+        <p class="archive-date">10-01</p>
+      </div>
+    
+  </div>
+</section>
+  
+</main>
+
+<script>
+  (function () {
+    var url = 'http://blog.hiroshiba.jp/archives/2017/11/index.html';
+    $('#article-banner').geopattern(url);
+    $('.header').removeClass('fixed-header');
+  })();
+</script>
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2019 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+<script src="/js/script.js"></script>
+
+  </body>
+</html>

@@ -2,28 +2,70 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://hiroshiba.github.io/mastodon-idol-tutorial/</loc>
+    <loc>http://blog.hiroshiba.jp/talk-to-yuduki-yukari-with-deep-learning-power/</loc>
+    
+    <lastmod>2019-03-02T16:39:41.549Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.hiroshiba.jp/became-yuduki-yukari-with-deep-learning-power/</loc>
+    
+    <lastmod>2019-02-22T17:10:09.744Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.hiroshiba.jp/became-yuduki-yukari-with-cycle-gan-power/</loc>
+    
+    <lastmod>2019-02-22T17:10:09.657Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.hiroshiba.jp/using-crepe/</loc>
+    
+    <lastmod>2019-02-22T17:10:09.649Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.hiroshiba.jp/brainware_idea_challenge_2018/</loc>
+    
+    <lastmod>2019-02-22T17:10:09.648Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.hiroshiba.jp/voice-conversion-deep-leanring-and-other-delusions/</loc>
+    
+    <lastmod>2018-02-13T02:15:26.103Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.hiroshiba.jp/sandbox-alignment-voice-actress-data/</loc>
+    
+    <lastmod>2018-02-12T03:44:59.903Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.hiroshiba.jp/class-design-at-research-and-development-using-chainer/</loc>
+    
+    <lastmod>2018-02-12T03:44:59.900Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.hiroshiba.jp/mastodon-idol-tutorial/</loc>
     
     <lastmod>2017-12-03T20:31:32.294Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://hiroshiba.github.io/CBHG%E3%82%92%E4%BD%BF%E3%81%A3%E3%81%A6%E5%A3%B0%E8%B3%AA%E5%A4%89%E6%8F%9B%E3%81%97%E3%81%A6%E3%81%BF%E3%82%8B/</loc>
-    
-    <lastmod>2017-11-16T22:28:38.648Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://hiroshiba.github.io/sandbox-alignment-voice-actress-data/</loc>
-    
-    <lastmod>2017-11-03T11:07:22.020Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://hiroshiba.github.io/first-commit/</loc>
+    <loc>http://blog.hiroshiba.jp/first-commit/</loc>
     
     <lastmod>2017-11-02T12:21:42.028Z</lastmod>
     

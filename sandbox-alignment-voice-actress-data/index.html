@@ -1,17 +1,158 @@
-<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><title>声優統計コーパスをアライメントしてみる | Hiho's Blog</title><meta name="description" content="声優統計コーパスをアライメントしてみる - Kazuyuki Hiroshiba"><meta name="viewport" content="width=device-width, initial-scale=1"><link rel="icon" href="/blog/images/favicon.png"><link rel="stylesheet" href="/blog/css/theme.css"><link rel="search" type="application/opensearchdescription+xml" href="/blog/atom.xml" title="Hiho's Blog"></head><body><div class="wrap"><header><h1 class="branding"><a href="/blog/" title="Hiho's Blog">Hiho's Blog</a></h1><ul class="nav nav-list"><li class="nav-list-item"><a class="nav-list-link" href="/blog/archives" target="_self">ARCHIVES</a></li><li class="nav-list-item"><a class="nav-list-link" href="https://github.com/Hiroshiba" target="_blank">GITHUB</a></li></ul></header><main class="container"><div class="post"><article class="post-block"><h1 class="post-title">声優統計コーパスをアライメントしてみる</h1><div class="post-info"><a></a>2017-11-03</div><div class="post-content"><h3 id="目次"><a href="#目次" class="headerlink" title="目次"></a>目次</h3><ul>
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="Hiroshibaのブログです。">
+  <meta name="keyword" content="">
+  
+    <link rel="shortcut icon" type="image/ico" href="images/favicon.png"/>
+  
+  <title>声優統計コーパスをアライメントしてみる | Hiho&#39;s Blog</title>
+  <meta name="description" content="目次 （背景）声質変換用のデータを作るために音声アライメントを試してみたい （手法）声優統計コーパスのデータを使用し、MFCCでアライメントした （結果）アライメント後の音声はところどころ伸びていた。無音とする閾値を下げると伸びは抑制された。 （考察）もっと完璧に揃うと思っていた。     話者１のメルスペクトログラム         話者２のメルスペクトログラム">
+<meta property="og:type" content="article">
+<meta property="og:title" content="声優統計コーパスをアライメントしてみる">
+<meta property="og:url" content="http://blog.hiroshiba.jp/sandbox-alignment-voice-actress-data/index.html">
+<meta property="og:site_name" content="Hiho&#39;s Blog">
+<meta property="og:description" content="目次 （背景）声質変換用のデータを作るために音声アライメントを試してみたい （手法）声優統計コーパスのデータを使用し、MFCCでアライメントした （結果）アライメント後の音声はところどころ伸びていた。無音とする閾値を下げると伸びは抑制された。 （考察）もっと完璧に揃うと思っていた。     話者１のメルスペクトログラム         話者２のメルスペクトログラム">
+<meta property="og:image" content="http://blog.hiroshiba.jp/sandbox-alignment-voice-actress-data/muteup-aligned-melspec-1-000.svg">
+<meta property="og:image" content="http://blog.hiroshiba.jp/sandbox-alignment-voice-actress-data/muteup-aligned-melspec-2-000.svg">
+<meta property="og:image" content="http://blog.hiroshiba.jp/sandbox-alignment-voice-actress-data/raw-melspec-1-000.svg">
+<meta property="og:image" content="http://blog.hiroshiba.jp/sandbox-alignment-voice-actress-data/raw-melspec-2-000.svg">
+<meta property="og:image" content="http://blog.hiroshiba.jp/sandbox-alignment-voice-actress-data/aligned-melspec-1-000.svg">
+<meta property="og:image" content="http://blog.hiroshiba.jp/sandbox-alignment-voice-actress-data/aligned-melspec-2-000.svg">
+<meta property="og:image" content="http://blog.hiroshiba.jp/sandbox-alignment-voice-actress-data/muteup-aligned-melspec-1-000.svg">
+<meta property="og:image" content="http://blog.hiroshiba.jp/sandbox-alignment-voice-actress-data/muteup-aligned-melspec-2-000.svg">
+<meta property="og:updated_time" content="2018-02-12T03:44:59.903Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="声優統計コーパスをアライメントしてみる">
+<meta name="twitter:description" content="目次 （背景）声質変換用のデータを作るために音声アライメントを試してみたい （手法）声優統計コーパスのデータを使用し、MFCCでアライメントした （結果）アライメント後の音声はところどころ伸びていた。無音とする閾値を下げると伸びは抑制された。 （考察）もっと完璧に揃うと思っていた。     話者１のメルスペクトログラム         話者２のメルスペクトログラム">
+<meta name="twitter:image" content="http://blog.hiroshiba.jp/sandbox-alignment-voice-actress-data/muteup-aligned-melspec-1-000.svg">
+<meta name="twitter:creator" content="@hiho_karuta">
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+  <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdn.bootcss.com/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
+  <script src="/js/qrious.js"></script>
+<script src="/js/gitment.js"></script>
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+</head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png" />
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Hiho's Blog</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="https://twitter.com/hiho_karuta" class="item-link">Twitter</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="https://github.com/Hiroshiba" class="item-link">Github</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="https://twitter.com/hiho_karuta" class="menu-link">Twitter</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="https://github.com/Hiroshiba" class="menu-link">Github</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>声優統計コーパスをアライメントしてみる</h2>
+  <p class="post-date">2017-11-03</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><h3 id="目次"><a href="#目次" class="headerlink" title="目次"></a>目次</h3><ul>
 <li>（背景）声質変換用のデータを作るために音声アライメントを試してみたい</li>
 <li>（手法）<a href="http://voice-statistics.github.io/" target="_blank" rel="external">声優統計コーパス</a>のデータを使用し、MFCCでアライメントした</li>
 <li>（結果）アライメント後の音声はところどころ伸びていた。無音とする閾値を下げると伸びは抑制された。</li>
 <li>（考察）もっと完璧に揃うと思っていた。</li>
 </ul>
 <figure>
-  <img src="/blog/sandbox-alignment-voice-actress-data/muteup-aligned-melspec-1-000.svg" alt="muteup-aligned-melspec-1-000.svg" title="">
   <figcaption>話者１のメルスペクトログラム</figcaption>
+  <img src="/sandbox-alignment-voice-actress-data/muteup-aligned-melspec-1-000.svg" alt="muteup-aligned-melspec-1-000.svg" title="">
 </figure>
 
 <figure>
-  <img src="/blog/sandbox-alignment-voice-actress-data/muteup-aligned-melspec-2-000.svg" alt="muteup-aligned-melspec-2-000.svg" title="">
   <figcaption>話者２のメルスペクトログラム</figcaption>
+  <img src="/sandbox-alignment-voice-actress-data/muteup-aligned-melspec-2-000.svg" alt="muteup-aligned-melspec-2-000.svg" title="">
 </figure>
 
 <a id="more"></a>
@@ -30,68 +171,68 @@ DTWは<a href="https://r9y9.github.io/nnmnkwii/latest/nnmnkwii_gallery/notebooks
 無音とする閾値は<code>librosa.effects.split</code>の<code>top_db</code>で変更できる。</p>
 <h3 id="結果"><a href="#結果" class="headerlink" title="結果"></a>結果</h3><h4 id="アライメントされた音声"><a href="#アライメントされた音声" class="headerlink" title="アライメントされた音声"></a>アライメントされた音声</h4><p>話者１と話者２の音声をアライメント結果は以下のようになった。</p>
 <figure>
-  <audio src="raw-voice-1-000.wav" controls></audio>
   <figcaption>話者１の元ボイス</figcaption>
+  <audio src="raw-voice-1-000.wav" controls></audio>
 </figure>
 
 <figure>
-  <audio src="raw-voice-2-000.wav" controls></audio>
   <figcaption>話者２の元ボイス</figcaption>
-</figure>
-
-<figure>
-  <audio src="aligned-voice-1-000.wav" controls></audio>
-  <figcaption>アライメントされた話者１のボイス</figcaption>
-</figure>
-
-<figure>
   <audio src="raw-voice-2-000.wav" controls></audio>
+</figure>
+
+<figure>
+  <figcaption>アライメントされた話者１のボイス</figcaption>
+  <audio src="aligned-voice-1-000.wav" controls></audio>
+</figure>
+
+<figure>
   <figcaption>アライメントされた話者２のボイス</figcaption>
+  <audio src="raw-voice-2-000.wav" controls></audio>
 </figure>
 
 <p>前半はきれいに揃っているが、後半の最後は伸びた感じになっていた。</p>
 <h4 id="アライメントされたメルスペクトログラム"><a href="#アライメントされたメルスペクトログラム" class="headerlink" title="アライメントされたメルスペクトログラム"></a>アライメントされたメルスペクトログラム</h4><p>先程の音声のメルスペクトログラムは以下のようになった。</p>
 <figure>
-  <img src="/blog/sandbox-alignment-voice-actress-data/raw-melspec-1-000.svg" alt="raw-melspec-1-000.svg" title="">
   <figcaption>話者１の元ボイスのメルスペクトログラム</figcaption>
+  <img src="/sandbox-alignment-voice-actress-data/raw-melspec-1-000.svg" alt="raw-melspec-1-000.svg" title="">
 </figure>
 
 <figure>
-  <img src="/blog/sandbox-alignment-voice-actress-data/raw-melspec-2-000.svg" alt="raw-melspec-2-000.svg" title="">
   <figcaption>話者２の元ボイスのメルスペクトログラム</figcaption>
+  <img src="/sandbox-alignment-voice-actress-data/raw-melspec-2-000.svg" alt="raw-melspec-2-000.svg" title="">
 </figure>
 
 <figure>
-  <img src="/blog/sandbox-alignment-voice-actress-data/aligned-melspec-1-000.svg" alt="aligned-melspec-1-000.svg" title="">
   <figcaption>アライメントされた話者１の元ボイスのメルスペクトログラム</figcaption>
+  <img src="/sandbox-alignment-voice-actress-data/aligned-melspec-1-000.svg" alt="aligned-melspec-1-000.svg" title="">
 </figure>
 
 <figure>
-  <img src="/blog/sandbox-alignment-voice-actress-data/aligned-melspec-2-000.svg" alt="aligned-melspec-2-000.svg" title="">
   <figcaption>アライメントされた話者２の元ボイスのメルスペクトログラム</figcaption>
+  <img src="/sandbox-alignment-voice-actress-data/aligned-melspec-2-000.svg" alt="aligned-melspec-2-000.svg" title="">
 </figure>
 
 <p>無音区間の部分アライメントに悪影響しているようだった。</p>
 <h4 id="無音区間の閾値を下げてアライメントした結果"><a href="#無音区間の閾値を下げてアライメントした結果" class="headerlink" title="無音区間の閾値を下げてアライメントした結果"></a>無音区間の閾値を下げてアライメントした結果</h4><p>無音区間とする音圧の閾値を下げてアライメントした。
 <code>librosa.effects.split</code>の<code>top_db</code>をデフォルト値から<code>20</code>にした。</p>
 <figure>
-  <audio src="muteup-aligned-voice-1-000.wav" controls></audio>
   <figcaption>話者１のボイス</figcaption>
+  <audio src="muteup-aligned-voice-1-000.wav" controls></audio>
 </figure>
 
 <figure>
-  <audio src="muteup-aligned-voice-2-000.wav" controls></audio>
   <figcaption>話者２のボイス</figcaption>
+  <audio src="muteup-aligned-voice-2-000.wav" controls></audio>
 </figure>
 
 <figure>
-  <img src="/blog/sandbox-alignment-voice-actress-data/muteup-aligned-melspec-1-000.svg" alt="muteup-aligned-melspec-1-000.svg" title="">
   <figcaption>話者１のメルスペクトログラム</figcaption>
+  <img src="/sandbox-alignment-voice-actress-data/muteup-aligned-melspec-1-000.svg" alt="muteup-aligned-melspec-1-000.svg" title="">
 </figure>
 
 <figure>
-  <img src="/blog/sandbox-alignment-voice-actress-data/muteup-aligned-melspec-2-000.svg" alt="muteup-aligned-melspec-2-000.svg" title="">
   <figcaption>話者２のメルスペクトログラム</figcaption>
+  <img src="/sandbox-alignment-voice-actress-data/muteup-aligned-melspec-2-000.svg" alt="muteup-aligned-melspec-2-000.svg" title="">
 </figure>
 
 <p>ところどころブザーのような音になった。よくなっているように思える。</p>
@@ -101,4 +242,177 @@ DTWは<a href="https://r9y9.github.io/nnmnkwii/latest/nnmnkwii_gallery/notebooks
 とりあえずこのまま機械学習の入出力にしたいと思う。</p>
 <p>MFCCでDTWして別のデータを並び替えるために、DTWAlignerに別のデータを与える設計にしたが、これは良くない。
 <a href="https://librosa.github.io/librosa/generated/librosa.effects.trim.html#" target="_blank" rel="external">librosa.effects.trim</a>のように、インデックスを返す実装の方がいい。</p>
-</div></article></div></main><footer><div class="paginator"><a class="prev" href="/blog/CBHGを使って声質変換してみる/">prev</a><a class="next" href="/blog/first-commit/">next</a></div><div class="copyright"><p>&copy; 2017 <a href="https://hiroshiba.github.io/blog">Hiroshiba</a>.<br>Powered by <a href="https://hexo.io/" target="_blank">Hexo</a> &amp; <a href="https://github.com/Dreyer/hexo-theme-artemis" target="_blank">Artemis</a>.</p></div></footer></div></body></html>
+</section>
+    <!-- Tags START -->
+    
+    <!-- Tags END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/first-commit/">
+        <span class="nav-arrow">← </span>
+        
+          ブログ作りました
+        
+      </a>
+    
+    
+      <a class="nav-right" href="/mastodon-idol-tutorial/">
+        
+          マストドンアイドル チュートリアル
+        
+        <span class="nav-arrow"> →</span>
+      </a>
+    
+  </div>
+
+    <!-- NAV END -->
+    <!-- 打赏 START -->
+    
+    <!-- 打赏 END -->
+    <!-- 二维码 START -->
+    
+    <!-- 二维码 END -->
+    
+      <!-- No Comment -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://blog.hiroshiba.jp/sandbox-alignment-voice-actress-data/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    }
+    $('.header').removeClass('fixed-header')
+
+     // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+
+    // qrcode
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+
+    // gitment
+    var gitmentConfig = "";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "声優統計コーパスをアライメントしてみる",
+        owner: "",
+        repo: "",
+        oauth: {
+          client_id: "",
+          client_secret: ""
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  })();
+</script>
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2019 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+<script src="/js/script.js"></script>
+
+  </body>
+</html>

@@ -55,6 +55,15 @@ pre {
   width: 400px;
   height: 400px;
 }
+.share-list {
+  display: block;
+  list-style: none;
+  padding: 0;
+}
+.share-list li {
+  display: inline-block;
+  vertical-align: top;
+}
 .app-body {
   padding: 2em 1em;
   margin: 0 auto;

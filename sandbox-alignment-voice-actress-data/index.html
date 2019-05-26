@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
-  <head>
+  <head><meta name="generator" content="Hexo 3.8.0">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
   <meta name="description" content="Hiroshibaのブログです。">
-  <meta name="keyword" content="">
+  <meta name="keyword" content>
   
-    <link rel="shortcut icon" type="image/ico" href="images/favicon.png"/>
+    <link rel="shortcut icon" type="image/ico" href="images/favicon.png">
   
   <title>声優統計コーパスをアライメントしてみる | Hiho&#39;s Blog</title>
   <meta name="description" content="目次 （背景）声質変換用のデータを作るために音声アライメントを試してみたい （手法）声優統計コーパスのデータを使用し、MFCCでアライメントした （結果）アライメント後の音声はところどころ伸びていた。無音とする閾値を下げると伸びは抑制された。 （考察）もっと完璧に揃うと思っていた。     話者１のメルスペクトログラム         話者２のメルスペクトログラム">
@@ -15,6 +15,7 @@
 <meta property="og:url" content="http://blog.hiroshiba.jp/sandbox-alignment-voice-actress-data/index.html">
 <meta property="og:site_name" content="Hiho&#39;s Blog">
 <meta property="og:description" content="目次 （背景）声質変換用のデータを作るために音声アライメントを試してみたい （手法）声優統計コーパスのデータを使用し、MFCCでアライメントした （結果）アライメント後の音声はところどころ伸びていた。無音とする閾値を下げると伸びは抑制された。 （考察）もっと完璧に揃うと思っていた。     話者１のメルスペクトログラム         話者２のメルスペクトログラム">
+<meta property="og:locale" content="default">
 <meta property="og:image" content="http://blog.hiroshiba.jp/sandbox-alignment-voice-actress-data/muteup-aligned-melspec-1-000.svg">
 <meta property="og:image" content="http://blog.hiroshiba.jp/sandbox-alignment-voice-actress-data/muteup-aligned-melspec-2-000.svg">
 <meta property="og:image" content="http://blog.hiroshiba.jp/sandbox-alignment-voice-actress-data/raw-melspec-1-000.svg">
@@ -67,7 +68,7 @@
 
 </head>
 <div class="wechat-share">
-  <img src="/css/images/logo.png" />
+  <img src="/css/images/logo.png">
 </div>
 
   <body>
@@ -141,33 +142,34 @@
   <article class="post-article">
     <section class="markdown-content"><h3 id="目次"><a href="#目次" class="headerlink" title="目次"></a>目次</h3><ul>
 <li>（背景）声質変換用のデータを作るために音声アライメントを試してみたい</li>
-<li>（手法）<a href="http://voice-statistics.github.io/" target="_blank" rel="external">声優統計コーパス</a>のデータを使用し、MFCCでアライメントした</li>
+<li>（手法）<a href="http://voice-statistics.github.io/" target="_blank" rel="noopener">声優統計コーパス</a>のデータを使用し、MFCCでアライメントした</li>
 <li>（結果）アライメント後の音声はところどころ伸びていた。無音とする閾値を下げると伸びは抑制された。</li>
 <li>（考察）もっと完璧に揃うと思っていた。</li>
 </ul>
 <figure>
   <figcaption>話者１のメルスペクトログラム</figcaption>
-  <img src="/sandbox-alignment-voice-actress-data/muteup-aligned-melspec-1-000.svg" alt="muteup-aligned-melspec-1-000.svg" title="">
+  <img src="/sandbox-alignment-voice-actress-data/muteup-aligned-melspec-1-000.svg">
 </figure>
 
 <figure>
   <figcaption>話者２のメルスペクトログラム</figcaption>
-  <img src="/sandbox-alignment-voice-actress-data/muteup-aligned-melspec-2-000.svg" alt="muteup-aligned-melspec-2-000.svg" title="">
+  <img src="/sandbox-alignment-voice-actress-data/muteup-aligned-melspec-2-000.svg">
 </figure>
 
 <a id="more"></a>
+
 <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>DeeeeepLearingを使って声質変換してみたい。
 どうやら最初に、違う話者による同じ発話内容の音声を揃える必要があるらしい。
 声質変換用のデータを作るために音声アライメントを試してみた。</p>
-<h3 id="手法"><a href="#手法" class="headerlink" title="手法"></a>手法</h3><p>データセットは<a href="http://voice-statistics.github.io/" target="_blank" rel="external">声優統計コーパス</a>の音声データを使用した。
+<h3 id="手法"><a href="#手法" class="headerlink" title="手法"></a>手法</h3><p>データセットは<a href="http://voice-statistics.github.io/" target="_blank" rel="noopener">声優統計コーパス</a>の音声データを使用した。
 話者は<code>fujitou_normal</code>（話者１）と<code>tsuchiya_normal</code>（話者２）を選んだ。</p>
 <p>アライメント用の特徴量はいろんな文献に従いMFCCとした。
-MFCC抽出には<a href="http://ml.cs.yamanashi.ac.jp/world/" target="_blank" rel="external">World</a>と、そのpythonラッパー<a href="https://github.com/JeremyCCHsu/Python-Wrapper-for-World-Vocoder" target="_blank" rel="external">pyworld</a>を用いた。</p>
+MFCC抽出には<a href="http://ml.cs.yamanashi.ac.jp/world/" target="_blank" rel="noopener">World</a>と、そのpythonラッパー<a href="https://github.com/JeremyCCHsu/Python-Wrapper-for-World-Vocoder" target="_blank" rel="noopener">pyworld</a>を用いた。</p>
 <p>音声のアライメントはMFCCにDTWを適用した結果を用いた。
-DTWは<a href="https://r9y9.github.io/nnmnkwii/latest/nnmnkwii_gallery/notebooks/vc/01-GMM%20voice%20conversion%20%28en%29.html" target="_blank" rel="external">音声変換の実装例</a>アライメントされた音声の生成は、DTW結果のindexに従ってSTFTを並び替え、STFTを逆変換して求めた。</p>
+DTWは<a href="https://r9y9.github.io/nnmnkwii/latest/nnmnkwii_gallery/notebooks/vc/01-GMM%20voice%20conversion%20%28en%29.html" target="_blank" rel="noopener">音声変換の実装例</a>アライメントされた音声の生成は、DTW結果のindexに従ってSTFTを並び替え、STFTを逆変換して求めた。</p>
 <p>比較用にメルスペクトログラムを求め、作図に用いた。
-これの生成は<a href="https://github.com/keithito/tacotron/blob/master/util/audio.py" target="_blank" rel="external">tacotronの実装例</a>を参考にした。</p>
-<p>コードは<a href="https://gist.github.com/Hiroshiba/25fee12b3e51b2209b249fdfbb6ade88" target="_blank" rel="external">gist</a>に公開した。
+これの生成は<a href="https://github.com/keithito/tacotron/blob/master/util/audio.py" target="_blank" rel="noopener">tacotronの実装例</a>を参考にした。</p>
+<p>コードは<a href="https://gist.github.com/Hiroshiba/25fee12b3e51b2209b249fdfbb6ade88" target="_blank" rel="noopener">gist</a>に公開した。
 無音とする閾値は<code>librosa.effects.split</code>の<code>top_db</code>で変更できる。</p>
 <h3 id="結果"><a href="#結果" class="headerlink" title="結果"></a>結果</h3><h4 id="アライメントされた音声"><a href="#アライメントされた音声" class="headerlink" title="アライメントされた音声"></a>アライメントされた音声</h4><p>話者１と話者２の音声をアライメント結果は以下のようになった。</p>
 <figure>
@@ -194,22 +196,22 @@ DTWは<a href="https://r9y9.github.io/nnmnkwii/latest/nnmnkwii_gallery/notebooks
 <h4 id="アライメントされたメルスペクトログラム"><a href="#アライメントされたメルスペクトログラム" class="headerlink" title="アライメントされたメルスペクトログラム"></a>アライメントされたメルスペクトログラム</h4><p>先程の音声のメルスペクトログラムは以下のようになった。</p>
 <figure>
   <figcaption>話者１の元ボイスのメルスペクトログラム</figcaption>
-  <img src="/sandbox-alignment-voice-actress-data/raw-melspec-1-000.svg" alt="raw-melspec-1-000.svg" title="">
+  <img src="/sandbox-alignment-voice-actress-data/raw-melspec-1-000.svg">
 </figure>
 
 <figure>
   <figcaption>話者２の元ボイスのメルスペクトログラム</figcaption>
-  <img src="/sandbox-alignment-voice-actress-data/raw-melspec-2-000.svg" alt="raw-melspec-2-000.svg" title="">
+  <img src="/sandbox-alignment-voice-actress-data/raw-melspec-2-000.svg">
 </figure>
 
 <figure>
   <figcaption>アライメントされた話者１の元ボイスのメルスペクトログラム</figcaption>
-  <img src="/sandbox-alignment-voice-actress-data/aligned-melspec-1-000.svg" alt="aligned-melspec-1-000.svg" title="">
+  <img src="/sandbox-alignment-voice-actress-data/aligned-melspec-1-000.svg">
 </figure>
 
 <figure>
   <figcaption>アライメントされた話者２の元ボイスのメルスペクトログラム</figcaption>
-  <img src="/sandbox-alignment-voice-actress-data/aligned-melspec-2-000.svg" alt="aligned-melspec-2-000.svg" title="">
+  <img src="/sandbox-alignment-voice-actress-data/aligned-melspec-2-000.svg">
 </figure>
 
 <p>無音区間の部分アライメントに悪影響しているようだった。</p>
@@ -227,12 +229,12 @@ DTWは<a href="https://r9y9.github.io/nnmnkwii/latest/nnmnkwii_gallery/notebooks
 
 <figure>
   <figcaption>話者１のメルスペクトログラム</figcaption>
-  <img src="/sandbox-alignment-voice-actress-data/muteup-aligned-melspec-1-000.svg" alt="muteup-aligned-melspec-1-000.svg" title="">
+  <img src="/sandbox-alignment-voice-actress-data/muteup-aligned-melspec-1-000.svg">
 </figure>
 
 <figure>
   <figcaption>話者２のメルスペクトログラム</figcaption>
-  <img src="/sandbox-alignment-voice-actress-data/muteup-aligned-melspec-2-000.svg" alt="muteup-aligned-melspec-2-000.svg" title="">
+  <img src="/sandbox-alignment-voice-actress-data/muteup-aligned-melspec-2-000.svg">
 </figure>
 
 <p>ところどころブザーのような音になった。よくなっているように思える。</p>
@@ -241,7 +243,7 @@ DTWは<a href="https://r9y9.github.io/nnmnkwii/latest/nnmnkwii_gallery/notebooks
 <p>DTWで音声が完璧に揃えられると思っていたけど、いまいちだった。
 とりあえずこのまま機械学習の入出力にしたいと思う。</p>
 <p>MFCCでDTWして別のデータを並び替えるために、DTWAlignerに別のデータを与える設計にしたが、これは良くない。
-<a href="https://librosa.github.io/librosa/generated/librosa.effects.trim.html#" target="_blank" rel="external">librosa.effects.trim</a>のように、インデックスを返す実装の方がいい。</p>
+<a href="https://librosa.github.io/librosa/generated/librosa.effects.trim.html#" target="_blank" rel="noopener">librosa.effects.trim</a>のように、インデックスを返す実装の方がいい。</p>
 </section>
     <!-- Tags START -->
     
@@ -252,7 +254,10 @@ DTWは<a href="https://r9y9.github.io/nnmnkwii/latest/nnmnkwii_gallery/notebooks
         <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="hiho_karuta" data-related="hiho_karuta" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
       </li>
       <li>
-        <div id="fb-root"></div><script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v3.3&appId=411014156399099&autoLogAppEvents=1"></script><div class="fb-share-button" data-href="http://blog.hiroshiba.jp/sandbox-alignment-voice-actress-data/" data-layout="button_count" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fblog.hiroshiba.jp%2Fsandbox-alignment-voice-actress-data%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
+        <a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="basic-label-counter" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/v4/public/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;"></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+      </li>
+      <li>
+        <div id="fb-root"></div><script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v3.3&appId=411014156399099&autoLogAppEvents=1"></script><div class="fb-share-button" data-href="http://blog.hiroshiba.jp/sandbox-alignment-voice-actress-data/" data-layout="button_count" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fblog.hiroshiba.jp%2Fsandbox-alignment-voice-actress-data%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">facebookでシェア</a></div>
       </li>
     </ul>
     <!-- Share Button END -->

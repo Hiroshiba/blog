@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
-  <head>
+  <head><meta name="generator" content="Hexo 3.8.0">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
   <meta name="description" content="結月ゆかりと会話したいが、結月ゆかりの人格は世界に存在しない。自分が人工知能になり、余った自分の魂を結月ゆかりに宿らせて、自分と結月ゆかりが会話する手法を提案する。結月ゆかりと会話することができた。次は結月ゆかりの人工知能を作りたい。">
-  <meta name="keyword" content="">
+  <meta name="keyword" content>
   
-    <link rel="shortcut icon" type="image/ico" href="images/favicon.png"/>
+    <link rel="shortcut icon" type="image/ico" href="images/favicon.png">
   
   <title>ディープラーニングの力で人工知能になって結月ゆかりと会話してみた | Hiho&#39;s Blog</title>
   <meta name="description" content="結月ゆかりと会話したいが、結月ゆかりの人格は世界に存在しない。自分が人工知能になり、余った自分の魂を結月ゆかりに宿らせて、自分と結月ゆかりが会話する手法を提案する。結月ゆかりと会話することができた。次は結月ゆかりの人工知能を作りたい。">
@@ -15,6 +15,7 @@
 <meta property="og:url" content="http://blog.hiroshiba.jp/talk-to-yuduki-yukari-with-deep-learning-power/index.html">
 <meta property="og:site_name" content="Hiho&#39;s Blog">
 <meta property="og:description" content="結月ゆかりと会話したいが、結月ゆかりの人格は世界に存在しない。自分が人工知能になり、余った自分の魂を結月ゆかりに宿らせて、自分と結月ゆかりが会話する手法を提案する。結月ゆかりと会話することができた。次は結月ゆかりの人工知能を作りたい。">
+<meta property="og:locale" content="default">
 <meta property="og:updated_time" content="2019-03-02T16:39:41.549Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ディープラーニングの力で人工知能になって結月ゆかりと会話してみた">
@@ -58,7 +59,7 @@
 
 </head>
 <div class="wechat-share">
-  <img src="/css/images/logo.png" />
+  <img src="/css/images/logo.png">
 </div>
 
   <body>
@@ -137,7 +138,9 @@
 <li>（展望）次は結月ゆかりの人工知能を作りたい。</li>
 </ul>
 <a id="more"></a>
-<p><script type="application/javascript" src="https://embed.nicovideo.jp/watch/sm34712379/script?w=640&h=360"></script><noscript><a href="https://www.nicovideo.jp/watch/sm34712379" target="_blank" rel="external">ディープラーニングの力で人工知能になって結月ゆかりと会話してみた</a></noscript></p>
+
+<script type="application/javascript" src="https://embed.nicovideo.jp/watch/sm34712379/script?w=640&h=360"></script><noscript><a href="https://www.nicovideo.jp/watch/sm34712379" target="_blank" rel="noopener">ディープラーニングの力で人工知能になって結月ゆかりと会話してみた</a></noscript>
+
 <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>多くの人が結月ゆかりと会話したいと思っている。
 結月ゆかりと会話するには、結月ゆかりの人工知能を作ることで解決できる。
 しかし、結月ゆかりの真の人格は世界に存在しない。
@@ -148,31 +151,32 @@
 <p>最初に自分の人工知能の作り方を説明し、続いて結月ゆかりになる手法を説明する。</p>
 <h4 id="自分の人工知能を作る"><a href="#自分の人工知能を作る" class="headerlink" title="自分の人工知能を作る"></a>自分の人工知能を作る</h4><p>人工知能と会話するためには、人工知能用のテキスト音声合成・会話応答・音声認識が必要になる。
 それぞれの手法を説明する。
-（手法の詳細は<a href="https://qiita.com/Hiroshiba/items/b4daca0176af5fd352a2" target="_blank" rel="external">過去の解説記事</a>にある。）</p>
-<p>テキスト音声合成には<a href="https://r9y9.github.io/nnmnkwii/latest/nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM%20based%20RNNs%20for%20speech%20synthesis%20%28en%29.html" target="_blank" rel="external">ディープラーニングを使った既存手法</a>を用いた。
+（手法の詳細は<a href="https://qiita.com/Hiroshiba/items/b4daca0176af5fd352a2" target="_blank" rel="noopener">過去の解説記事</a>にある。）</p>
+<p>テキスト音声合成には<a href="https://r9y9.github.io/nnmnkwii/latest/nnmnkwii_gallery/notebooks/tts/02-Bidirectional-LSTM%20based%20RNNs%20for%20speech%20synthesis%20%28en%29.html" target="_blank" rel="noopener">ディープラーニングを使った既存手法</a>を用いた。
 文章５００文を読み上げた自分の音声データを学習データセットとした。</p>
 <p>会話応答は、「問いかけの文章を自分なりの言葉にして返すもの」とし、ディープラーニングを使ったオートエンコーダを用いた。
 doc2vecを使ってテキストから特徴量を抽出し、その特徴量から元のテキストを生成する学習を行った。
-<a href="https://friends.nico/@hiho_karuta" target="_blank" rel="external">SNS（マストドン）で発言したテキスト約１１万文</a>を学習データセットとした。</p>
+<a href="https://friends.nico/@hiho_karuta" target="_blank" rel="noopener">SNS（マストドン）で発言したテキスト約１１万文</a>を学習データセットとした。</p>
 <p>音声認識はchromeに備わっているWeb Speech APIを用いた。
 デモを行う際、自分の発言の字幕をリアルタイムで表示するためにこれを採用した。</p>
 <p>学習のためのコードや、これらをWebAPI化するコード、
 人工知能と会話できるWebフロントアプリ、全てをオープンソースで公開した。</p>
 <ul>
-<li><a href="https://github.com/Hiroshiba/hihobot" target="_blank" rel="external">会話応答（hihobot）</a></li>
-<li><a href="https://github.com/Hiroshiba/hihobot-synthesis" target="_blank" rel="external">音声合成（hihobot-synthesis）</a></li>
-<li><a href="https://github.com/Hiroshiba/hihobot-tts" target="_blank" rel="external">APIサーバー（hihobot-tts）</a></li>
-<li><a href="https://github.com/Hiroshiba/hihobot-front" target="_blank" rel="external">フロントエンド（hihobot-front）</a></li>
+<li><a href="https://github.com/Hiroshiba/hihobot" target="_blank" rel="noopener">会話応答（hihobot）</a></li>
+<li><a href="https://github.com/Hiroshiba/hihobot-synthesis" target="_blank" rel="noopener">音声合成（hihobot-synthesis）</a></li>
+<li><a href="https://github.com/Hiroshiba/hihobot-tts" target="_blank" rel="noopener">APIサーバー（hihobot-tts）</a></li>
+<li><a href="https://github.com/Hiroshiba/hihobot-front" target="_blank" rel="noopener">フロントエンド（hihobot-front）</a></li>
 </ul>
 <h4 id="結月ゆかりになる"><a href="#結月ゆかりになる" class="headerlink" title="結月ゆかりになる"></a>結月ゆかりになる</h4><p>結月ゆかりになるには、自分の声をリアルタイムで結月ゆかりの声に変換する必要がある。
 これには<a href="../became-yuduki-yukari-with-deep-learning-power/">過去に開発した声質変換手法</a>を用いた。</p>
 <h3 id="結果"><a href="#結果" class="headerlink" title="結果"></a>結果</h3><p>自分の人工知能と会話した結果を紹介する。
-<a href="https://twitter.com/i/status/1068656559406821376" target="_blank" rel="external">実際に会話した動画</a></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">自分　　　：おはよう</div><div class="line">人工知能　：おはようございます</div><div class="line">自分　　　：今日もいい天気ですね　気分はいかがですか</div><div class="line">人工知能　：今日は休日ですか</div><div class="line">自分　　　：土曜日なんで休日ですね</div><div class="line">人工知能　：２月１２日なんですかね</div><div class="line">自分　　　：それは僕の誕生日ですね</div><div class="line">人工知能　：今日は僕の誕生日ですね</div><div class="line">自分　　　：今日は僕の誕生日ではないですね</div><div class="line">人工知能　：僕は今日ですね</div><div class="line">自分　　　：あそうか確かにあなたの誕生日は今日かもしれない</div></pre></td></tr></table></figure>
+<a href="https://twitter.com/i/status/1068656559406821376" target="_blank" rel="noopener">実際に会話した動画</a></p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">自分　　　：おはよう</span><br><span class="line">人工知能　：おはようございます</span><br><span class="line">自分　　　：今日もいい天気ですね　気分はいかがですか</span><br><span class="line">人工知能　：今日は休日ですか</span><br><span class="line">自分　　　：土曜日なんで休日ですね</span><br><span class="line">人工知能　：２月１２日なんですかね</span><br><span class="line">自分　　　：それは僕の誕生日ですね</span><br><span class="line">人工知能　：今日は僕の誕生日ですね</span><br><span class="line">自分　　　：今日は僕の誕生日ではないですね</span><br><span class="line">人工知能　：僕は今日ですね</span><br><span class="line">自分　　　：あそうか確かにあなたの誕生日は今日かもしれない</span><br></pre></td></tr></table></figure>
+
 <p>この結果から、人工知能が、質問に対し自分なりの言葉にして返事できていることがわかる。</p>
 <p>また、自分が結月ゆかりになり、自分の人工知能と会話することで、
 自分と結月ゆかりが会話することができた。
-<a href="https://www.nicovideo.jp/watch/sm34712379" target="_blank" rel="external">デモ動画</a></p>
+<a href="https://www.nicovideo.jp/watch/sm34712379" target="_blank" rel="noopener">デモ動画</a></p>
 <p>実際に行った素直な感想としては、特に自分と会話している気持ちにはならず、
 ただただポンコツな何かに対して壁打ちのように会話している気分になった。
 会話後に、録画した映像を見直すと、ところどころゆかりさんが可愛くて、
@@ -200,7 +204,10 @@ doc2vecを使ってテキストから特徴量を抽出し、その特徴量か�
         <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="hiho_karuta" data-related="hiho_karuta" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
       </li>
       <li>
-        <div id="fb-root"></div><script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v3.3&appId=411014156399099&autoLogAppEvents=1"></script><div class="fb-share-button" data-href="http://blog.hiroshiba.jp/talk-to-yuduki-yukari-with-deep-learning-power/" data-layout="button_count" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fblog.hiroshiba.jp%2Ftalk-to-yuduki-yukari-with-deep-learning-power%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
+        <a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="basic-label-counter" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/v4/public/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;"></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+      </li>
+      <li>
+        <div id="fb-root"></div><script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v3.3&appId=411014156399099&autoLogAppEvents=1"></script><div class="fb-share-button" data-href="http://blog.hiroshiba.jp/talk-to-yuduki-yukari-with-deep-learning-power/" data-layout="button_count" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fblog.hiroshiba.jp%2Ftalk-to-yuduki-yukari-with-deep-learning-power%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">facebookでシェア</a></div>
       </li>
     </ul>
     <!-- Share Button END -->
@@ -216,6 +223,13 @@ doc2vecを使ってテキストから特徴量を抽出し、その特徴量か�
         
       </a>
     
+    
+      <a class="nav-right" href="/backstage-of-talking-event-with-yuzuki-yukari/">
+        
+          「結月ゆかり」とお喋りできるイベントの舞台裏
+        
+        <span class="nav-arrow"> →</span>
+      </a>
     
   </div>
 

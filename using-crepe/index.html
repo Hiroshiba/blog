@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
-  <head>
+  <head><meta name="generator" content="Hexo 3.8.0">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
   <meta name="description" content="畳み込みニューラルネットを使ったピッチ推定手法、CREPEが提案された。PyPIが用意されていて、発話音声にも簡単に適用できそうだったので試してみた。">
-  <meta name="keyword" content="">
+  <meta name="keyword" content>
   
-    <link rel="shortcut icon" type="image/ico" href="images/favicon.png"/>
+    <link rel="shortcut icon" type="image/ico" href="images/favicon.png">
   
   <title>CREPE(A Convolutional REpresentation for Pitch Estimation)使ってみた | Hiho&#39;s Blog</title>
   <meta name="description" content="畳み込みニューラルネットを使ったピッチ推定手法、CREPEが提案された。PyPIが用意されていて、発話音声にも簡単に適用できそうだったので試してみた。">
@@ -15,8 +15,9 @@
 <meta property="og:url" content="http://blog.hiroshiba.jp/using-crepe/index.html">
 <meta property="og:site_name" content="Hiho&#39;s Blog">
 <meta property="og:description" content="畳み込みニューラルネットを使ったピッチ推定手法、CREPEが提案された。PyPIが用意されていて、発話音声にも簡単に適用できそうだったので試してみた。">
+<meta property="og:locale" content="default">
 <meta property="og:image" content="http://blog.hiroshiba.jp/using-crepe/f0.png">
-<meta property="og:updated_time" content="2019-02-22T17:10:09.649Z">
+<meta property="og:updated_time" content="2019-05-25T16:31:10.008Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="CREPE(A Convolutional REpresentation for Pitch Estimation)使ってみた">
 <meta name="twitter:description" content="畳み込みニューラルネットを使ったピッチ推定手法、CREPEが提案された。PyPIが用意されていて、発話音声にも簡単に適用できそうだったので試してみた。">
@@ -60,7 +61,7 @@
 
 </head>
 <div class="wechat-share">
-  <img src="/css/images/logo.png" />
+  <img src="/css/images/logo.png">
 </div>
 
   <body>
@@ -132,23 +133,27 @@
 <main class="app-body flex-box">
   <!-- Article START -->
   <article class="post-article">
-    <section class="markdown-content"><p>畳み込みニューラルネットを使ったピッチ推定手法、CREPEが提案された[^1]。
-<a href="https://pypi.org/project/crepe/" target="_blank" rel="external">PyPI</a>が用意されていて、発話音声にも簡単に適用できそうだったので試してみた。</p>
+    <section class="markdown-content"><p>畳み込みニューラルネットを使ったピッチ推定手法、CREPEが提案された<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>。
+<a href="https://pypi.org/project/crepe/" target="_blank" rel="noopener">PyPI</a>が用意されていて、発話音声にも簡単に適用できそうだったので試してみた。</p>
 <a id="more"></a>
+
 <p>使用方法はとても簡単で、以下のコマンドを叩けば良い。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install crepe</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install crepe</span><br></pre></td></tr></table></figure>
+
 <p>GPUを使ったほうが圧倒的に早い。
 CREPEはKeras製なので、tensorflow-gpuを導入すればGPU使用可能になる。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pip install tensorflow-gpu</div></pre></td></tr></table></figure>
-<p><a href="https://github.com/marl/crepe" target="_blank" rel="external">GitHubでの説明</a>によると、コマンドとして使うことが想定されている。
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install tensorflow-gpu</span><br></pre></td></tr></table></figure>
+
+<p><a href="https://github.com/marl/crepe" target="_blank" rel="noopener">GitHubでの説明</a>によると、コマンドとして使うことが想定されている。
 コードはちゃんと機能ごとに切り分けられているので、適切にimportすればPython内で使うこともできる。</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> librosa</div><div class="line"></div><div class="line"><span class="keyword">from</span> crepe.core <span class="keyword">import</span> build_and_load_model <span class="keyword">as</span> crepe_build</div><div class="line"><span class="keyword">from</span> crepe.core <span class="keyword">import</span> predict <span class="keyword">as</span> crepe_predict</div><div class="line"></div><div class="line">fs = <span class="number">16000</span></div><div class="line">x, _ = librosa.load(<span class="string">'hoge.wav'</span>, sr=fs)</div><div class="line"></div><div class="line">crepe_build()</div><div class="line">t, f0, confidence, _ = crepe_predict(x, sr=fs, viterbi=<span class="keyword">True</span>)</div><div class="line"></div><div class="line">threshold = <span class="number">0.1</span></div><div class="line">f0[confidence &lt; threshold] = <span class="number">0</span></div></pre></td></tr></table></figure>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> librosa</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> crepe.core <span class="keyword">import</span> build_and_load_model <span class="keyword">as</span> crepe_build</span><br><span class="line"><span class="keyword">from</span> crepe.core <span class="keyword">import</span> predict <span class="keyword">as</span> crepe_predict</span><br><span class="line"></span><br><span class="line">fs = <span class="number">16000</span></span><br><span class="line">x, _ = librosa.load(<span class="string">'hoge.wav'</span>, sr=fs)</span><br><span class="line"></span><br><span class="line">crepe_build()</span><br><span class="line">t, f0, confidence, _ = crepe_predict(x, sr=fs, viterbi=<span class="literal">True</span>)</span><br><span class="line"></span><br><span class="line">threshold = <span class="number">0.1</span></span><br><span class="line">f0[confidence &lt; threshold] = <span class="number">0</span></span><br></pre></td></tr></table></figure>
+
 <p>CREPEは、ピッチの確率分布のようなものを推定したあと、その分布を元にピッチを定める。
 <code>viterbi=False</code>（初期値）の場合は確率が最大のピッチを、<code>viterbi=True</code>の場合はHMMを使ってよしなにピッチを推定するっぽい（論文読んでいない）。<code>confidence</code>の値は音声活動の信頼度(0~1)らしい。</p>
 <p>WORLDのHarvestを用いて基本周波数を推定したものと、CREPEを比較してみた。</p>
 <figure>
   <figcaption>F0比較</figcaption>
-  <img src="/using-crepe/f0.png" alt="f0.png" title="">
+  <img src="/using-crepe/f0.png">
 </figure>
 
 <p><code>viterbi=False</code>だと値が吹っ飛ぶことが多いようだった。</p>
@@ -179,9 +184,8 @@ CREPEはフレーム時間が0.01秒固定で、WORLDは0.005秒なので、そ�
 GPU無しCREPEだと10秒程度かかった。</p>
 <p>CREPEはWORLDほどバッファが必要ない（たぶん）ので、リアルタイム性が必要なサービスに使いやすそうだ。
 しかし、HMMを利用する場合は、前の音声のコンテキストが必要なはずだが、そこは実装されていないので、自分でどうにかしないといけない。</p>
-<p>作図に用いた<a href="https://gist.github.com/Hiroshiba/ad19bef0200c5f312cb7cbd5678b185c#file-use_crepe-ipynb" target="_blank" rel="external">Jupyter notebookファイル</a>をGistにアップロードした。</p>
-<p>[^1]: <a href="https://arxiv.org/abs/1802.06182" target="_blank" rel="external">CREPE: A Convolutional Representation for Pitch Estimation</a></p>
-</section>
+<p>作図に用いた<a href="https://gist.github.com/Hiroshiba/ad19bef0200c5f312cb7cbd5678b185c#file-use_crepe-ipynb" target="_blank" rel="noopener">Jupyter notebookファイル</a>をGistにアップロードした。</p>
+<div id="footnotes"><hr><div id="footnotelist"><ol style="list-style:none; padding-left: 0;"><li id="fn:1"><span style="display: inline-block; vertical-align: top; padding-right: 10px;">1.</span><span style="display: inline-block; vertical-align: top;"><a href="https://arxiv.org/abs/1802.06182" target="_blank" rel="noopener">CREPE: A Convolutional Representation for Pitch Estimation</a></span><a href="#fnref:1" rev="footnote"> ↩</a></li></ol></div></div></section>
     <!-- Tags START -->
     
     <!-- Tags END -->
@@ -191,7 +195,10 @@ GPU無しCREPEだと10秒程度かかった。</p>
         <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="hiho_karuta" data-related="hiho_karuta" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
       </li>
       <li>
-        <div id="fb-root"></div><script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v3.3&appId=411014156399099&autoLogAppEvents=1"></script><div class="fb-share-button" data-href="http://blog.hiroshiba.jp/using-crepe/" data-layout="button_count" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fblog.hiroshiba.jp%2Fusing-crepe%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
+        <a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="basic-label-counter" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/v4/public/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;"></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+      </li>
+      <li>
+        <div id="fb-root"></div><script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v3.3&appId=411014156399099&autoLogAppEvents=1"></script><div class="fb-share-button" data-href="http://blog.hiroshiba.jp/using-crepe/" data-layout="button_count" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fblog.hiroshiba.jp%2Fusing-crepe%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">facebookでシェア</a></div>
       </li>
     </ul>
     <!-- Share Button END -->

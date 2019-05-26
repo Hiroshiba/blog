@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html>
+  <head><meta name="generator" content="Hexo 3.8.0">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="２０１９年５月頭に開催された、結月ゆかり・紲星あかり中心VOICEROIDオンリー同人イベント「この声届け、月までも五」（声月）の一画で、企画展示をする機会を頂きました。この展示ブースにて、既存のＶＲ技術と、以前開発した声質変換技術を組み合わせ、イベント会場に来場されたお客さんが「結月ゆかり」とお喋りできる催しを行いました。その経験をもとに得られた知見や課題、感想をまとめたいと思います。">
+  <meta name="keyword" content>
+  
+    <link rel="shortcut icon" type="image/ico" href="images/favicon.png">
+  
+  <title>「結月ゆかり」とお喋りできるイベントの舞台裏 | Hiho&#39;s Blog</title>
+  <meta name="description" content="２０１９年５月頭に開催された、結月ゆかり・紲星あかり中心VOICEROIDオンリー同人イベント「この声届け、月までも五」（声月）の一画で、企画展示をする機会を頂きました。この展示ブースにて、既存のＶＲ技術と、以前開発した声質変換技術を組み合わせ、イベント会場に来場されたお客さんが「結月ゆかり」とお喋りできる催しを行いました。その経験をもとに得られた知見や課題、感想をまとめたいと思います。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="「結月ゆかり」とお喋りできるイベントの舞台裏">
+<meta property="og:url" content="http://blog.hiroshiba.jp/backstage-of-talking-event-with-yuzuki-yukari/index.html">
+<meta property="og:site_name" content="Hiho&#39;s Blog">
+<meta property="og:description" content="２０１９年５月頭に開催された、結月ゆかり・紲星あかり中心VOICEROIDオンリー同人イベント「この声届け、月までも五」（声月）の一画で、企画展示をする機会を頂きました。この展示ブースにて、既存のＶＲ技術と、以前開発した声質変換技術を組み合わせ、イベント会場に来場されたお客さんが「結月ゆかり」とお喋りできる催しを行いました。その経験をもとに得られた知見や課題、感想をまとめたいと思います。">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://blog.hiroshiba.jp/backstage-of-talking-event-with-yuzuki-yukari/fig1b-twitter.jpg">
+<meta property="og:image" content="http://blog.hiroshiba.jp/backstage-of-talking-event-with-yuzuki-yukari/fig2b-vc.jpg">
+<meta property="og:image" content="http://blog.hiroshiba.jp/backstage-of-talking-event-with-yuzuki-yukari/fig2a-satoru.jpg">
+<meta property="og:image" content="http://blog.hiroshiba.jp/backstage-of-talking-event-with-yuzuki-yukari/fig3-ponchi.png">
+<meta property="og:image" content="http://blog.hiroshiba.jp/backstage-of-talking-event-with-yuzuki-yukari/fig4-ponchi.png">
+<meta property="og:image" content="http://blog.hiroshiba.jp/backstage-of-talking-event-with-yuzuki-yukari/fig5-ponchi.png">
+<meta property="og:image" content="http://blog.hiroshiba.jp/backstage-of-talking-event-with-yuzuki-yukari/fig7-besshitsu.jpg">
+<meta property="og:image" content="http://blog.hiroshiba.jp/backstage-of-talking-event-with-yuzuki-yukari/fig6-kokuhaku.png">
+<meta property="og:updated_time" content="2019-05-26T05:59:49.045Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="「結月ゆかり」とお喋りできるイベントの舞台裏">
+<meta name="twitter:description" content="２０１９年５月頭に開催された、結月ゆかり・紲星あかり中心VOICEROIDオンリー同人イベント「この声届け、月までも五」（声月）の一画で、企画展示をする機会を頂きました。この展示ブースにて、既存のＶＲ技術と、以前開発した声質変換技術を組み合わせ、イベント会場に来場されたお客さんが「結月ゆかり」とお喋りできる催しを行いました。その経験をもとに得られた知見や課題、感想をまとめたいと思います。">
+<meta name="twitter:image" content="http://blog.hiroshiba.jp/backstage-of-talking-event-with-yuzuki-yukari/fig1b-twitter.jpg">
+<meta name="twitter:creator" content="@hiho_karuta">
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+  <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdn.bootcss.com/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
+  <script src="/js/qrious.js"></script>
+<script src="/js/gitment.js"></script>
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+</head>
+<div class="wechat-share">
+  <img src="/css/images/logo.png">
+</div>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Hiho's Blog</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="https://twitter.com/hiho_karuta" class="item-link">Twitter</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="https://github.com/Hiroshiba" class="item-link">Github</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="https://twitter.com/hiho_karuta" class="menu-link">Twitter</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="https://github.com/Hiroshiba" class="menu-link">Github</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>「結月ゆかり」とお喋りできるイベントの舞台裏</h2>
+  <p class="post-date">2019-05-26</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><p>２０１９年５月頭に開催された、
+<a href="http://yukari.blueskywings.net/" target="_blank" rel="noopener">結月ゆかり・紲星あかり中心VOICEROIDオンリー同人イベント「この声届け、月までも五」（声月）</a>の一画で、企画展示をする機会を頂きました。
+この展示ブースにて、既存のＶＲ技術と、以前開発した声質変換技術を組み合わせ、
+イベント会場に来場されたお客さんが「結月ゆかり」とお喋りできる催しを行いました。
+その経験をもとに得られた知見や課題、感想をまとめたいと思います。</p>
+<a id="more"></a>
+
+<figure width="50%">
+  <figcaption>企画タイトルは「ゆかりが声月にやってきた」</figcaption>
+  <img src="fig1b-twitter.jpg" style="max-height: 15em">
+</figure>
+
+<h3 id="企画内容"><a href="#企画内容" class="headerlink" title="企画内容"></a>企画内容</h3><p>この企画の趣旨を一言で言うと、「イベント会場に来ると結月ゆかりと会話できる」というものです。</p>
+<figure>
+  <figcaption>ＶＲ世界に来たお客さん（左）と会話する「結月ゆかり」（右）</figcaption>
+  <img src="fig2b-vc.jpg" style="max-height: 15em">
+</figure>
+
+<p>「結月ゆかり」は音声合成ソフトウェアVOICEROIDのキャラクターで、
+今回のVOICEROIDオンリーイベント「声月」にはファンの方が大勢集まります。
+僕自身も「結月ゆかり」が大好きで、話せたらきっと楽しいと思い、企画しました。
+展示では、「結月ゆかり」とコミュニケーションが取れる体験の演出に注力しました。</p>
+<p>来場したお客さんは、</p>
+<ul>
+<li>会場のプロジェクター映像とマイクを使って「結月ゆかり」と会話したり</li>
+<li>会場に設置されたＶＲ機材を使って「結月ゆかり」と会ってお喋りしたり</li>
+<li>「結月ゆかり」がゲームしている姿をプロジェクター映像越しに眺めたり</li>
+</ul>
+<p>できるようにしました。</p>
+<figure>
+  <figcaption>会場のプロジェクターに映る「結月ゆかり」</figcaption>
+  <img src="fig2a-satoru.jpg" style="max-height: 15em">
+</figure>
+
+<p>このような企画を実現するために、多くの技術的なハードルがありました。
+以降では、企画の舞台裏を振り返りたいと思います。</p>
+<h3 id="仕組み"><a href="#仕組み" class="headerlink" title="仕組み"></a>仕組み</h3><h4 id="「結月ゆかり」は別室で人（アクター）が演じた"><a href="#「結月ゆかり」は別室で人（アクター）が演じた" class="headerlink" title="「結月ゆかり」は別室で人（アクター）が演じた"></a>「結月ゆかり」は別室で人（アクター）が演じた</h4><p>人と違和感なく会話できるのは、いまのところ人だけなので、人（アクター）が結月ゆかりを演じることにしました。
+そのためには、アクターの声と姿を「結月ゆかり」のものにする必要があります。
+アクターは、ＶＲ技術を使って「結月ゆかり」の体を動かしつつ、
+声質変換技術を使ってアクター自身の声を「結月ゆかり」の声に変換しました<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>。
+ここでは、<a href="../became-yuduki-yukari-with-deep-learning-power/">過去に開発したディープラーニング声質変換</a>を用いました。</p>
+<figure>
+  <figcaption>別室と会場の関係図</figcaption>
+  <img src="fig3-ponchi.png" style="max-height: 7.5em">
+</figure>
+
+
+
+<p>動き回れるくらいの空間が必要なのと、声の変換のためにノイズが少ない環境が必要だったため、
+会場から離れた別室を用意してもらいました。</p>
+<h4 id="姿・声の変換のためにGPUパソコンを２つ用意した"><a href="#姿・声の変換のためにGPUパソコンを２つ用意した" class="headerlink" title="姿・声の変換のためにGPUパソコンを２つ用意した"></a>姿・声の変換のためにGPUパソコンを２つ用意した</h4><p>今回の企画では、姿を変えるためにバーチャルキャストを、声を変えるためにディープラーニング声質変換を使いました。
+<a href="https://virtualcast.jp/" target="_blank" rel="noopener">バーチャルキャスト</a>は、
+バーチャルキャラクターになってリアルタイムでコミュニケーションできるVRライブ・コミュニケーションサービスです。
+バーチャルキャストとディープラーニング声質変換はどちらもGPUを使ってしまうという独特な問題があります。
+同じGPUを使っていると、バーチャルキャストの描画頻度が低下してアクターが酔いやすくなったり、
+声質変換が遅延して会話しづらくなったりします。
+この問題を解決するために、GPUパソコンを２台用意しました。
+片方のパソコンでバーチャルキャストしつつ、もう片方で声を変換しました。</p>
+<figure>
+  <figcaption>パソコンを２つ用意してソフトウェアを分離する</figcaption>
+  <img src="fig4-ponchi.png" style="max-height: 11.5em">
+</figure>
+
+<h4 id="リアルタイムで字幕を載せた"><a href="#リアルタイムで字幕を載せた" class="headerlink" title="リアルタイムで字幕を載せた"></a>リアルタイムで字幕を載せた</h4><p>会場にきたお客さんと「結月ゆかり」がお喋りするときに、
+会場が賑やかだったり、うまく声が変換できなかったりで、「結月ゆかり」の発言が伝わりにくいかもしれません。
+そこで、音声認識サービスを用いて、リアルタイムで字幕をつけることにしました。
+この字幕表示も一工夫しました。
+あまり意識されませんが、テレビなどのセリフ字幕は、発言とほぼ同じタイミングで表示されます。
+いろいろ試した結果、音声認識を用いた字幕表示も、この方式に沿ったほうが見やすくなることがわかりました。
+しかし、音声認識を使うと、字幕テキストを得られるのが発言よりも必ず遅れます。
+そこで、会場への配信映像を合成するときに、映像と音声を遅らせることで、字幕表示の違和感を減らしました<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup>。</p>
+<figure>
+  <figcaption>音声を遅らせて字幕のタイミングと合わせる</figcaption>
+  <img src="fig5-ponchi.png" style="max-height: 12em">
+</figure>
+
+<p>これらの仕組みを実践していく中で、課題がいくつか見えてきました。</p>
+<h3 id="課題"><a href="#課題" class="headerlink" title="課題"></a>課題</h3><h4 id="会場の人と会話しにくかった"><a href="#会場の人と会話しにくかった" class="headerlink" title="会場の人と会話しにくかった"></a>会場の人と会話しにくかった</h4><p>予想以上に会場が賑やかだったたため、ＶＲ空間に来たお客さんは「結月ゆかり」の声を聞き取りづらいようでした。
+お客さんと会話していて気づきましたが、字幕なしであっても意外と意思疎通ができ、
+変換結果の声でも会話内容はそれなりに伝わることがわかりました。
+なので、ＶＲ用にヘッドホン等を用意して、ちゃんと声が聞こえるようにすると良さそうでした
+（今回はスピーカーのみを用意していました）。</p>
+<p>もう１つ、遅延による会話への影響が思っていたより大きいようでした。
+今回用いたディープラーニング声質変換は、２秒ほど遅延してしまいます。
+このことをお客さんに伝えていなかったため、意思疎通できているのか不安に感じる方が多くいました。
+遅延することを伝えつつ、それに対するストーリー（宇宙から交信してるとか！）も作ればよかったかもしれません。</p>
+<h4 id="相手の表情を見れなかった"><a href="#相手の表情を見れなかった" class="headerlink" title="相手の表情を見れなかった"></a>相手の表情を見れなかった</h4><p>ＶＲ機材を装着しなくとも、プロジェクターの前に立てば「結月ゆかり」とお喋りできるようにしていました。
+このとき、会場にカメラを設置して、お客さんの表情をアクターが見られるようにするつもりでしたが、
+何らかの原因で正常な映像をアクター側に送ることができませんでした。
+会場パソコン側のネットワーク帯域か、計算リソースが不足していたのだと思います。
+会場パソコンはバーチャルキャストが起動しているので、映像配信用のデバイスをもう１つ用意すると良かったかもしれません。</p>
+<h4 id="アクター役をやりながらオペレーションすることはできない"><a href="#アクター役をやりながらオペレーションすることはできない" class="headerlink" title="アクター役をやりながらオペレーションすることはできない"></a>アクター役をやりながらオペレーションすることはできない</h4><p>実は今回、僕が「結月ゆかり」のアクター役をしました。
+一方で、僕は企画のオペレータでもありました。
+僕がいる別室側でトラブルが起こった場合は、声でスタッフとやりとりすることができますが、
+会場側にトラブルが起こったときにオペレーションできません。
+特に、アクターが会場スタッフからの連絡を受けとるのは難しいと思います。
+今回はスタッフが優秀だったため大きなトラブルは起こりませんでしたが、
+さすがにオペレーターとアクターは分けるべきだということを学びました。</p>
+<figure>
+  <figcaption>別室にはＶＲ機材と声質変換・ＶＲ用のパソコン２台を設置した</figcaption>
+  <img src="fig7-besshitsu.jpg" style="max-height: 12em">
+</figure>
+
+<h3 id="結び（ポエム）"><a href="#結び（ポエム）" class="headerlink" title="結び（ポエム）"></a>結び（ポエム）</h3><p>声質変換をイベントに活用するのは、僕がやりたいことの１つでした。
+声月関係者の方々には貴重な機会をいただき、とても感謝しています。
+今回使ったリアルタイム声質変換のコードは全て公開するつもりです。
+いろんな方に使ってもらって、いろんなアイデアを見てみたいです。</p>
+<p>僕はこれからも、チャンスがあればイベントやサービス開発に挑戦してみたいです。
+もし何か面白いことがあったら、ぜひお声掛けください！</p>
+<figure>
+  <figcaption>休憩中用の画像（thanks 告白P）</figcaption>
+  <img src="fig6-kokuhaku.png" style="max-height: 15em">
+</figure>
+<div id="footnotes"><hr><div id="footnotelist"><ol style="list-style:none; padding-left: 0;"><li id="fn:1"><span style="display: inline-block; vertical-align: top; padding-right: 10px;">1.</span><span style="display: inline-block; vertical-align: top;">発話内容を音声認識でテキストにした後、VOICEROIDソフトでテキスト音声合成するという方法もあります。
+それに比べて声質変換を使う方法は、「遅延が短い」「笑い声などの非テキスト音声も変換可能」といった特性があります。
+今回の企画では、ゆかりさんとお喋りする臨場感を体験できることを目指したので、声質変換を用いました。
+より詳しい仕組みは<a href="../became-yuduki-yukari-with-deep-learning-power/">こちらの記事</a>で紹介しています。</span><a href="#fnref:1" rev="footnote"> ↩</a></li><li id="fn:2"><span style="display: inline-block; vertical-align: top; padding-right: 10px;">2.</span><span style="display: inline-block; vertical-align: top;">本当は、ＶＲ空間で「結月ゆかり」と会ってお喋りしてる人にも違和感のない字幕を表示したかったのですが、
+バーチャルキャストのモーションを遅延させる方法が思いつかず、断念しました。</span><a href="#fnref:2" rev="footnote"> ↩</a></li></ol></div></div></section>
+    <!-- Tags START -->
+    
+    <!-- Tags END -->
+    <!-- Share Button START -->
+    <ul class="share-list">
+      <li>
+        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="hiho_karuta" data-related="hiho_karuta" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+      </li>
+      <li>
+        <a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="basic-label-counter" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/v4/public/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;"></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+      </li>
+      <li>
+        <div id="fb-root"></div><script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v3.3&appId=411014156399099&autoLogAppEvents=1"></script><div class="fb-share-button" data-href="http://blog.hiroshiba.jp/backstage-of-talking-event-with-yuzuki-yukari/" data-layout="button_count" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fblog.hiroshiba.jp%2Fbackstage-of-talking-event-with-yuzuki-yukari%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">facebookでシェア</a></div>
+      </li>
+    </ul>
+    <!-- Share Button END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/talk-to-yuduki-yukari-with-deep-learning-power/">
+        <span class="nav-arrow">← </span>
+        
+          ディープラーニングの力で人工知能になって結月ゆかりと会話してみた
+        
+      </a>
+    
+    
+  </div>
+
+    <!-- NAV END -->
+    
+      <!-- No Comment -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://blog.hiroshiba.jp/backstage-of-talking-event-with-yuzuki-yukari/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    }
+    $('.header').removeClass('fixed-header')
+
+     // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+
+    // qrcode
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+
+    // gitment
+    var gitmentConfig = "";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "「結月ゆかり」とお喋りできるイベントの舞台裏",
+        owner: "",
+        repo: "",
+        oauth: {
+          client_id: "",
+          client_secret: ""
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  })();
+</script>
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2019 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+<script src="/js/script.js"></script>
+
+  </body>
+</html>

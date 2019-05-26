@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
-  <head>
+  <head><meta name="generator" content="Hexo 3.8.0">
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
   <meta name="description" content="自分の声を結月ゆかりにしたい。前回はあまりクオリティが良くなかったので、手法を変えて質を上げたい。声質変換を、低音質変換と高音質化の二段階に分けてそれぞれ学習させた。画像分野で有名なモデルを使った。性能が飛躍的に向上し、かなり聞き取れるものになった。精度はまだ改善の余地があり、多対多声質変換にすることで精度が向上すると考えられる。今回の結果を論文化したい。">
-  <meta name="keyword" content="">
+  <meta name="keyword" content>
   
-    <link rel="shortcut icon" type="image/ico" href="images/favicon.png"/>
+    <link rel="shortcut icon" type="image/ico" href="images/favicon.png">
   
   <title>ディープラーニングの力で結月ゆかりの声になってみた | Hiho&#39;s Blog</title>
   <meta name="description" content="自分の声を結月ゆかりにしたい。前回はあまりクオリティが良くなかったので、手法を変えて質を上げたい。声質変換を、低音質変換と高音質化の二段階に分けてそれぞれ学習させた。画像分野で有名なモデルを使った。性能が飛躍的に向上し、かなり聞き取れるものになった。精度はまだ改善の余地があり、多対多声質変換にすることで精度が向上すると考えられる。今回の結果を論文化したい。">
@@ -15,6 +15,7 @@
 <meta property="og:url" content="http://blog.hiroshiba.jp/became-yuduki-yukari-with-deep-learning-power/index.html">
 <meta property="og:site_name" content="Hiho&#39;s Blog">
 <meta property="og:description" content="自分の声を結月ゆかりにしたい。前回はあまりクオリティが良くなかったので、手法を変えて質を上げたい。声質変換を、低音質変換と高音質化の二段階に分けてそれぞれ学習させた。画像分野で有名なモデルを使った。性能が飛躍的に向上し、かなり聞き取れるものになった。精度はまだ改善の余地があり、多対多声質変換にすることで精度が向上すると考えられる。今回の結果を論文化したい。">
+<meta property="og:locale" content="default">
 <meta property="og:image" content="http://blog.hiroshiba.jp/became-yuduki-yukari-with-deep-learning-power/0-output-spectrogram.svg">
 <meta property="og:image" content="http://blog.hiroshiba.jp/became-yuduki-yukari-with-deep-learning-power/1-output-spectrogram.svg">
 <meta property="og:image" content="http://blog.hiroshiba.jp/became-yuduki-yukari-with-deep-learning-power/2-output-spectrogram.svg">
@@ -64,7 +65,7 @@
 
 </head>
 <div class="wechat-share">
-  <img src="/css/images/logo.png" />
+  <img src="/css/images/logo.png">
 </div>
 
   <body>
@@ -143,7 +144,9 @@
 <li>（考察）精度はまだ改善の余地があり、多対多声質変換にすることで精度が向上すると考えられる。今回の結果を論文化したい。</li>
 </ul>
 <a id="more"></a>
-<h3 id="デモ動画"><a href="#デモ動画" class="headerlink" title="デモ動画"></a>デモ動画</h3><p><script type="application/javascript" src="https://embed.nicovideo.jp/watch/sm32724409/script?w=640&h=360"></script><noscript><a href="http://www.nicovideo.jp/watch/sm32724409" target="_blank" rel="external">ディープラーニングの力で結月ゆかりの声になってみた</a></noscript></p>
+
+<h3 id="デモ動画"><a href="#デモ動画" class="headerlink" title="デモ動画"></a>デモ動画</h3><script type="application/javascript" src="https://embed.nicovideo.jp/watch/sm32724409/script?w=640&h=360"></script><noscript><a href="http://www.nicovideo.jp/watch/sm32724409" target="_blank" rel="noopener">ディープラーニングの力で結月ゆかりの声になってみた</a></noscript>
+
 <h3 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h3><p>多くの人が可愛い女の子になりたいと思っている。
 ＣＧ技術やモーションキャプチャ技術の向上により、姿は女の子に仮想化できるようになってきた。
 しかし、声に関してはまだまだ課題が多い。
@@ -158,7 +161,7 @@
 <h4 id="画像ディープラーニング分野で性能の良かったモデルを使用した"><a href="#画像ディープラーニング分野で性能の良かったモデルを使用した" class="headerlink" title="画像ディープラーニング分野で性能の良かったモデルを使用した"></a>画像ディープラーニング分野で性能の良かったモデルを使用した</h4><p>画像ディープラーニング分野は音声より数年早く進んでおり、
 解きたいタスクに対して使用すれば良いモデルが知られている。
 今回のように、対応関係のあるもの（音声分野で言うところのパラレルデータ）の変換を、
-少ないデータ数で学習させるには、<a href="https://phillipi.github.io/pix2pix/" target="_blank" rel="external">pix2pixモデル</a>が適している。
+少ないデータ数で学習させるには、<a href="https://phillipi.github.io/pix2pix/" target="_blank" rel="noopener">pix2pixモデル</a>が適している。
 今回はこのpix2pixモデルを使って声質変換タスクを解いた。</p>
 <h4 id="声質変換を「低音質声質変換」部分と「高音質化」部分に分けた"><a href="#声質変換を「低音質声質変換」部分と「高音質化」部分に分けた" class="headerlink" title="声質変換を「低音質声質変換」部分と「高音質化」部分に分けた"></a>声質変換を「低音質声質変換」部分と「高音質化」部分に分けた</h4><p>声質変換には、複数話者によるペア音声を用意する必要があるが、
 結月ゆかりは大量の音声データを簡単に得られるのに対し、自分の声を大量に用意するのは容易ではない。
@@ -171,7 +174,7 @@
 一方、音響特徴量は時間辺りの特徴量であるため、画像用のpix2pixネットワークが適用できない。
 そこで、新たに1次元用のpix2pixネットワーク構造を提案し、これを音響特徴量の変換に適用した。</p>
 <h3 id="結果"><a href="#結果" class="headerlink" title="結果"></a>結果</h3><p>以前の結果と、高音質化やpix2pixモデルでの特徴量変換の結果を比較した。
-この記事で用いたコードは<a href="https://github.com/Hiroshiba/become-yukarin" target="_blank" rel="external">become-yukarin Githubリポジトリ</a>で公開している。</p>
+この記事で用いたコードは<a href="https://github.com/Hiroshiba/become-yukarin" target="_blank" rel="noopener">become-yukarin Githubリポジトリ</a>で公開している。</p>
 <h4 id="前回の結果"><a href="#前回の結果" class="headerlink" title="前回の結果"></a>前回の結果</h4><p>ベースとなる<a href="../voice-conversion-deep-leanring-and-other-delusions">前回</a>の結果は以下のようになっていた。
 （発話内容は「僕の声をディープラーニングの力を借りて結月ゆかりにするプロジェクト」）</p>
 <figure>
@@ -186,7 +189,7 @@
 
 <figure>
   <figcaption>ベース手法での変換結果スペクトログラム</figcaption>
-  <img src="/became-yuduki-yukari-with-deep-learning-power/0-output-spectrogram.svg" alt="0-output-spectrogram.svg" title="">
+  <img src="/became-yuduki-yukari-with-deep-learning-power/0-output-spectrogram.svg">
 </figure>
 
 <p>変換結果は結月ゆかりに近いが、発話内容が明細ではなく、音質も良くない。</p>
@@ -198,7 +201,7 @@
 
 <figure>
   <figcaption>高音質化手法での変換結果スペクトログラム</figcaption>
-  <img src="/became-yuduki-yukari-with-deep-learning-power/1-output-spectrogram.svg" alt="1-output-spectrogram.svg" title="">
+  <img src="/became-yuduki-yukari-with-deep-learning-power/1-output-spectrogram.svg">
 </figure>
 
 <p>音質は改善したが、発話内容がまだわかりにくい。</p>
@@ -210,13 +213,13 @@
 
 <figure>
   <figcaption>pix2pixモデルでの変換結果スペクトログラム</figcaption>
-  <img src="/became-yuduki-yukari-with-deep-learning-power/2-output-spectrogram.svg" alt="2-output-spectrogram.svg" title="">
+  <img src="/became-yuduki-yukari-with-deep-learning-power/2-output-spectrogram.svg">
 </figure>
 
 <p>発話内容が明確にわかるようになった。</p>
 <h4 id="おまけ"><a href="#おまけ" class="headerlink" title="おまけ"></a>おまけ</h4><p>入力データには全く関係のない音声を入力した結果は以下のようになった。</p>
 <figure>
-  <figcaption>入力音声（<a href="http://www.nicovideo.jp/watch/sm28276238" target="_blank" rel="external">チュルリラ・チュルリラ・ダッダッダ！</a>の一部）</figcaption>
+  <figcaption>入力音声（[チュルリラ・チュルリラ・ダッダッダ！](http://www.nicovideo.jp/watch/sm28276238)の一部）</figcaption>
   <audio src="3-input-spectrogram.wav" controls></audio>
 </figure>
 
@@ -227,12 +230,12 @@
 
 <figure>
   <figcaption>入力音声スペクトログラム</figcaption>
-  <img src="/became-yuduki-yukari-with-deep-learning-power/3-input-spectrogram.svg" alt="3-input-spectrogram.svg" title="">
+  <img src="/became-yuduki-yukari-with-deep-learning-power/3-input-spectrogram.svg">
 </figure>
 
 <figure>
   <figcaption>変換結果スペクトログラム</figcaption>
-  <img src="/became-yuduki-yukari-with-deep-learning-power/3-output-spectrogram.svg" alt="3-output-spectrogram.svg" title="">
+  <img src="/became-yuduki-yukari-with-deep-learning-power/3-output-spectrogram.svg">
 </figure>
 
 <p>入力音声にかかわらず、変換結果が学習データに近くなるように学習されていることがわかった。</p>
@@ -249,7 +252,7 @@ pix2pixモデルが時間方向で広い範囲の入力を元に推定できる�
 <p>今後は解析を進めつつ、多対多声質変換を目指したい。また、可能そうであれば論文にしたい。</p>
 <p>（別の記事に試行錯誤や雑多なメモを日記として書きます）</p>
 <h3 id="宣伝＆謝辞"><a href="#宣伝＆謝辞" class="headerlink" title="宣伝＆謝辞"></a>宣伝＆謝辞</h3><p>この記事の内容は、ニコニコ生放送でライブコーディングしていました。
-僕の<a href="http://com.nicovideo.jp/community/co3686550" target="_blank" rel="external">ニコニココミュ</a>で朝6:30くらいから生放送しているのでよかったらいらしてください。（特に音声信号処理に詳しい方！）</p>
+僕の<a href="http://com.nicovideo.jp/community/co3686550" target="_blank" rel="noopener">ニコニココミュ</a>で朝6:30くらいから生放送しているのでよかったらいらしてください。（特に音声信号処理に詳しい方！）</p>
 <p>デモ動画の作成にあたって、上記放送に来て議論してくださった方々にはとても感謝しています。
 特にサムネイル絵を頂いた@Kyowsukeさんに深く感謝します。ありがとうございます。</p>
 </section>
@@ -262,7 +265,10 @@ pix2pixモデルが時間方向で広い範囲の入力を元に推定できる�
         <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="hiho_karuta" data-related="hiho_karuta" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
       </li>
       <li>
-        <div id="fb-root"></div><script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v3.3&appId=411014156399099&autoLogAppEvents=1"></script><div class="fb-share-button" data-href="http://blog.hiroshiba.jp/became-yuduki-yukari-with-deep-learning-power/" data-layout="button_count" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fblog.hiroshiba.jp%2Fbecame-yuduki-yukari-with-deep-learning-power%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">シェア</a></div>
+        <a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="basic-label-counter" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/v4/public/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;"></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+      </li>
+      <li>
+        <div id="fb-root"></div><script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v3.3&appId=411014156399099&autoLogAppEvents=1"></script><div class="fb-share-button" data-href="http://blog.hiroshiba.jp/became-yuduki-yukari-with-deep-learning-power/" data-layout="button_count" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fblog.hiroshiba.jp%2Fbecame-yuduki-yukari-with-deep-learning-power%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">facebookでシェア</a></div>
       </li>
     </ul>
     <!-- Share Button END -->

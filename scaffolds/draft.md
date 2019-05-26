@@ -14,13 +14,13 @@ description:
 * （考察）
 
 <figure>
-  ![]()
   <figcaption></figcaption>
+  ![]()
 </figure>
 
 <figure>
-  <audio src=" controls></audio>
   <figcaption></figcaption>
+  <audio src=" controls></audio>
 </figure>
 
 <!-- more -->

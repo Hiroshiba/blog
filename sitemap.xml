@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.hiroshiba.jp/talk-to-yuduki-yukari-with-deep-learning-power/</loc>
+    
+    <lastmod>2019-09-27T11:37:21.545Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.hiroshiba.jp/realtime-yukarin-introduction/</loc>
+    
+    <lastmod>2019-09-27T11:36:57.933Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://blog.hiroshiba.jp/backstage-of-talking-event-with-yuzuki-yukari/</loc>
     
     <lastmod>2019-05-26T06:00:48.821Z</lastmod>
@@ -12,13 +26,6 @@
     <loc>http://blog.hiroshiba.jp/using-crepe/</loc>
     
     <lastmod>2019-05-25T16:31:10.008Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://blog.hiroshiba.jp/talk-to-yuduki-yukari-with-deep-learning-power/</loc>
-    
-    <lastmod>2019-03-02T16:39:41.549Z</lastmod>
     
   </url>
   

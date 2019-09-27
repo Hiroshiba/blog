@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html>
+  <head><meta name="generator" content="Hexo 3.8.0">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="リアルタイム声質変換アプリケーション、Realtime Yukarinを開発し、OSS（オープンソースソフトウェア）として公開しました。ここで言う声質変換とは、「誰でも好きな声になれる」技術のことを指します。好きな声になれる声質変換は夢があって流行りそうなのですが、まだ全然普及していないと思います。それは現時点で、声質変換を実際にリアルタイムで使えるフリーな仕組みが無いためだと考えました。そこで、自由に使えるリアルタイム声質変換アプリケーションを作り、ソースコードと合わせて公開しました。">
+  <meta name="keyword" content>
+  
+    <link rel="shortcut icon" type="image/ico" href="/images/favicon.png">
+  
+  <title>リアルタイム声質変換ライブラリ「Realtime Yukarin」を公開しました | Hiho&#39;s Blog</title>
+  <meta name="description" content="リアルタイム声質変換アプリケーション、Realtime Yukarinを開発し、OSS（オープンソースソフトウェア）として公開しました。ここで言う声質変換とは、「誰でも好きな声になれる」技術のことを指します。好きな声になれる声質変換は夢があって流行りそうなのですが、まだ全然普及していないと思います。それは現時点で、声質変換を実際にリアルタイムで使えるフリーな仕組みが無いためだと考えました。そこで、">
+<meta property="og:type" content="article">
+<meta property="og:title" content="リアルタイム声質変換ライブラリ「Realtime Yukarin」を公開しました">
+<meta property="og:url" content="http://blog.hiroshiba.jp/realtime-yukarin-introduction/index.html">
+<meta property="og:site_name" content="Hiho&#39;s Blog">
+<meta property="og:description" content="リアルタイム声質変換アプリケーション、Realtime Yukarinを開発し、OSS（オープンソースソフトウェア）として公開しました。ここで言う声質変換とは、「誰でも好きな声になれる」技術のことを指します。好きな声になれる声質変換は夢があって流行りそうなのですが、まだ全然普及していないと思います。それは現時点で、声質変換を実際にリアルタイムで使えるフリーな仕組みが無いためだと考えました。そこで、">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://blog.hiroshiba.jp/realtime-yukarin-introduction/7.svg">
+<meta property="og:image" content="http://blog.hiroshiba.jp/realtime-yukarin-introduction/1.svg">
+<meta property="og:image" content="http://blog.hiroshiba.jp/realtime-yukarin-introduction/2.svg">
+<meta property="og:image" content="http://blog.hiroshiba.jp/realtime-yukarin-introduction/3.svg">
+<meta property="og:image" content="http://blog.hiroshiba.jp/realtime-yukarin-introduction/4.svg">
+<meta property="og:image" content="http://blog.hiroshiba.jp/realtime-yukarin-introduction/5.svg">
+<meta property="og:updated_time" content="2019-09-27T11:36:57.933Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="リアルタイム声質変換ライブラリ「Realtime Yukarin」を公開しました">
+<meta name="twitter:description" content="リアルタイム声質変換アプリケーション、Realtime Yukarinを開発し、OSS（オープンソースソフトウェア）として公開しました。ここで言う声質変換とは、「誰でも好きな声になれる」技術のことを指します。好きな声になれる声質変換は夢があって流行りそうなのですが、まだ全然普及していないと思います。それは現時点で、声質変換を実際にリアルタイムで使えるフリーな仕組みが無いためだと考えました。そこで、">
+<meta name="twitter:image" content="http://blog.hiroshiba.jp/realtime-yukarin-introduction/7.svg">
+<meta name="twitter:creator" content="@hiho_karuta">
+  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/css/plugins/gitment.css">
+  <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdn.bootcss.com/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
+  <script src="/js/qrious.js"></script>
+<script src="/js/gitment.js"></script>
+  <!-- https://github.com/hexojs/hexo-theme-landscape/blob/master/layout/_partial/google-analytics.ejs -->
+
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-141253083-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-141253083-1');
+</script>
+<!-- End Google Analytics -->
+
+
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+</head>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Hiho's Blog</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="https://twitter.com/hiho_karuta" class="item-link">Twitter</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="https://github.com/Hiroshiba" class="item-link">Github</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="https://twitter.com/hiho_karuta" class="menu-link">Twitter</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="https://github.com/Hiroshiba" class="menu-link">Github</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>リアルタイム声質変換ライブラリ「Realtime Yukarin」を公開しました</h2>
+  <p class="post-date">2019-09-27</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><h3 id="はじめに"><a href="#はじめに" class="headerlink" title="はじめに"></a>はじめに</h3><p>リアルタイム声質変換アプリケーション、<a href="https://github.com/Hiroshiba/realtime-yukarin" target="_blank" rel="noopener">Realtime Yukarin</a>を開発し、
+OSS（オープンソースソフトウェア）として公開しました。
+ここで言う声質変換とは、「誰でも好きな声になれる」技術のことを指します。
+好きな声になれる声質変換は夢があって流行りそうなのですが、まだ全然普及していないと思います。
+それは現時点で、声質変換を実際にリアルタイムで使えるフリーな仕組みが無いためだと考えました。
+そこで、自由に使えるリアルタイム声質変換アプリケーションを作り、ソースコードと合わせて公開しました。</p>
+<a id="more"></a>
+
+<h3 id="声質変換とは"><a href="#声質変換とは" class="headerlink" title="声質変換とは"></a>声質変換とは</h3><p>声を変える方法で有名なのは、声の高さや音色を変える手法、いわゆるボイスチェンジャーです。
+既存のボイスチェンジャーは、元の声を起点として、変換パラメータを自分で調整する必要があります。
+一方ここでの声質変換は、元の声と好きな声を用いて機械学習し、変換パラメータを自動で調整します。</p>
+<figure>
+  <figcaption>既存のボイスチェンジャーと声質変換の違い</figcaption>
+  <img src="7.svg" style="max-height: 14em">
+</figure>
+
+<p>また、声質変換は、ボイスチェンジャーで変換できないパラメータも変換することができます。
+音声は、声の高さ・声の音色・イントネーション・音の強弱などに分解できますが、
+ボイスチェンジャーが変換するのは声の高さと音色だけです。
+声質変換は、イントネーションや音の強弱も変換することができます。</p>
+<h3 id="Realtime-Yukarin"><a href="#Realtime-Yukarin" class="headerlink" title="Realtime Yukarin"></a>Realtime Yukarin</h3><p>Realtime Yukarinとは、リアルタイムで声質変換ができる、オープンソースのアプリケーションです。
+このアプリケーションは、「誰でも好きな声になれる声質変換システム：Yukarinライブラリ」の１つです。
+「Yukarin」及び「Become Yukarin」と連携することで、リアルタイム声質変換を実現します。</p>
+<h4 id="どうやって使うか"><a href="#どうやって使うか" class="headerlink" title="どうやって使うか"></a>どうやって使うか</h4><p>声質変換を担当する<a href="https://github.com/Hiroshiba/yukarin" target="_blank" rel="noopener">Yukarin</a>モデルと、
+変換結果を高品質化する<a href="https://github.com/Hiroshiba/become-yukarin" target="_blank" rel="noopener">Become Yukarin</a>モデルの、
+２つの機械学習済みモデルを用意して、コマンドを実行すれば使えます。
+それぞれのリンク先のドキュメントに従って、誰でも機械学習済みモデルを作成することができます。
+以下の解説動画にて、より詳細な手順を紹介しています。</p>
+<ul>
+<li><a href="https://www.nicovideo.jp/watch/sm35735482" target="_blank" rel="noopener">ディープラーニングで好きな声になれるツール作ってみた</a></li>
+</ul>
+<h4 id="何ができるか"><a href="#何ができるか" class="headerlink" title="何ができるか"></a>何ができるか</h4><p>声質変換の機械学習タスクで作成したモデルと、GPU搭載パソコンを用いて、
+コマンド１つでリアルタイムな声質変換ができます。
+また、OSSなので、これをベースにコードを改良したり、
+商用非商用問わずアプリケーションに組み込んだりすることができます。
+ソースコードはGitHubで公開しています。</p>
+<ul>
+<li><a href="https://github.com/Hiroshiba/realtime-yukarin" target="_blank" rel="noopener">Realtime Yukarinのソースコード</a></li>
+</ul>
+<h3 id="特徴"><a href="#特徴" class="headerlink" title="特徴"></a>特徴</h3><h4 id="変換処理を３段階に分け、それぞれを別プロセスで動かす"><a href="#変換処理を３段階に分け、それぞれを別プロセスで動かす" class="headerlink" title="変換処理を３段階に分け、それぞれを別プロセスで動かす"></a>変換処理を３段階に分け、それぞれを別プロセスで動かす</h4><p>Realtime Yukarinでは、音声入力デバイスから取り込んだ音声を細切れ（セグメント化と呼ぶことにします）にしたあと、
+セグメントごとに変換し、繋ぎ合わせてから音声に戻すことで、音声を変換しています。</p>
+<figure>
+  <img src="1.svg" style="max-height: 7.5em">
+</figure>
+
+<p>変換処理を１プロセスで行う場合、セグメントの長さよりも変換に時間がかかると、変換結果の音声が途切れてしまいます。</p>
+<figure>
+  <img src="2.svg" style="max-height: 10.5em">
+</figure>
+
+<p>Realtime Yukarinでは、変換処理をエンコード、コンバート、デコードの３段階に分け、
+それぞれ別プロセスで処理するように工夫しており、スムーズに変換処理を行います。</p>
+<figure>
+  <img src="3.svg" style="max-height: 14.5em">
+</figure>
+
+<h4 id="セグメントをオーバーラップさせて変換精度を一定にする"><a href="#セグメントをオーバーラップさせて変換精度を一定にする" class="headerlink" title="セグメントをオーバーラップさせて変換精度を一定にする"></a>セグメントをオーバーラップさせて変換精度を一定にする</h4><p>Realtime Yukarinは、声質変換の際に前後の入力音声も用いることで、変換精度を向上させています。
+しかし、セグメント端は音声が欠けているため、その区間だけ変換精度が下がってしまいます。</p>
+<figure>
+  <img src="4.svg" style="max-height: 9.5em">
+</figure>
+
+<p>これを避けるために、Realtime Yukarinでは、セグメントをオーバーラップできる機能を用意し、変換精度を一定に保ちます。</p>
+<figure>
+  <img src="5.svg" style="max-height: 9.5em">
+</figure>
+
+<h4 id="ノイズを除去する"><a href="#ノイズを除去する" class="headerlink" title="ノイズを除去する"></a>ノイズを除去する</h4><p>全ての音を声に変換する声質変換では、小さなノイズを拾って声を生成しようとし、
+大きなノイズが出力されてしまうことがあります。
+Realtime Yukarinでは、音量ベースの簡単なノイズ除去機能を用意し、耳障りなノイズを減らす工夫をしています。</p>
+<h3 id="デモ"><a href="#デモ" class="headerlink" title="デモ"></a>デモ</h3><p>Intel Core i7-7700 CPU @ 3.60GHzと、GeForce GTX 1060 6GBを搭載したWindowsパソコンを使って、
+遅延約2秒の声質変換が可能です。</p>
+<p>使い方の解説動画内にデモがあります。ぜひご覧ください。</p>
+<ul>
+<li><a href="https://www.nicovideo.jp/watch/sm35735482" target="_blank" rel="noopener">解説動画</a></li>
+</ul>
+<p>また、今年の５月に、Realtime Yukarinを用いて、声質変換した声でお客さんと会話するイベントを行いました。
+Realtime Yukarinは、実際の現場でもちゃんと使えると思います。</p>
+<ul>
+<li><a href="https://blog.hiroshiba.jp/backstage-of-talking-event-with-yuzuki-yukari/">声質変換を用いたイベント例</a></li>
+</ul>
+<h3 id="おわりに"><a href="#おわりに" class="headerlink" title="おわりに"></a>おわりに</h3><p>最初に声質変換を使ってみてから１年間かけ、自分自身で検証を重ねてクオリティと実用性を上げました。
+そしてやっと、誰でもリアルタイム声質変換を使える仕組み、Realtime Yukarinを公開することができました。
+これで、ちょっとでも声質変換が普及したら嬉しいです。ぜひお試しください。</p>
+</section>
+    <!-- Tags START -->
+    
+    <!-- Tags END -->
+    <!-- Share Button START -->
+    <ul class="share-list">
+      <li>
+        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="hiho_karuta" data-related="hiho_karuta" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+      </li>
+      <li>
+        <a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="basic-label-counter" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/v4/public/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;"></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+      </li>
+      <li>
+        <div id="fb-root"></div><script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v3.3&appId=411014156399099&autoLogAppEvents=1"></script><div class="fb-share-button" data-href="http://blog.hiroshiba.jp/realtime-yukarin-introduction/" data-layout="button_count" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fblog.hiroshiba.jp%2Frealtime-yukarin-introduction%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">facebookでシェア</a></div>
+      </li>
+    </ul>
+    <!-- Share Button END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/backstage-of-talking-event-with-yuzuki-yukari/">
+        <span class="nav-arrow">← </span>
+        
+          「結月ゆかり」とお喋りできるイベントの舞台裏
+        
+      </a>
+    
+    
+  </div>
+
+    <!-- NAV END -->
+    
+      <!-- No Comment -->
+    
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://blog.hiroshiba.jp/realtime-yukarin-introduction/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    }
+    $('.header').removeClass('fixed-header')
+
+     // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+
+    // qrcode
+    var qr = new QRious({
+      element: document.getElementById('share-qrcode'),
+      value: document.location.href
+    });
+
+    // gitment
+    var gitmentConfig = "";
+    if (gitmentConfig !== 'undefined') {
+      var gitment = new Gitment({
+        id: "リアルタイム声質変換ライブラリ「Realtime Yukarin」を公開しました",
+        owner: "",
+        repo: "",
+        oauth: {
+          client_id: "",
+          client_secret: ""
+        },
+        theme: {
+          render(state, instance) {
+            const container = document.createElement('div')
+            container.lang = "en-US"
+            container.className = 'gitment-container gitment-root-container'
+            container.appendChild(instance.renderHeader(state, instance))
+            container.appendChild(instance.renderEditor(state, instance))
+            container.appendChild(instance.renderComments(state, instance))
+            container.appendChild(instance.renderFooter(state, instance))
+            return container;
+          }
+        }
+      })
+      gitment.render(document.getElementById('comments'))
+    }
+  })();
+</script>
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2019 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+<script>
+  var hasLine = 'true';
+  async("//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js", function(){
+    $('figure pre').each(function(i, block) {
+      var figure = $(this).parents('figure');
+      if (hasLine === 'false') {
+        figure.find('.gutter').hide();
+      }
+      var lang = figure.attr('class').split(' ')[1] || 'code';
+      var codeHtml = $(this).html();
+      var codeTag = document.createElement('code');
+      codeTag.className = lang;
+      codeTag.innerHTML = codeHtml;
+      $(this).attr('class', '').empty().html(codeTag);
+      figure.attr('data-lang', lang.toUpperCase());
+      hljs.highlightBlock(block);
+    });
+  })
+</script>
+<!-- Baidu Tongji -->
+
+<script src="/js/script.js"></script>
+
+  </body>
+</html>

@@ -8,6 +8,14 @@
     </url>
 
     <url>
+        <loc>http://blog.hiroshiba.jp/create-singing-engine-with-deep-learning/</loc>
+        <lastmod>2019-11-30T20:34:05.242Z</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.6</priority>
+
+    </url>
+
+    <url>
         <loc>http://blog.hiroshiba.jp/realtime-yukarin-introduction/</loc>
         <lastmod>2019-09-27T12:08:59.616Z</lastmod>
         <changefreq>weekly</changefreq>

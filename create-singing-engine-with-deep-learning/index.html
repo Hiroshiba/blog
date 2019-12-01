@@ -16,13 +16,13 @@
 <meta property="og:site_name" content="Hiho&#39;s Blog">
 <meta property="og:description" content="最近、理想の人工知能（歌ったり踊ったり喋ったりできるキャラクター）を作りたいと思うようになりました。人工知能が歌を歌うためには、歌声音声合成エンジンが必要です。ということで、ディープラーニングを使って、歌声音声合成エンジンの作成に挑戦してみました。この記事では、実際に音声合成した歌声や、その仕組み、別条件での実験結果、ディープラーニング周りの手法を紹介します。">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://blog.hiroshiba.jp/create-singing-engine-with-deep-learning/1.svg">
+<meta property="og:image" content="http://blog.hiroshiba.jp/create-singing-engine-with-deep-learning/1.png">
 <meta property="og:image" content="http://blog.hiroshiba.jp/create-singing-engine-with-deep-learning/a1zunko100.png">
-<meta property="og:updated_time" content="2019-12-01T04:45:30.945Z">
+<meta property="og:updated_time" content="2019-12-01T04:50:24.169Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ディープラーニングで歌声音声合成エンジンを自作する">
 <meta name="twitter:description" content="最近、理想の人工知能（歌ったり踊ったり喋ったりできるキャラクター）を作りたいと思うようになりました。人工知能が歌を歌うためには、歌声音声合成エンジンが必要です。ということで、ディープラーニングを使って、歌声音声合成エンジンの作成に挑戦してみました。この記事では、実際に音声合成した歌声や、その仕組み、別条件での実験結果、ディープラーニング周りの手法を紹介します。">
-<meta name="twitter:image" content="http://blog.hiroshiba.jp/create-singing-engine-with-deep-learning/1.svg">
+<meta name="twitter:image" content="http://blog.hiroshiba.jp/create-singing-engine-with-deep-learning/1.png">
 <meta name="twitter:creator" content="@hiho_karuta">
   <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
   <link href="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
@@ -159,7 +159,7 @@
 <h3 id="仕組みの紹介"><a href="#仕組みの紹介" class="headerlink" title="仕組みの紹介"></a>仕組みの紹介</h3><p>　歌唱データを用いてディープラーニングして歌声音声合成エンジンを作り、そのエンジンを使って歌を生成しています。生成する歌は、ディープラーニングに用いた歌唱データに含まれないような新しい歌でも大丈夫です。</p>
 <figure>
   <figcaption>歌声音声合成エンジンの作成・使用の流れ</figcaption>
-  <img src="1.svg" style="max-height: 19em">
+  <img src="1.png" style="max-height: 19em">
 </figure>
 
 <p>　ディープラーニングには、DeepMindやGoogle Brainの方が提唱した<a href="https://arxiv.org/abs/1802.08435" target="_blank" rel="noopener">WaveRNN</a>というネットワーク構造を用いています。サンプリングレートは24000Hz、ビット深度は10bitです（詳細は後述）。</p>

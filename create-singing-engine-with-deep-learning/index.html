@@ -16,13 +16,13 @@
 <meta property="og:site_name" content="Hiho&#39;s Blog">
 <meta property="og:description" content="最近、理想の人工知能（歌ったり踊ったり喋ったりできるキャラクター）を作りたいと思うようになりました。人工知能が歌を歌うためには、歌声音声合成エンジンが必要です。ということで、ディープラーニングを使って、歌声音声合成エンジンの作成に挑戦してみました。この記事では、実際に音声合成した歌声や、その仕組み、別条件での実験結果、ディープラーニング周りの手法を紹介します。">
 <meta property="og:locale" content="default">
-<meta property="og:image" content="http://blog.hiroshiba.jp/create-singing-engine-with-deep-learning/a1zunko100.png">
 <meta property="og:image" content="http://blog.hiroshiba.jp/create-singing-engine-with-deep-learning/1.svg">
-<meta property="og:updated_time" content="2019-11-30T20:34:05.242Z">
+<meta property="og:image" content="http://blog.hiroshiba.jp/create-singing-engine-with-deep-learning/a1zunko100.png">
+<meta property="og:updated_time" content="2019-12-01T04:45:30.945Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ディープラーニングで歌声音声合成エンジンを自作する">
 <meta name="twitter:description" content="最近、理想の人工知能（歌ったり踊ったり喋ったりできるキャラクター）を作りたいと思うようになりました。人工知能が歌を歌うためには、歌声音声合成エンジンが必要です。ということで、ディープラーニングを使って、歌声音声合成エンジンの作成に挑戦してみました。この記事では、実際に音声合成した歌声や、その仕組み、別条件での実験結果、ディープラーニング周りの手法を紹介します。">
-<meta name="twitter:image" content="http://blog.hiroshiba.jp/create-singing-engine-with-deep-learning/a1zunko100.png">
+<meta name="twitter:image" content="http://blog.hiroshiba.jp/create-singing-engine-with-deep-learning/1.svg">
 <meta name="twitter:creator" content="@hiho_karuta">
   <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
   <link href="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
@@ -156,12 +156,6 @@
 </figure>
 
 <p>　まだ挑戦し始めてから２週間ほどしか経っていないのでかなり荒削りですが、それでもちゃんと歌詞や音程が取れていたり、溜めの部分で大きく息を吸う音が入っていたりと、そこそこの成果をあげることができました。</p>
-<p>　ディープラーニングには<a href="https://zunko.jp/kiridev/login.php" target="_blank" rel="noopener">東北きりたん歌唱データベース</a>の音声データを活用しました。こちらのデータベースには、東北きりたんというキャラクターがアカペラで歌った歌唱データや音素ラベルが50曲も収録されています。</p>
-<figure>
-  <figcaption>東北きりたん</figcaption>
-  <img src="a1zunko100.png" style="max-height: 15em">
-</figure>
-
 <h3 id="仕組みの紹介"><a href="#仕組みの紹介" class="headerlink" title="仕組みの紹介"></a>仕組みの紹介</h3><p>　歌唱データを用いてディープラーニングして歌声音声合成エンジンを作り、そのエンジンを使って歌を生成しています。生成する歌は、ディープラーニングに用いた歌唱データに含まれないような新しい歌でも大丈夫です。</p>
 <figure>
   <figcaption>歌声音声合成エンジンの作成・使用の流れ</figcaption>
@@ -176,6 +170,12 @@
 <li>声の高さ（周波数）</li>
 </ul>
 <p>つまり、歌詞と楽譜と声の高さとタイミングを指定すれば、歌が生成される感じです。</p>
+<p>　ディープラーニングには<a href="https://zunko.jp/kiridev/login.php" target="_blank" rel="noopener">東北きりたん歌唱データベース</a>の音声データを活用しました。こちらのデータベースには、東北きりたんというキャラクターがアカペラで歌った歌唱データや音素ラベルが50曲も収録されています。</p>
+<figure>
+  <figcaption>東北きりたん</figcaption>
+  <img src="a1zunko100.png" style="max-height: 15em">
+</figure>
+
 <h3 id="別条件での実験結果"><a href="#別条件での実験結果" class="headerlink" title="別条件での実験結果"></a>別条件での実験結果</h3><p>　せっかく歌声音声合成エンジンができたので、いろいろな条件で結果がどうなるか実験してみました。</p>
 <h4 id="声の高さラベルを省いてディープラーニングしたとき"><a href="#声の高さラベルを省いてディープラーニングしたとき" class="headerlink" title="声の高さラベルを省いてディープラーニングしたとき"></a>声の高さラベルを省いてディープラーニングしたとき</h4><p>　歌を歌うとき、基本的には音楽の音階に沿って声の高さを変えて歌います。このとき、声の高さにわざと高低をつけて、歌に表現力を持たせることができます（ビブラートなど）。先ほどのデモでは声の高さラベルも入力していますが、これを省いてディープラーニングすれば、声の高さも良い感じに生成してくれて、元の歌声に近い表現になるかもしれません。ということで、声の高さラベルを省いてディープラーニングを行い、その音声合成結果を聞いてみました。</p>
 <figure>

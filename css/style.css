@@ -269,20 +269,6 @@ h2.article-head {
   color: #7f8c8d;
   font-style: italic;
 }
-.qrcode {
-  padding-bottom: 30px;
-  text-align: center;
-  border-bottom: 1px dashed #e5e5e5;
-}
-.qrcode canvas {
-  width: 8em;
-  height: 8em;
-  padding: 5px;
-  box-shadow: 0 0 1px #e3e3e3;
-}
-#uyan_frame {
-  margin-top: 20px;
-}
 .image-view-wrap {
   position: fixed;
   top: 0;

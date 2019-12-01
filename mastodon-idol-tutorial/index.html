@@ -21,16 +21,13 @@
 <meta name="twitter:title" content="マストドンアイドル チュートリアル">
 <meta name="twitter:description" content="なに？マストドンアイドルに厳格な定義はありません。 その意味は、漠然と、マストドンで人気のある人を指しています。 狭義には、friends.nicoで生放送する人のことを指します。 だれが？創作活動をしている、あるいはしたいと思っているが、モチベーションが湧かない人向けです。 なぜ？チャット感覚での交流が行われるマストドンは、創作活動のフィードバックを得られやすいためです。">
 <meta name="twitter:creator" content="@hiho_karuta">
-  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-  <link href="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
-  <link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
   <link rel="stylesheet" href="/css/style.css">
-<link rel="stylesheet" href="/css/plugins/gitment.css">
-  <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-  <script src="//cdn.bootcss.com/geopattern/1.2.3/js/geopattern.min.js"></script>
-  <script src="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
-  <script src="/js/qrious.js"></script>
-<script src="/js/gitment.js"></script>
+<link rel="stylesheet" href="/css/plugins/font-awesome-4.7.0.min.css">
+<link rel="stylesheet" href="/css/plugins/highlight.js-9.12.0.min.css">
+<link rel="stylesheet" href="/css/plugins/nprogress-0.2.0.min.css">
+  <script src="/js/jquery-3.4.1.min.js"></script>
+<script src="/js/geopattern-1.2.3.min.js"></script>
+<script src="/js/nprogress-0.2.0.min.js"></script>
   <!-- https://github.com/hexojs/hexo-theme-landscape/blob/master/layout/_partial/google-analytics.ejs -->
 
 
@@ -66,7 +63,7 @@
         }
       });
     </script>
-    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <!-- MathJax support END -->
   
 
@@ -235,9 +232,6 @@ friends.nicoであれば、ニコニコのバージョンアップの際が最�
   </div>
 
     <!-- NAV END -->
-    
-      <!-- No Comment -->
-    
   </article>
   <!-- Article END -->
   <!-- Catalog START -->
@@ -290,39 +284,6 @@ friends.nicoであれば、ニコニコのバージョンアップの際が最�
         })
       }
     })
-
-    // qrcode
-    var qr = new QRious({
-      element: document.getElementById('share-qrcode'),
-      value: document.location.href
-    });
-
-    // gitment
-    var gitmentConfig = "";
-    if (gitmentConfig !== 'undefined') {
-      var gitment = new Gitment({
-        id: "マストドンアイドル チュートリアル",
-        owner: "",
-        repo: "",
-        oauth: {
-          client_id: "",
-          client_secret: ""
-        },
-        theme: {
-          render(state, instance) {
-            const container = document.createElement('div')
-            container.lang = "en-US"
-            container.className = 'gitment-container gitment-root-container'
-            container.appendChild(instance.renderHeader(state, instance))
-            container.appendChild(instance.renderEditor(state, instance))
-            container.appendChild(instance.renderComments(state, instance))
-            container.appendChild(instance.renderFooter(state, instance))
-            return container;
-          }
-        }
-      })
-      gitment.render(document.getElementById('comments'))
-    }
   })();
 </script>
 
@@ -346,14 +307,14 @@ friends.nicoであれば、ニコニコのバージョンアップの際が最�
   }
 </script>
 <script>
-  async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+  async("/js/fastclick-1.0.6.min.js", function(){
     FastClick.attach(document.body);
   })
 </script>
 
 <script>
   var hasLine = 'true';
-  async("//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js", function(){
+  async("/js/highlight-9.12.0.min.js", function(){
     $('figure pre').each(function(i, block) {
       var figure = $(this).parents('figure');
       if (hasLine === 'false') {
@@ -370,8 +331,6 @@ friends.nicoであれば、ニコニコのバージョンアップの際が最�
     });
   })
 </script>
-<!-- Baidu Tongji -->
-
 <script src="/js/script.js"></script>
 
   </body>

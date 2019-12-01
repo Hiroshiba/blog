@@ -24,16 +24,13 @@
 <meta name="twitter:description" content="最近、理想の人工知能（歌ったり踊ったり喋ったりできるキャラクター）を作りたいと思うようになりました。人工知能が歌を歌うためには、歌声音声合成エンジンが必要です。ということで、ディープラーニングを使って、歌声音声合成エンジンの作成に挑戦してみました。この記事では、実際に音声合成した歌声や、その仕組み、別条件での実験結果、ディープラーニング周りの手法を紹介します。">
 <meta name="twitter:image" content="http://blog.hiroshiba.jp/create-singing-engine-with-deep-learning/1.png">
 <meta name="twitter:creator" content="@hiho_karuta">
-  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-  <link href="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
-  <link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
   <link rel="stylesheet" href="/css/style.css">
-<link rel="stylesheet" href="/css/plugins/gitment.css">
-  <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-  <script src="//cdn.bootcss.com/geopattern/1.2.3/js/geopattern.min.js"></script>
-  <script src="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
-  <script src="/js/qrious.js"></script>
-<script src="/js/gitment.js"></script>
+<link rel="stylesheet" href="/css/plugins/font-awesome-4.7.0.min.css">
+<link rel="stylesheet" href="/css/plugins/highlight.js-9.12.0.min.css">
+<link rel="stylesheet" href="/css/plugins/nprogress-0.2.0.min.css">
+  <script src="/js/jquery-3.4.1.min.js"></script>
+<script src="/js/geopattern-1.2.3.min.js"></script>
+<script src="/js/nprogress-0.2.0.min.js"></script>
   <!-- https://github.com/hexojs/hexo-theme-landscape/blob/master/layout/_partial/google-analytics.ejs -->
 
 
@@ -69,7 +66,7 @@
         }
       });
     </script>
-    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <!-- MathJax support END -->
   
 
@@ -229,9 +226,6 @@
   </div>
 
     <!-- NAV END -->
-    
-      <!-- No Comment -->
-    
   </article>
   <!-- Article END -->
   <!-- Catalog START -->
@@ -284,39 +278,6 @@
         })
       }
     })
-
-    // qrcode
-    var qr = new QRious({
-      element: document.getElementById('share-qrcode'),
-      value: document.location.href
-    });
-
-    // gitment
-    var gitmentConfig = "";
-    if (gitmentConfig !== 'undefined') {
-      var gitment = new Gitment({
-        id: "ディープラーニングで歌声音声合成エンジンを自作する",
-        owner: "",
-        repo: "",
-        oauth: {
-          client_id: "",
-          client_secret: ""
-        },
-        theme: {
-          render(state, instance) {
-            const container = document.createElement('div')
-            container.lang = "en-US"
-            container.className = 'gitment-container gitment-root-container'
-            container.appendChild(instance.renderHeader(state, instance))
-            container.appendChild(instance.renderEditor(state, instance))
-            container.appendChild(instance.renderComments(state, instance))
-            container.appendChild(instance.renderFooter(state, instance))
-            return container;
-          }
-        }
-      })
-      gitment.render(document.getElementById('comments'))
-    }
   })();
 </script>
 
@@ -340,14 +301,14 @@
   }
 </script>
 <script>
-  async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+  async("/js/fastclick-1.0.6.min.js", function(){
     FastClick.attach(document.body);
   })
 </script>
 
 <script>
   var hasLine = 'true';
-  async("//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js", function(){
+  async("/js/highlight-9.12.0.min.js", function(){
     $('figure pre').each(function(i, block) {
       var figure = $(this).parents('figure');
       if (hasLine === 'false') {
@@ -364,8 +325,6 @@
     });
   })
 </script>
-<!-- Baidu Tongji -->
-
 <script src="/js/script.js"></script>
 
   </body>

@@ -30,16 +30,13 @@
 <meta name="twitter:description" content="目次 （背景）声質変換用のデータを作るために音声アライメントを試してみたい （手法）声優統計コーパスのデータを使用し、MFCCでアライメントした （結果）アライメント後の音声はところどころ伸びていた。無音とする閾値を下げると伸びは抑制された。 （考察）もっと完璧に揃うと思っていた。     話者１のメルスペクトログラム         話者２のメルスペクトログラム">
 <meta name="twitter:image" content="http://blog.hiroshiba.jp/sandbox-alignment-voice-actress-data/muteup-aligned-melspec-1-000.svg">
 <meta name="twitter:creator" content="@hiho_karuta">
-  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-  <link href="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
-  <link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
   <link rel="stylesheet" href="/css/style.css">
-<link rel="stylesheet" href="/css/plugins/gitment.css">
-  <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-  <script src="//cdn.bootcss.com/geopattern/1.2.3/js/geopattern.min.js"></script>
-  <script src="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
-  <script src="/js/qrious.js"></script>
-<script src="/js/gitment.js"></script>
+<link rel="stylesheet" href="/css/plugins/font-awesome-4.7.0.min.css">
+<link rel="stylesheet" href="/css/plugins/highlight.js-9.12.0.min.css">
+<link rel="stylesheet" href="/css/plugins/nprogress-0.2.0.min.css">
+  <script src="/js/jquery-3.4.1.min.js"></script>
+<script src="/js/geopattern-1.2.3.min.js"></script>
+<script src="/js/nprogress-0.2.0.min.js"></script>
   <!-- https://github.com/hexojs/hexo-theme-landscape/blob/master/layout/_partial/google-analytics.ejs -->
 
 
@@ -75,7 +72,7 @@
         }
       });
     </script>
-    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <!-- MathJax support END -->
   
 
@@ -295,9 +292,6 @@ DTWは<a href="https://r9y9.github.io/nnmnkwii/latest/nnmnkwii_gallery/notebooks
   </div>
 
     <!-- NAV END -->
-    
-      <!-- No Comment -->
-    
   </article>
   <!-- Article END -->
   <!-- Catalog START -->
@@ -350,39 +344,6 @@ DTWは<a href="https://r9y9.github.io/nnmnkwii/latest/nnmnkwii_gallery/notebooks
         })
       }
     })
-
-    // qrcode
-    var qr = new QRious({
-      element: document.getElementById('share-qrcode'),
-      value: document.location.href
-    });
-
-    // gitment
-    var gitmentConfig = "";
-    if (gitmentConfig !== 'undefined') {
-      var gitment = new Gitment({
-        id: "声優統計コーパスをアライメントしてみる",
-        owner: "",
-        repo: "",
-        oauth: {
-          client_id: "",
-          client_secret: ""
-        },
-        theme: {
-          render(state, instance) {
-            const container = document.createElement('div')
-            container.lang = "en-US"
-            container.className = 'gitment-container gitment-root-container'
-            container.appendChild(instance.renderHeader(state, instance))
-            container.appendChild(instance.renderEditor(state, instance))
-            container.appendChild(instance.renderComments(state, instance))
-            container.appendChild(instance.renderFooter(state, instance))
-            return container;
-          }
-        }
-      })
-      gitment.render(document.getElementById('comments'))
-    }
   })();
 </script>
 
@@ -406,14 +367,14 @@ DTWは<a href="https://r9y9.github.io/nnmnkwii/latest/nnmnkwii_gallery/notebooks
   }
 </script>
 <script>
-  async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+  async("/js/fastclick-1.0.6.min.js", function(){
     FastClick.attach(document.body);
   })
 </script>
 
 <script>
   var hasLine = 'true';
-  async("//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js", function(){
+  async("/js/highlight-9.12.0.min.js", function(){
     $('figure pre').each(function(i, block) {
       var figure = $(this).parents('figure');
       if (hasLine === 'false') {
@@ -430,8 +391,6 @@ DTWは<a href="https://r9y9.github.io/nnmnkwii/latest/nnmnkwii_gallery/notebooks
     });
   })
 </script>
-<!-- Baidu Tongji -->
-
 <script src="/js/script.js"></script>
 
   </body>

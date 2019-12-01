@@ -23,16 +23,13 @@
 <meta name="twitter:description" content="畳み込みニューラルネットを使ったピッチ推定手法、CREPEが提案された。PyPIが用意されていて、発話音声にも簡単に適用できそうだったので試してみた。">
 <meta name="twitter:image" content="http://blog.hiroshiba.jp/using-crepe/f0.png">
 <meta name="twitter:creator" content="@hiho_karuta">
-  <link href="//cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-  <link href="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
-  <link href="//cdn.bootcss.com/highlight.js/9.12.0/styles/tomorrow.min.css" rel="stylesheet">
   <link rel="stylesheet" href="/css/style.css">
-<link rel="stylesheet" href="/css/plugins/gitment.css">
-  <script src="//cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
-  <script src="//cdn.bootcss.com/geopattern/1.2.3/js/geopattern.min.js"></script>
-  <script src="//cdn.bootcss.com/nprogress/0.2.0/nprogress.min.js"></script>
-  <script src="/js/qrious.js"></script>
-<script src="/js/gitment.js"></script>
+<link rel="stylesheet" href="/css/plugins/font-awesome-4.7.0.min.css">
+<link rel="stylesheet" href="/css/plugins/highlight.js-9.12.0.min.css">
+<link rel="stylesheet" href="/css/plugins/nprogress-0.2.0.min.css">
+  <script src="/js/jquery-3.4.1.min.js"></script>
+<script src="/js/geopattern-1.2.3.min.js"></script>
+<script src="/js/nprogress-0.2.0.min.js"></script>
   <!-- https://github.com/hexojs/hexo-theme-landscape/blob/master/layout/_partial/google-analytics.ejs -->
 
 
@@ -68,7 +65,7 @@
         }
       });
     </script>
-    <script type="text/javascript" src="//cdn.bootcss.com/mathjax/2.7.1/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
     <!-- MathJax support END -->
   
 
@@ -236,9 +233,6 @@ GPU無しCREPEだと10秒程度かかった。</p>
   </div>
 
     <!-- NAV END -->
-    
-      <!-- No Comment -->
-    
   </article>
   <!-- Article END -->
   <!-- Catalog START -->
@@ -291,39 +285,6 @@ GPU無しCREPEだと10秒程度かかった。</p>
         })
       }
     })
-
-    // qrcode
-    var qr = new QRious({
-      element: document.getElementById('share-qrcode'),
-      value: document.location.href
-    });
-
-    // gitment
-    var gitmentConfig = "";
-    if (gitmentConfig !== 'undefined') {
-      var gitment = new Gitment({
-        id: "CREPE(A Convolutional REpresentation for Pitch Estimation)使ってみた",
-        owner: "",
-        repo: "",
-        oauth: {
-          client_id: "",
-          client_secret: ""
-        },
-        theme: {
-          render(state, instance) {
-            const container = document.createElement('div')
-            container.lang = "en-US"
-            container.className = 'gitment-container gitment-root-container'
-            container.appendChild(instance.renderHeader(state, instance))
-            container.appendChild(instance.renderEditor(state, instance))
-            container.appendChild(instance.renderComments(state, instance))
-            container.appendChild(instance.renderFooter(state, instance))
-            return container;
-          }
-        }
-      })
-      gitment.render(document.getElementById('comments'))
-    }
   })();
 </script>
 
@@ -347,14 +308,14 @@ GPU無しCREPEだと10秒程度かかった。</p>
   }
 </script>
 <script>
-  async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+  async("/js/fastclick-1.0.6.min.js", function(){
     FastClick.attach(document.body);
   })
 </script>
 
 <script>
   var hasLine = 'true';
-  async("//cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js", function(){
+  async("/js/highlight-9.12.0.min.js", function(){
     $('figure pre').each(function(i, block) {
       var figure = $(this).parents('figure');
       if (hasLine === 'false') {
@@ -371,8 +332,6 @@ GPU無しCREPEだと10秒程度かかった。</p>
     });
   })
 </script>
-<!-- Baidu Tongji -->
-
 <script src="/js/script.js"></script>
 
   </body>

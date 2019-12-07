@@ -18,7 +18,7 @@
 <meta property="og:locale" content="default">
 <meta property="og:image" content="http://blog.hiroshiba.jp/create-singing-engine-with-deep-learning/1.png">
 <meta property="og:image" content="http://blog.hiroshiba.jp/create-singing-engine-with-deep-learning/a1zunko100.png">
-<meta property="og:updated_time" content="2019-12-01T04:50:24.169Z">
+<meta property="og:updated_time" content="2019-12-07T17:08:36.672Z">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="ディープラーニングで歌声音声合成エンジンを自作する">
 <meta name="twitter:description" content="最近、理想の人工知能（歌ったり踊ったり喋ったりできるキャラクター）を作りたいと思うようになりました。人工知能が歌を歌うためには、歌声音声合成エンジンが必要です。ということで、ディープラーニングを使って、歌声音声合成エンジンの作成に挑戦してみました。この記事では、実際に音声合成した歌声や、その仕組み、別条件での実験結果、ディープラーニング周りの手法を紹介します。">
@@ -188,6 +188,12 @@
 </figure>
 
 <p>　結果を聞くと、ノイズのような歌声になってしまうことがわかりました。これは・・・なんでこうなるのか、全く見当がつきません。ディープラーニングはこんな感じで、問題が発生したとき、その問題が真に解決不可能なのか、それともただプログラムがバグっているだけなのかを切り分けづらく、もやもやすることがあります。今回のこの問題は、原因不明です。</p>
+<p>　（2019/12/08追記）声の大きさラベルの値を全体的に小さくしてみたところ、品質がかなり上がりました。ディープラーニングなにもわからない。</p>
+<figure>
+  <figcaption>声の大きさラベルの値を小さくしたときの歌唱デモ</figcaption>
+  <audio src="demo-w-volume-2.wav" controls></audio>
+</figure>
+
 <h3 id="ディープラーニング周りの紹介"><a href="#ディープラーニング周りの紹介" class="headerlink" title="ディープラーニング周りの紹介"></a>ディープラーニング周りの紹介</h3><p>　音声合成エンジンの作成にはディープラーニング、つまり機械学習を用いています。ここでは、今回用いた用いディープラーニング手法や、学習データの前処理を紹介します。ここはちょっと技術寄りの説明になります。</p>
 <h4 id="end-to-end音声合成"><a href="#end-to-end音声合成" class="headerlink" title="end-to-end音声合成"></a>end-to-end音声合成</h4><p>　機械学習を用いて音声合成する手法は、音声波形を直接生成するのではなく、音響特徴量を生成したあと、ボコーダーと呼ばれる変換器を使って音声波形にする手法が主流でした。この方法は、声に関連する特徴量だけを生成すれば良いため、少ないデータ数で機械学習することができます。しかし、一度特徴量にすると、呼吸音などの情報が欠け落ちてしまいます。呼吸音は尊いので、なんとしてでも救いたいです。そのために、ラベルから音声波形を直接生成する手法（end-to-end音声合成）に挑戦してみました。</p>
 <p>　音声波形は特徴量に比べて情報量が大きいため、学習するのがより難しくなります。東北きりたん歌唱データベースには約１時間という十分な量の歌唱データがあるため、なんとかなるだろうと思ってこちらの手法にしました。今回は、前々から追実装して手軽に使える環境があったので、WaveRNN（の改造版）を用いました。</p>
@@ -215,10 +221,10 @@
   <div class="nav-container">
     <!-- reverse left and right to put prev and next in a more logic postition -->
     
-      <a class="nav-left" href="/realtime-yukarin-introduction/">
+      <a class="nav-left" href="/backstage-of-talking-event-with-yuzuki-yukari/">
         <span class="nav-arrow">← </span>
         
-          リアルタイム声質変換ライブラリ「Realtime Yukarin」を公開しました
+          「結月ゆかり」とお喋りできるイベントの舞台裏
         
       </a>
     

@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="Hiroshibaのブログです。">
+  <meta name="keyword" content="">
+  
+    <link rel="shortcut icon" type="image/ico" href="/images/favicon.png"/>
+  
+  <title>GCPでできるだけ安くディープラーニング | Hiho&#39;s Blog</title>
+  <meta name="description" content="私は仕事でも趣味でもディープラーニングをしています。趣味ではいつもGoogle Colaboratoryを使ってお金をかけずにディープラーニングしていたのですが、Colabは1日12時間ほどしかGPUを使えず、しかも頻繁に学習タスクを回していると弱いGPUしか利用できなくなるので、進捗があまりよくありませんでした。そこで、お金を使って進捗を出すことを考えました。 　Google Cloud Pl">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GCPでできるだけ安くディープラーニング">
+<meta property="og:url" content="http://blog.hiroshiba.jp/%E3%81%A7%E3%81%8D%E3%82%8B%E9%99%90%E3%82%8A%E3%82%B3%E3%82%B9%E3%83%88%E3%82%92%E6%8A%91%E3%81%88%E3%81%A6GCP%E3%81%A7%E3%83%87%E3%82%A3%E3%83%BC%E3%83%97%E3%83%A9%E3%83%BC%E3%83%8B%E3%83%B3%E3%82%B0/index.html">
+<meta property="og:site_name" content="Hiho&#39;s Blog">
+<meta property="og:description" content="私は仕事でも趣味でもディープラーニングをしています。趣味ではいつもGoogle Colaboratoryを使ってお金をかけずにディープラーニングしていたのですが、Colabは1日12時間ほどしかGPUを使えず、しかも頻繁に学習タスクを回していると弱いGPUしか利用できなくなるので、進捗があまりよくありませんでした。そこで、お金を使って進捗を出すことを考えました。 　Google Cloud Pl">
+<meta property="og:image" content="http://blog.hiroshiba.jp/%E3%81%A7%E3%81%8D%E3%82%8B%E9%99%90%E3%82%8A%E3%82%B3%E3%82%B9%E3%83%88%E3%82%92%E6%8A%91%E3%81%88%E3%81%A6GCP%E3%81%A7%E3%83%87%E3%82%A3%E3%83%BC%E3%83%97%E3%83%A9%E3%83%BC%E3%83%8B%E3%83%B3%E3%82%B0/screen-quota-gpu.png">
+<meta property="og:image" content="http://blog.hiroshiba.jp/%E3%81%A7%E3%81%8D%E3%82%8B%E9%99%90%E3%82%8A%E3%82%B3%E3%82%B9%E3%83%88%E3%82%92%E6%8A%91%E3%81%88%E3%81%A6GCP%E3%81%A7%E3%83%87%E3%82%A3%E3%83%BC%E3%83%97%E3%83%A9%E3%83%BC%E3%83%8B%E3%83%B3%E3%82%B0/screen-quota-t4.png">
+<meta property="og:image" content="http://blog.hiroshiba.jp/%E3%81%A7%E3%81%8D%E3%82%8B%E9%99%90%E3%82%8A%E3%82%B3%E3%82%B9%E3%83%88%E3%82%92%E6%8A%91%E3%81%88%E3%81%A6GCP%E3%81%A7%E3%83%87%E3%82%A3%E3%83%BC%E3%83%97%E3%83%A9%E3%83%BC%E3%83%8B%E3%83%B3%E3%82%B0/screen-disk.png">
+<meta property="og:image" content="http://blog.hiroshiba.jp/%E3%81%A7%E3%81%8D%E3%82%8B%E9%99%90%E3%82%8A%E3%82%B3%E3%82%B9%E3%83%88%E3%82%92%E6%8A%91%E3%81%88%E3%81%A6GCP%E3%81%A7%E3%83%87%E3%82%A3%E3%83%BC%E3%83%97%E3%83%A9%E3%83%BC%E3%83%8B%E3%83%B3%E3%82%B0/screen-instance-dataset.png">
+<meta property="og:image" content="http://blog.hiroshiba.jp/%E3%81%A7%E3%81%8D%E3%82%8B%E9%99%90%E3%82%8A%E3%82%B3%E3%82%B9%E3%83%88%E3%82%92%E6%8A%91%E3%81%88%E3%81%A6GCP%E3%81%A7%E3%83%87%E3%82%A3%E3%83%BC%E3%83%97%E3%83%A9%E3%83%BC%E3%83%8B%E3%83%B3%E3%82%B0/screen-storage.png">
+<meta property="og:image" content="http://blog.hiroshiba.jp/%E3%81%A7%E3%81%8D%E3%82%8B%E9%99%90%E3%82%8A%E3%82%B3%E3%82%B9%E3%83%88%E3%82%92%E6%8A%91%E3%81%88%E3%81%A6GCP%E3%81%A7%E3%83%87%E3%82%A3%E3%83%BC%E3%83%97%E3%83%A9%E3%83%BC%E3%83%8B%E3%83%B3%E3%82%B0/screen-image.png">
+<meta property="og:image" content="http://blog.hiroshiba.jp/%E3%81%A7%E3%81%8D%E3%82%8B%E9%99%90%E3%82%8A%E3%82%B3%E3%82%B9%E3%83%88%E3%82%92%E6%8A%91%E3%81%88%E3%81%A6GCP%E3%81%A7%E3%83%87%E3%82%A3%E3%83%BC%E3%83%97%E3%83%A9%E3%83%BC%E3%83%8B%E3%83%B3%E3%82%B0/screen-result.png">
+<meta property="og:image" content="http://blog.hiroshiba.jp/%E3%81%A7%E3%81%8D%E3%82%8B%E9%99%90%E3%82%8A%E3%82%B3%E3%82%B9%E3%83%88%E3%82%92%E6%8A%91%E3%81%88%E3%81%A6GCP%E3%81%A7%E3%83%87%E3%82%A3%E3%83%BC%E3%83%97%E3%83%A9%E3%83%BC%E3%83%8B%E3%83%B3%E3%82%B0/screen-log.png">
+<meta property="article:published_time" content="2020-07-16T15:31:25.000Z">
+<meta property="article:modified_time" content="2020-07-16T15:31:38.012Z">
+<meta property="article:author" content="Kazuyuki Hiroshiba">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://blog.hiroshiba.jp/%E3%81%A7%E3%81%8D%E3%82%8B%E9%99%90%E3%82%8A%E3%82%B3%E3%82%B9%E3%83%88%E3%82%92%E6%8A%91%E3%81%88%E3%81%A6GCP%E3%81%A7%E3%83%87%E3%82%A3%E3%83%BC%E3%83%97%E3%83%A9%E3%83%BC%E3%83%8B%E3%83%B3%E3%82%B0/screen-quota-gpu.png">
+<meta name="twitter:creator" content="@hiho_karuta">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/a11y-dark.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+  
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-141253083-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'UA-141253083-1');
+    </script>
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Hiho's Blog</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="https://twitter.com/hiho_karuta" target="_blank" rel="noopener" class="item-link">Twitter</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="https://github.com/Hiroshiba" target="_blank" rel="noopener" class="item-link">Github</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="https://twitter.com/hiho_karuta" target="_blank" rel="noopener" class="menu-link">Twitter</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="https://github.com/Hiroshiba" target="_blank" rel="noopener" class="menu-link">Github</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>GCPでできるだけ安くディープラーニング</h2>
+  <p class="post-date">2020-07-17</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><p>　私は仕事でも趣味でもディープラーニングをしています。趣味ではいつも<a href="https://colab.research.google.com/notebooks/basic_features_overview.ipynb" target="_blank" rel="noopener">Google Colaboratory</a>を使ってお金をかけずにディープラーニングしていたのですが、Colabは1日12時間ほどしかGPUを使えず、しかも頻繁に学習タスクを回していると弱いGPUしか利用できなくなるので、進捗があまりよくありませんでした。そこで、お金を使って進捗を出すことを考えました。</p>
+<p>　<a href="https://cloud.google.com/gcp/" target="_blank" rel="noopener">Google Cloud Platform（GCP）</a>なら、ちょっと弱めのGPU（Tesla T4）を1時間あたり約12円で借りられます。これならまあ趣味の予算で可能だと感じたので実際にやってみたのですが、GCPは思った以上に複雑で、わかりづらい点が多くありました。そこでこのブログでは、<strong>GCPに登録するところから、１コマンドでディープラーニングできる環境を構築するまでの方法</strong>を紹介します。</p>
+<a id="more"></a>
+
+<h3 id="手順"><a href="#手順" class="headerlink" title="手順"></a>手順</h3><p><a href="https://cloud.google.com/gcp/" target="_blank" rel="noopener">Google Cloud Platform（GCP）</a>でディープラーニングするためには、GCPに登録したり、ストレージを用意したりする必要があります。このブログでは、次の項目に沿って手順を紹介します。</p>
+<ul>
+<li>準備する（GCPに登録、gcloudをインストール、GCPの設定）</li>
+<li>データセット・学習結果用のストレージを用意する</li>
+<li>学習用のVMイメージを作成する</li>
+<li>自動で学習・停止するスクリプトを書く</li>
+<li>VMインスタンスを起動してディープラーニングする</li>
+<li>学習結果を回収する</li>
+</ul>
+<p>ちなみに、VMとは仮想マシンのことで、GCPでは「<a href="https://cloud.google.com/compute" target="_blank" rel="noopener">Google Compute Engine</a>」と呼ばれています。</p>
+<h4 id="準備する（GCPに登録、gcloudをインストール、GCPの設定）"><a href="#準備する（GCPに登録、gcloudをインストール、GCPの設定）" class="headerlink" title="準備する（GCPに登録、gcloudをインストール、GCPの設定）"></a>準備する（GCPに登録、gcloudをインストール、GCPの設定）</h4><p>　GCPを利用するにはアカウントの登録が必要です。<a href="https://cloud.google.com/" target="_blank" rel="noopener">GCPのページ</a>から登録することができます。また、GCPでGPUを使うには、アカウント登録の他に、支払い方法の登録が必要です。支払い方法はGCPコンソールの<a href="https://console.cloud.google.com/billing" target="_blank" rel="noopener">お支払い</a>で登録することができます。支払い方法の登録に関する詳細は、<a href="https://cloud.google.com/billing/docs/how-to/payment-methods#add_a_payment_method" target="_blank" rel="noopener">Cloud Billingのガイド</a>で確認できます。ちなみに、GCPには<a href="https://cloud.google.com/free" target="_blank" rel="noopener">300ドルの無料クレジット</a>があります。</p>
+<p>　手元のパソコンからコマンドでGCPにアクセスするには、<code>gcloud</code>ツールがとても便利です。このブログの説明では<code>gcloud</code>を使う方法を主に紹介しています。<a href="https://cloud.google.com/sdk/docs/quickstarts" target="_blank" rel="noopener">gcloudのクイックスタート</a>に、OS別のインストール方法が紹介されています。</p>
+<p>　<code>gcloud</code>の設定中に、デフォルトの「リージョン・ゾーン」の入力を求められます。リージョンとはデータセンターの場所で、ゾーンはその中で更に区分けされた場所のことです。場所の決め方は、<a href="https://cloud.google.com/compute/gpus-pricing" target="_blank" rel="noopener">GPUの料金ページ</a>を見て、日本から近くて安い場所にすると良いと思います。また、同じリージョン内でも、ゾーンによって使用可能なGPUの種類が異なる場合があります。リージョン・ゾーンごとの使用可能なGPUの種類は、<a href="https://cloud.google.com/compute/docs/gpus#gpus-list" target="_blank" rel="noopener">GPUの詳細ページ</a>に掲載されています。私は安いGPU（Tesla T4）が使えると嬉しいので、台湾（asia-east1）にしました。</p>
+<p>　GCPでGPUを用いるには、GPUの「割り当て」を申請する必要があります。割り当ては、GCPコンソールの<a href="https://console.cloud.google.com/iam-admin/quotas" target="_blank" rel="noopener">割り当てページ</a>から申請できます。GPUを用いるためには、2つの割り当て項目を申請する必要があります。1つ目は、GPUの合計数です。割り当てページの「フィルタ」に「gpu」と入力して出てくる「GPUs(all regions)」を選択し、「割り当ての編集」ボタンを押します。右側に「連絡先の詳細」入力欄が出てくるので、「名前」「メールアドレス」「電話番号」をそれぞれ入力して次へ進みます。次は「割り当ての変更」入力欄が出てくるので、「新しい上限」に使いたいGPUの数を書いて、「リクエストの説明」に使用目的を書き、「リクエストを送信」ボタンを押します。申請後、しばらくすると申請が通ったことを伝えるメールが来ます。このときのページ画面はこんな感じです。
+<img src="screen-quota-gpu.png" border="1" style="max-height: 22em"></p>
+<p>　割り当て項目の2つ目は、GPUの種類ごとの数です。先程と同様に割り当てページの「フィルタ」に「gpu」と入力し、好きなGPU（例えばT4の場合は「Commited NVIDIA T4 GPUs」）を選択します。種類ごとのGPUの割り当て申請はリージョンごとに区分されているので、いろんなリージョンの項目が表示されます。その中から、<code>gcloud</code>で設定したリージョンと同じ項目を選択して、「割り当ての編集」ボタンを押します。あとは先程と同様に入力して、割り当てを申請します。このときのページ画面はこんな感じです。<img src="screen-quota-t4.png" border="1" style="max-height: 22em"></p>
+<h4 id="データセット・学習結果用のストレージを用意する"><a href="#データセット・学習結果用のストレージを用意する" class="headerlink" title="データセット・学習結果用のストレージを用意する"></a>データセット・学習結果用のストレージを用意する</h4><p>　データを保存するストレージは、「<a href="https://cloud.google.com/compute/docs/disks" target="_blank" rel="noopener">永続ディスク</a>」と「<a href="https://cloud.google.com/storage/docs" target="_blank" rel="noopener">Cloud Storage</a>」の2種類を目的に分けて使います。永続ディスクはデータ転送速度が早い一方、複数のVMインスタンスから同時に書き込みできないという仕様があります（※正確には、複数のVMインスタンスに書き込み権限付きでマウントすることができません）。逆にCloud Storageは複数のVMインスタンスから同時に書き込めますが、データ転送速度が遅いです。これらの理由から、学習データセットは永続ディスクに、学習結果はCloud Storageに保存することにします。</p>
+<p>　永続ディスクは、GCPコンソールの「<a href="https://console.cloud.google.com/compute/disks" target="_blank" rel="noopener">ディスク</a>」から作成することができます。ディスクページにある「ディスクを作成」ボタンを押すと、ディスク作成のための入力欄が表示されます。入力欄の「名前」に好きな名前を書き、「リージョン」や「ゾーン」には<code>gcloud</code>で設定したものを選びます。「タイプ」や「サイズ」は<a href="https://cloud.google.com/compute/disks-image-pricing#persistentdisk" target="_blank" rel="noopener">料金ページ</a>を参考に予算と相談して、SSDもしくはHDD（標準ディスク）から選びます。それ以外はデフォルトのままにして、作成ボタンを押します。このときのページ画面はこんな感じです。<img src="screen-disk.png" border="1" style="max-height: 22em"></p>
+<p>　永続ディスクが作成できたら、データセットを保存しておきます。永続ディスクにデータを転送するには、VMインスタンスを立ち上げて永続ディスクをマウントし、<code>gcloud</code>コマンドを用いてコピーするのが手っ取り早いです。データセットをコピーするために、まずは作業用の安いVMインスタンスを起動します。GCPコンソールの「<a href="https://console.cloud.google.com/compute/instances" target="_blank" rel="noopener">VMインスタンス</a>」ページを開き、「インスタンスを作成」ボタンを押すと、VMインスタンス作成のための入力欄が表示されます。「名前」に好きな名前を書いて、「リージョン」と「ゾーン」には<code>gcloud</code>で設定したものを選択します。また、「管理、セキュリティ、ディスク、ネットワーク、単一テナンシー」を展開し、「ディスク」タブで「既存のディスクを接続」から、先ほど作成した永続ディスクを選びます。それ以外はデフォルトのままにして、作成ボタンを押します。このときのページ画面はこんな感じです。<img src="screen-instance-dataset.png" border="1" style="max-height: 22em"></p>
+<p>　VMインスタンスが起動したら、<code>gcloud compute ssh</code>でVMインスタンスにssh接続したあと、永続ディスクをマウントします。</p>
+<pre><code class="hljs bash"><span class="hljs-comment"># ssh接続</span>
+gcloud compute ssh [VMインスタンスの名前]</code></pre>
+<pre><code class="hljs bash"><span class="hljs-comment"># 永続ディスクをマウント</span>
+mkdir -p [永続ディスクの名前]
+sudo mount -o discard,defaults /dev/sdb [永続ディスクの名前]</code></pre>
+
+<p>　マウントが完了したら、手元のパソコンから<code>gcloud compute scp</code>でデータセットを転送することができます。転送後、VMインスタンス内で<code>ls [永続ディスクの名前]</code>することで、ファイルが転送できたことを確認できます。</p>
+<pre><code class="hljs bash">gcloud compute scp --recurse [データセットのパス] [VMインスタンスの名前]:[永続ディスクの名前]</code></pre>
+
+<p>　続いて、Cloud Storageで、学習結果を保存するためのストレージ（バケット）を作成します。バケットは、GCPコンソールの「<a href="https://console.cloud.google.com/storage/browser" target="_blank" rel="noopener">ストレージ ブラウザ</a>」から作成できます。「バケットを作成」を押すと、バケット作成のための入力欄が表示されます。入力欄の「バケットに名前を付ける」に好きな名前を書き、「ロケーションタイプ」を「Region」にして、「ロケーション」に<code>gcloud</code>で設定したリージョンを入力します。あとは「アクセス制御」を「均一」に設定し、それ以外はデフォルトのままにして、作成ボタンを押します。このときのページ画面はこんな感じです。<img src="screen-storage.png" border="1" style="max-height: 22em"></p>
+<p>　以上でストレージの準備は完了です。</p>
+<h4 id="学習用のVMイメージを作成する"><a href="#学習用のVMイメージを作成する" class="headerlink" title="学習用のVMイメージを作成する"></a>学習用のVMイメージを作成する</h4><p>　GCPにはデフォルトで、PyTorchやTensorFlowがインストールされたVMイメージ（<a href="https://cloud.google.com/ai-platform/deep-learning-vm/docs" target="_blank" rel="noopener">Deep Learning VM</a>）があります。しかしこれらのVMイメージには、NVIDIAドライバなどがインストールされていません。既成のVMイメージにNVIDIAドライバなどをインストールして自分用のVMイメージを作成しておくと、VMイメージの使い回しができて便利です。</p>
+<p>　まず最初に、元となるVMイメージを使ってVMインスタンスを起動します。GCPには<a href="https://cloud.google.com/ai-platform/deep-learning-vm/docs/images" target="_blank" rel="noopener">色々なVMイメージ</a>があり、PyTorchなどのフレームワークがインストール済みのものや、CUDAだけ入っているものなどが用意されています。私はPyTorchを使いたいので、「pytorch-latest-gpu」を選びました。より細かいバージョンを指定したい場合は<code>gcloud compute images list</code>を実行することで確認できます。</p>
+<p>　選んだVMイメージを指定して、<code>gcloud compute instances create</code>でVMインスタンスを起動します。<code>--image-family</code>に選んだVMイメージを指定し、<code>--accelerator</code>には先ほど割り当てを申請したGPUを指定します。ここで指定するGPUのラベル名は、<a href="https://cloud.google.com/compute/docs/gpus#introduction" target="_blank" rel="noopener">GPUの対応表</a>で確認することができます。<code>--metadata=&quot;install-nvidia-driver=True&quot;</code>を指定することで、NVIDIAドライバが自動的にインストールされます。</p>
+<pre><code class="hljs bash">gcloud compute instances create [VMインスタンスの名前] \
+  --image-project=<span class="hljs-string">"deeplearning-platform-release"</span> \
+  --image-family=<span class="hljs-string">"pytorch-latest-gpu"</span> \
+  --metadata=<span class="hljs-string">"install-nvidia-driver=True"</span> \
+  --accelerator=<span class="hljs-string">"type=nvidia-tesla-t4,count=1"</span> \
+  --maintenance-policy=<span class="hljs-string">"TERMINATE"</span></code></pre>
+
+<p>　ちなみに<code>--maintenance-policy=&quot;TERMINATE&quot;</code>は、GPUを使用してVMインスタンスを起動する際に必ず指定する必要があります。引数の詳細は<a href="https://cloud.google.com/ai-platform/deep-learning-vm/docs/cli#creating_an_instance_with_one_or_more_gpus" target="_blank" rel="noopener">こちら</a>に紹介されています。</p>
+<p>　NVIDIAドライバがインストールできたので、このVMインスタンスを再利用することで素早くディープラーニングすることが可能です。が、いつもインストールする他のツールもここでインストールしておくと、VMインスタンスの起動時間を更に減らすことができます。デバッグをしやすくするためのログ出力ツールと、Cloud StorageバケットをマウントするためのFUSEツールも、ここでインストールしておきます。</p>
+<p>　まず、<code>gcloud compute ssh</code>でVMインスタンスにssh接続します。</p>
+<pre><code class="hljs bash"><span class="hljs-comment"># ssh接続</span>
+gcloud compute ssh [VMインスタンスの名前]</code></pre>
+<p>ssh接続したあと、次のコマンドを実行してツールをインストールします。</p>
+<pre><code class="hljs bash"><span class="hljs-comment"># ログ出力ツールのインストール</span>
+curl -sS https://dl.google.com/cloudagents/install-logging-agent.sh | sudo bash -</code></pre>
+<pre><code class="hljs bash"><span class="hljs-comment"># FUSEのインストール</span>
+<span class="hljs-built_in">export</span> GCSFUSE_REPO=gcsfuse-`lsb_release -c -s`
+<span class="hljs-built_in">echo</span> <span class="hljs-string">"deb http://packages.cloud.google.com/apt <span class="hljs-variable">$GCSFUSE_REPO</span> main"</span> |\
+sudo tee /etc/apt/sources.list.d/gcsfuse.list
+curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add -
+
+sudo apt-get update
+sudo apt-get install -y gcsfuse</code></pre>
+<p>他にも、ディープラーニングフレームワークのアップデートなど、時間がかかる環境構築作業もここで行うと良いと思います。全てのインストールが完了したら、VMインスタンスを終了しておきます。</p>
+<pre><code class="hljs bash">sudo shutdown now</code></pre>
+
+<p>　最後に、色々インストールしたVMインスタンスを元にVMイメージを作成して、再利用できるようにします。VMイメージの作成は、GCPコンソールの「<a href="https://console.cloud.google.com/compute/images" target="_blank" rel="noopener">イメージ</a>」で行えます。「イメージを作成」ボタンを押すと入力欄を表示されるので、「名前」に好きな名前を書き、「ソース」を「ディスク」に選択したあと、「ソースディスク」に先程のVMインスタンスの名前を選択します。あとは「ロケーション」を「リージョン」にして、<code>gcloud</code>で設定したリージョンを選択します。それ以外はデフォルトのままにして、作成ボタンを押します。このときのページ画面はこんな感じです。<img src="screen-image.png" border="1" style="max-height: 22em"></p>
+<p>　以上で学習用のVMイメージの作成は完了です。</p>
+<h4 id="自動で学習・停止するスクリプトを書く"><a href="#自動で学習・停止するスクリプトを書く" class="headerlink" title="自動で学習・停止するスクリプトを書く"></a>自動で学習・停止するスクリプトを書く</h4><p>　全ての準備が完了したので、VMインスタンスを起動してディープラーニングを実行します。起動時間をできるだけ短くするために、起動直後に自動的に学習を開始し、学習が完了したら自動的に停止するようにします。</p>
+<p>　起動直後に学習を開始するためには、VMインスタンスの「起動スクリプト」を使うのが手っ取り早いです。起動直後に実行するスクリプトを書いておき、<code>gcloud</code>でVMインスタンスを起動するときの引数に指定します。以降で、起動スクリプトの内容（自動停止の設定、ディスクのマウント、訓練開始コードなど）を紹介します。</p>
+<p>　まず1行目に、エラー発生時にこのスクリプトの実行を終了させる設定を書きます。</p>
+<pre><code class="hljs bash"><span class="hljs-built_in">set</span> -eu</code></pre>
+
+<p>起動スクリプトはrootユーザーで実行されます。rootユーザーではPythonへのパスが通っていないので、パスを追加します。</p>
+<pre><code class="hljs bash"><span class="hljs-built_in">export</span> PATH=<span class="hljs-string">"/usr/local/cuda/bin:/opt/conda/bin:/opt/conda/condabin:<span class="hljs-variable">$PATH</span>"</span></code></pre>
+
+<p>続いて、VMインスタンスが自動的に終了するようにします。</p>
+<pre><code class="hljs bash"><span class="hljs-built_in">trap</span> finally EXIT
+<span class="hljs-keyword">function</span> finally &#123;
+    shutdown
+&#125;</code></pre>
+
+<p>Cloud Storageバケットをマウントして、学習結果を保存できるようにします。この例の場合、<code>/mnt/result</code>ディレクトリに学習結果を保存すると、自動的にバケットに保存されます。</p>
+<pre><code class="hljs bash">mkdir -p /mnt/result
+gcsfuse [バケットの名前] /mnt/result</code></pre>
+
+<p>永続ディスクをマウントして、データセットを読み込めるようにします。この例の場合、<code>/mnt/dataset</code>ディレクトリからデータセットを読み込むことができます。</p>
+<pre><code class="hljs bash">mkdir -p /mnt/dataset/
+mount -o discard,defaults /dev/sdb /mnt/dataset/</code></pre>
+
+<p>最後に、訓練用のコードをダウンロードして実行するようにします。この例では、GithubからPyTorchのMNIST分類サンプルコードをダウンロードして実行しています。他にも、Cloud Storageバケットや永続ディスクに訓練コードを保存しておいて、起動スクリプトから実行する方法もあると思います。</p>
+<pre><code class="hljs bash"><span class="hljs-comment"># ダウンロード</span>
+curl https://raw.githubusercontent.com/pytorch/examples/master/mnist/main.py &gt; train.py
+
+<span class="hljs-comment"># 実行</span>
+python train.py --batch-size 64 --save-model
+
+<span class="hljs-comment"># 学習結果を保存</span>
+cp * /mnt/result/</code></pre>
+
+<p>これらのコードをまとめて<code>[スクリプト名].sh</code>に保存します。</p>
+<h4 id="VMインスタンスを起動してディープラーニングする"><a href="#VMインスタンスを起動してディープラーニングする" class="headerlink" title="VMインスタンスを起動してディープラーニングする"></a>VMインスタンスを起動してディープラーニングする</h4><p>　ストレージ・VMイメージ・スクリプトの準備ができたので、これらをVMインスタンスの起動コマンドの引数に指定して、ディープラーニングを実行します。<code>--disk</code>でデータセット用の永続ディスクの名前を、<code>--image</code>で作成したVMイメージの名前を、<code>--metadata-from-file=&quot;startup-script=&quot;</code>でスクリプト名を指定します。他にも、<code>--machine-type</code>に<a href="https://cloud.google.com/compute/docs/machine-types" target="_blank" rel="noopener">マシンタイプ</a>を指定することで、CPUやメモリ量を変更できます。</p>
+<pre><code class="hljs bash">gcloud compute instances create [VMインスタンスの名前] \
+  --disk=<span class="hljs-string">"name=[永続ディスクの名前],auto-delete=no,mode=ro"</span> \
+  --image=<span class="hljs-string">"[VMイメージの名前]"</span> \
+  --metadata-from-file=<span class="hljs-string">"startup-script=[スクリプト名].sh"</span> \
+  --machine-type=<span class="hljs-string">"n1-standard-2"</span> \
+  --accelerator=<span class="hljs-string">"type=nvidia-tesla-t4,count=1"</span> \
+  --maintenance-policy=<span class="hljs-string">"TERMINATE"</span> \
+  --scopes=<span class="hljs-string">"default,storage-full"</span> \
+  --preemptible \
+  --no-restart-on-failure \
+  --no-shielded-integrity-monitoring \</code></pre>
+
+<p>　紹介していないけど必要な引数も追加しています。<code>--scopes=&quot;default,storage-full&quot;</code>でCloud Storageバケットへのフルアクセス権限を付与しています。<code>--preemptible</code>でプリエンプティブルインスタンス（有効期間が短い代わりに料金が手頃なVMインスタンス）を利用するようにします。<code>--no-restart-on-failure</code>は自動再起動の抑止を、<code>--no-shielded-integrity-monitoring</code>は整合性モニタリングの無効を指定しています。</p>
+<p>　VMインスタンス起動後、正常に学習できていると、学習結果が<a href="https://console.cloud.google.com/storage/browser" target="_blank" rel="noopener">Cloud Storageのバケット</a>にこんな感じで保存されているはずです。<img src="screen-result.png" border="1" style="max-height: 14em"></p>
+<p>　学習結果のダウンロードは、GCPコンソールのバケットから1つずつファイルをダウンロードする方法と、<code>gsutil</code>を用いてディレクトリごとダウンロードする方法があります。<code>gsutil</code>は<a href="https://cloud.google.com/storage/docs/gsutil_install" target="_blank" rel="noopener">GCPのリファレンス</a>に、インストール方法が書かれています。<code>gsutil</code>を使えば、次のようなコマンドで<code>MNIST</code>ディレクトリをダウンロードすることができます。</p>
+<pre><code class="hljs bash">gsutil -m cp -r <span class="hljs-string">"gs://[バケットの名前]/MNIST"</span> ~/Downloads/</code></pre>
+
+<p>　以上で、GCPを使ってディープラーニングする手順の紹介は終わりです。</p>
+<h3 id="実践"><a href="#実践" class="headerlink" title="実践"></a>実践</h3><p>実際にGCPでディープラーニングしてみて、気になったことや、知っていると役立つかもしれないテクニックを少し紹介します。</p>
+<h4 id="コスト"><a href="#コスト" class="headerlink" title="コスト"></a>コスト</h4><p>　実際のタスクに適用してみたときのコストを計算してみます。StarGAN v2を<a href="https://github.com/Hiroshiba/yukarin_style" target="_blank" rel="noopener">追実装</a>し、StarGAN v2を音声ドメインへ適用する実験をGCPで行ってみました。GCPのリージョンは台湾を選びました。マシンタイプは<code>n1-standard-2</code>（vCPU２つ、メモリ7.5GB）で、プリエンプティブルだと1時間あたり0.022ドルでした。GPUは<code>NVIDIA Tesla T4</code>1つ（GPUメモリ16GB）で、プリエンプティブルだと1時間あたり0.11ドルでした。StarGAN v2の学習は、プリエンプティブルインスタンスの最大時間の24時間でほぼ完了したので、実験1回で3.168ドル≒339円でした。ストレージなどの費用はこれらに比べると微々たるものでした。それ以外で費用は発生しませんでした。</p>
+<p>　過去の経験から、生成系のディープラーニングの追実験は、20回ほど学習を試せば、目的の品質が得られそうかわかる気がします。1日かかる学習を20回行っても339円*20回=6780円です。ゲーム1本くらいだと思えば、まあ趣味の範囲内かな、という感触でした。</p>
+<h4 id="ログの表示"><a href="#ログの表示" class="headerlink" title="ログの表示"></a>ログの表示</h4><p>　ログはすべてGCPコンソールの「<a href="https://console.cloud.google.com/logs" target="_blank" rel="noopener">ログビューア</a>」で見ることができます。VMインスタンス一覧から「ログを表示」を選択して、そのインスタンスのログだけを見ることもできます。24時間経たずにVMインスタンスが終了している場合は、ログの一番最後を見ると終了した理由がわかります。例えばプリエンプトされて早期終了した場合は、最後に「<code>preempted event</code>」が表示されていました。</p>
+<p>　ログはプログレスの表示なども含めて全て記録されていることもあり、ちょっと見づらいです。クエリビルダーに「startup-script」を追記すると、起動スクリプトからのログだけを表示できます。
+<img src="screen-log.png" border="1" style="max-height: 14em"></p>
+<h4 id="プリエンプト対応"><a href="#プリエンプト対応" class="headerlink" title="プリエンプト対応"></a>プリエンプト対応</h4><p>　プリエンプティブルインスタンスを使う場合、最大時間の24時間までに早期終了する（プリエンプトされる）ことがあります。学習プロセスが異常終了すると学習結果がおかしくなる可能性があるので、プリエンプトを検知したら学習を停止させるようにしました。VMインスタンスがプリエンプトされる対象になったことを検知する方法はいくつかありますが、VMインスタンス内で<a href="https://cloud.google.com/compute/docs/instances/create-start-preemptible-instance#detecting_if_an_instance_was_preempted" target="_blank" rel="noopener">プリエンプトされたかどうかを確認するAPI</a>をロングポーリングする方法が便利でした。例えば以下のように書くことで、プリエンプトを検知した際に、ディープラーニングのプロセスに停止シグナルを送信することができます。</p>
+<pre><code class="hljs bash">python train.py &amp;  <span class="hljs-comment"># ディープラーニングをバックグラウンドプロセスとして起動</span>
+pid_train=<span class="hljs-string">"$!"</span>  <span class="hljs-comment"># プロセスIDを取得</span>
+
+api=<span class="hljs-string">"http://metadata.google.internal/computeMetadata/v1/instance/preempted?wait_for_change=true"</span>
+curl -sS <span class="hljs-variable">$api</span> -H <span class="hljs-string">"Metadata-Flavor: Google"</span> &amp;  <span class="hljs-comment"># プリエンプトを検知するプロセス</span>
+pid_preempted=<span class="hljs-string">"$!"</span>  <span class="hljs-comment"># プロセスIDを取得</span>
+
+<span class="hljs-built_in">wait</span> -n  <span class="hljs-comment"># バックグラウンドプレセスのいずれかが完了するまで待機</span>
+<span class="hljs-built_in">kill</span> -SIGINT <span class="hljs-variable">$pid_train</span>  <span class="hljs-comment"># ディープラーニングのプロセスに停止シグナルを送信</span></code></pre>
+
+<h4 id="学習パラメータの渡し方"><a href="#学習パラメータの渡し方" class="headerlink" title="学習パラメータの渡し方"></a>学習パラメータの渡し方</h4><p>　ディープラーニングする際、複数のパラメータを与えて複数の学習を同時に行いたいことがあります。GCPで別々の学習パラメータを与える方法を色々調べたところ、起動スクリプトを複製して書き換えるのが手っ取り早そうでした。例えば先ほどのMNIST分類で、バッチサイズを変えて複数のVMインスタンスを起動したいときは、次のように<code>sed</code>コマンドを使うことによって簡単に実現することができます。</p>
+<pre><code class="hljs bash"><span class="hljs-comment"># 起動スクリプトを修正</span>
+python train.py --batch-size BATCHSIZE --save-model</code></pre>
+<pre><code class="hljs bash"><span class="hljs-comment"># VMインスタンス起動コマンドを修正</span>
+<span class="hljs-keyword">for</span> batchsize <span class="hljs-keyword">in</span> 16 32 64; <span class="hljs-keyword">do</span>  <span class="hljs-comment"># バッチサイズ16, 32, 64</span>
+  cat [スクリプト名].sh | sed <span class="hljs-string">"s/BATCHSIZE/<span class="hljs-variable">$batchsize</span>/g"</span> &gt; tmp_script.sh  <span class="hljs-comment"># 起動スクリプトを複製</span>
+  
+  gcloud compute instances create [VMインスタンスの名前] \
+    --metadata-from-file=<span class="hljs-string">"startup-script=tmp_script.sh"</span> \
+    （省略）
+<span class="hljs-keyword">done</span></code></pre>
+
+<h4 id="終わりに"><a href="#終わりに" class="headerlink" title="終わりに"></a>終わりに</h4><p>Google Colabの制限に疲れていたとき、GCPのプリエンプティブルインスタンスであれば割とお手頃価格でクラウドディープラーニングができることを知り、実際に試してみました。設定は大変でしたが、それなりに使える環境がそれなりの価格で整備できました。もっとお金があったら次はGoogle Kubernetes Engineとか使って、もっとかっこいい仕組みを作ってみたいです。ちなみにStarGAN v2の音声適用ですが、全然ダメでした。ディープラーニングむずかしい。</p>
+<p>　記事に関して何かありましたら、ツイッターの<a href="https://twitter.com/hiho_karuta" target="_blank" rel="noopener">@hiho_karuta</a>までご連絡いただけると嬉しいです。</p>
+<p>　最後に。GCP試行錯誤やブログ執筆は、ずっとニコ生で放送しながら行っていました。助言をくださった方々や、進捗を見守ってくださった方々、ありがとうございました。</p>
+</section>
+    <!-- Tags START -->
+    
+    <!-- Tags END -->
+    <!-- Share Button START -->
+    <ul class="share-list">
+      <li>
+        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" target="_blank" rel="noopener" class="twitter-share-button" data-via="hiho_karuta" data-related="hiho_karuta" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+      </li>
+      <li>
+        <a href="http://b.hatena.ne.jp/entry/" target="_blank" rel="noopener" class="hatena-bookmark-button" data-hatena-bookmark-layout="basic-label-counter" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/v4/public/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+      </li>
+      <li>
+        <div id="fb-root"></div><script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v3.3&appId=411014156399099&autoLogAppEvents=1"></script><div class="fb-share-button" data-href="http://blog.hiroshiba.jp/できる限りコストを抑えてGCPでディープラーニング/" data-layout="button_count" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fblog.hiroshiba.jp%2F%E3%81%A7%E3%81%8D%E3%82%8B%E9%99%90%E3%82%8A%E3%82%B3%E3%82%B9%E3%83%88%E3%82%92%E6%8A%91%E3%81%88%E3%81%A6GCP%E3%81%A7%E3%83%87%E3%82%A3%E3%83%BC%E3%83%97%E3%83%A9%E3%83%BC%E3%83%8B%E3%83%B3%E3%82%B0%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">facebookでシェア</a></div>
+      </li>
+    </ul>
+    <!-- Share Button END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/create-singing-engine-with-deep-learning/">
+        <span class="nav-arrow">← </span>
+        
+          ディープラーニングで歌声音声合成エンジンを自作する
+        
+      </a>
+    
+    
+  </div>
+
+    <!-- NAV END -->
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://blog.hiroshiba.jp/できる限りコストを抑えてGCPでディープラーニング/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2020 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+
+<script src="/js/script.js"></script>
+
+
+  </body>
+</html>

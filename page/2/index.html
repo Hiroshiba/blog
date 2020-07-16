@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
-  <head><meta name="generator" content="Hexo 3.8.0">
+  <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
   <meta name="description" content="Hiroshibaのブログです。">
-  <meta name="keyword" content>
+  <meta name="keyword" content="">
   
-    <link rel="shortcut icon" type="image/ico" href="/images/favicon.png">
+    <link rel="shortcut icon" type="image/ico" href="/images/favicon.png"/>
   
   <title>Hiho&#39;s Blog</title>
   <meta name="description" content="Hiroshibaのブログです。">
@@ -15,32 +15,18 @@
 <meta property="og:url" content="http://blog.hiroshiba.jp/page/2/index.html">
 <meta property="og:site_name" content="Hiho&#39;s Blog">
 <meta property="og:description" content="Hiroshibaのブログです。">
-<meta property="og:locale" content="default">
+<meta property="article:author" content="Kazuyuki Hiroshiba">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Hiho&#39;s Blog">
-<meta name="twitter:description" content="Hiroshibaのブログです。">
 <meta name="twitter:creator" content="@hiho_karuta">
-  <link rel="stylesheet" href="/css/style.css">
-<link rel="stylesheet" href="/css/plugins/font-awesome-4.7.0.min.css">
-<link rel="stylesheet" href="/css/plugins/highlight.js-9.12.0.min.css">
-<link rel="stylesheet" href="/css/plugins/nprogress-0.2.0.min.css">
-  <script src="/js/jquery-3.4.1.min.js"></script>
-<script src="/js/geopattern-1.2.3.min.js"></script>
-<script src="/js/nprogress-0.2.0.min.js"></script>
-  <!-- https://github.com/hexojs/hexo-theme-landscape/blob/master/layout/_partial/google-analytics.ejs -->
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/a11y-dark.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
 
-
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-141253083-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'UA-141253083-1');
-</script>
-<!-- End Google Analytics -->
-
-
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
   
   
     <!-- MathJax support START -->
@@ -67,7 +53,17 @@
   
 
 
-</head>
+  
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-141253083-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'UA-141253083-1');
+    </script>
+
+<meta name="generator" content="Hexo 4.2.1"></head>
 
   <body>
     <header class="header fixed-header">
@@ -80,7 +76,7 @@
       
         <li class="list-item">
           
-            <a href="https://twitter.com/hiho_karuta" class="item-link">Twitter</a>
+            <a href="https://twitter.com/hiho_karuta" target="_blank" rel="noopener" class="item-link">Twitter</a>
           
         </li>
       
@@ -92,7 +88,7 @@
       
         <li class="list-item">
           
-            <a href="https://github.com/Hiroshiba" class="item-link">Github</a>
+            <a href="https://github.com/Hiroshiba" target="_blank" rel="noopener" class="item-link">Github</a>
           
         </li>
       
@@ -107,7 +103,7 @@
         
           <li class="menu-item">
             
-              <a href="https://twitter.com/hiho_karuta" class="menu-link">Twitter</a>
+              <a href="https://twitter.com/hiho_karuta" target="_blank" rel="noopener" class="menu-link">Twitter</a>
             
           </li>
         
@@ -119,7 +115,7 @@
         
           <li class="menu-item">
             
-              <a href="https://github.com/Hiroshiba" class="menu-link">Github</a>
+              <a href="https://github.com/Hiroshiba" target="_blank" rel="noopener" class="menu-link">Github</a>
             
           </li>
         
@@ -129,6 +125,45 @@
 </header>
 
     <main class="app-body">
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/voice-conversion-deep-leanring-and-other-delusions/">DeepLearningでも声質変換したい！</a>
+      </h2>
+      <p class="article-date">December 10, 2017</p>
+      
+      <div class="article-summary">
+        
+          <p>これは<a href="https://qiita.com/advent-calendar/2017/dwango" target="_blank" rel="noopener">ドワンゴ Advent Calendar 2017</a>の9日目の記事です。</p>
+<p>漫画やアニメを見ていると、可愛い女の子になって可愛い女の子と他愛もない会話をして過ごす日常に憧れます。
+そんな感じで、可愛い女の子になりたい人は多いと思います<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>。
+しかし残念なことに、現在の技術で真の可愛い女の子になるのはとても難しいです。
+じゃあせめて仮想でいいから可愛い女の子になりたいですよね（バーチャルyoutuberキズナアイみたいな）。
+しかし、仮に姿を可愛い女の子にしても、声が可愛くなければ願いは叶いません。
+ということで、声を可愛くする声質変換を目指してみました。
+今回は僕の声をDeepLearningの力を借りて結月ゆかりにしました。</p>
+        
+      </div>
+      <a class="more" href="/voice-conversion-deep-leanring-and-other-delusions/">Read More</a>
+    </article>
+  
+    <article class="article-card">
+      <h2 class="article-head">
+        <a href="/mastodon-idol-tutorial/">マストドンアイドル チュートリアル</a>
+      </h2>
+      <p class="article-date">November 30, 2017</p>
+      
+      <div class="article-summary">
+        
+          <h3 id="なに？"><a href="#なに？" class="headerlink" title="なに？"></a>なに？</h3><p>マストドンアイドルに厳格な定義はありません。
+その意味は、漠然と、<a href="https://github.com/tootsuite/mastodon" target="_blank" rel="noopener">マストドン</a>で人気のある人を指しています。
+狭義には、<a href="https://friends.nico/" target="_blank" rel="noopener">friends.nico</a>で生放送する人のことを指します。</p>
+<h3 id="だれが？"><a href="#だれが？" class="headerlink" title="だれが？"></a>だれが？</h3><p>創作活動をしている、あるいはしたいと思っているが、モチベーションが湧かない人向けです。</p>
+<h3 id="なぜ？"><a href="#なぜ？" class="headerlink" title="なぜ？"></a>なぜ？</h3><p>チャット感覚での交流が行われるマストドンは、創作活動のフィードバックを得られやすいためです。</p>
+        
+      </div>
+      <a class="more" href="/mastodon-idol-tutorial/">Read More</a>
+    </article>
   
     <article class="article-card">
       <h2 class="article-head">
@@ -146,12 +181,12 @@
 </ul>
 <figure>
   <figcaption>話者１のメルスペクトログラム</figcaption>
-  <img src="/sandbox-alignment-voice-actress-data/muteup-aligned-melspec-1-000.svg">
+  <img src="/sandbox-alignment-voice-actress-data/muteup-aligned-melspec-1-000.svg" class="">
 </figure>
 
 <figure>
   <figcaption>話者２のメルスペクトログラム</figcaption>
-  <img src="/sandbox-alignment-voice-actress-data/muteup-aligned-melspec-2-000.svg">
+  <img src="/sandbox-alignment-voice-actress-data/muteup-aligned-melspec-2-000.svg" class="">
 </figure>
         
       </div>
@@ -191,7 +226,7 @@
 </div>
     <footer class="app-footer">
   <p class="copyright">
-    &copy; 2019 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    &copy; 2020 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
   </p>
 </footer>
 
@@ -206,31 +241,14 @@
   }
 </script>
 <script>
-  async("/js/fastclick-1.0.6.min.js", function(){
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
     FastClick.attach(document.body);
   })
 </script>
 
-<script>
-  var hasLine = 'true';
-  async("/js/highlight-9.12.0.min.js", function(){
-    $('figure pre').each(function(i, block) {
-      var figure = $(this).parents('figure');
-      if (hasLine === 'false') {
-        figure.find('.gutter').hide();
-      }
-      var lang = figure.attr('class').split(' ')[1] || 'code';
-      var codeHtml = $(this).html();
-      var codeTag = document.createElement('code');
-      codeTag.className = lang;
-      codeTag.innerHTML = codeHtml;
-      $(this).attr('class', '').empty().html(codeTag);
-      figure.attr('data-lang', lang.toUpperCase());
-      hljs.highlightBlock(block);
-    });
-  })
-</script>
+
 <script src="/js/script.js"></script>
+
 
   </body>
 </html>

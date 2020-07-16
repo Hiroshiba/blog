@@ -2,9 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.hiroshiba.jp/%25E3%2581%25A7%25E3%2581%258D%25E3%2582%258B%25E9%2599%2590%25E3%2582%258A%25E3%2582%25B3%25E3%2582%25B9%25E3%2583%2588%25E3%2582%2592%25E6%258A%2591%25E3%2581%2588%25E3%2581%25A6GCP%25E3%2581%25A7%25E3%2583%2587%25E3%2582%25A3%25E3%2583%25BC%25E3%2583%2597%25E3%2583%25A9%25E3%2583%25BC%25E3%2583%258B%25E3%2583%25B3%25E3%2582%25B0/</loc>
+    
+    <lastmod>2020-07-16T15:31:38.012Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://blog.hiroshiba.jp/create-singing-engine-with-deep-learning/</loc>
     
-    <lastmod>2019-12-07T17:08:36.672Z</lastmod>
+    <lastmod>2020-07-13T16:48:13.828Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://blog.hiroshiba.jp/realtime-yukarin-introduction/</loc>
+    
+    <lastmod>2020-07-13T16:26:43.662Z</lastmod>
     
   </url>
   

@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
-  <head><meta name="generator" content="Hexo 3.8.0">
+  <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
   <meta name="description" content="最近、理想の人工知能（歌ったり踊ったり喋ったりできるキャラクター）を作りたいと思うようになりました。人工知能が歌を歌うためには、歌声音声合成エンジンが必要です。ということで、ディープラーニングを使って、歌声音声合成エンジンの作成に挑戦してみました。この記事では、実際に音声合成した歌声や、その仕組み、別条件での実験結果、ディープラーニング周りの手法を紹介します。">
-  <meta name="keyword" content>
+  <meta name="keyword" content="">
   
-    <link rel="shortcut icon" type="image/ico" href="/images/favicon.png">
+    <link rel="shortcut icon" type="image/ico" href="/images/favicon.png"/>
   
   <title>ディープラーニングで歌声音声合成エンジンを自作する | Hiho&#39;s Blog</title>
   <meta name="description" content="最近、理想の人工知能（歌ったり踊ったり喋ったりできるキャラクター）を作りたいと思うようになりました。人工知能が歌を歌うためには、歌声音声合成エンジンが必要です。ということで、ディープラーニングを使って、歌声音声合成エンジンの作成に挑戦してみました。この記事では、実際に音声合成した歌声や、その仕組み、別条件での実験結果、ディープラーニング周りの手法を紹介します。">
@@ -15,36 +15,23 @@
 <meta property="og:url" content="http://blog.hiroshiba.jp/create-singing-engine-with-deep-learning/index.html">
 <meta property="og:site_name" content="Hiho&#39;s Blog">
 <meta property="og:description" content="最近、理想の人工知能（歌ったり踊ったり喋ったりできるキャラクター）を作りたいと思うようになりました。人工知能が歌を歌うためには、歌声音声合成エンジンが必要です。ということで、ディープラーニングを使って、歌声音声合成エンジンの作成に挑戦してみました。この記事では、実際に音声合成した歌声や、その仕組み、別条件での実験結果、ディープラーニング周りの手法を紹介します。">
-<meta property="og:locale" content="default">
 <meta property="og:image" content="http://blog.hiroshiba.jp/create-singing-engine-with-deep-learning/1.png">
 <meta property="og:image" content="http://blog.hiroshiba.jp/create-singing-engine-with-deep-learning/a1zunko100.png">
-<meta property="og:updated_time" content="2019-12-07T17:08:36.672Z">
+<meta property="article:published_time" content="2019-11-30T20:30:00.000Z">
+<meta property="article:modified_time" content="2020-07-13T16:48:13.828Z">
+<meta property="article:author" content="Kazuyuki Hiroshiba">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="ディープラーニングで歌声音声合成エンジンを自作する">
-<meta name="twitter:description" content="最近、理想の人工知能（歌ったり踊ったり喋ったりできるキャラクター）を作りたいと思うようになりました。人工知能が歌を歌うためには、歌声音声合成エンジンが必要です。ということで、ディープラーニングを使って、歌声音声合成エンジンの作成に挑戦してみました。この記事では、実際に音声合成した歌声や、その仕組み、別条件での実験結果、ディープラーニング周りの手法を紹介します。">
 <meta name="twitter:image" content="http://blog.hiroshiba.jp/create-singing-engine-with-deep-learning/1.png">
 <meta name="twitter:creator" content="@hiho_karuta">
-  <link rel="stylesheet" href="/css/style.css">
-<link rel="stylesheet" href="/css/plugins/font-awesome-4.7.0.min.css">
-<link rel="stylesheet" href="/css/plugins/highlight.js-9.12.0.min.css">
-<link rel="stylesheet" href="/css/plugins/nprogress-0.2.0.min.css">
-  <script src="/js/jquery-3.4.1.min.js"></script>
-<script src="/js/geopattern-1.2.3.min.js"></script>
-<script src="/js/nprogress-0.2.0.min.js"></script>
-  <!-- https://github.com/hexojs/hexo-theme-landscape/blob/master/layout/_partial/google-analytics.ejs -->
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/a11y-dark.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
 
-
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-141253083-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'UA-141253083-1');
-</script>
-<!-- End Google Analytics -->
-
-
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
   
   
     <!-- MathJax support START -->
@@ -71,7 +58,17 @@
   
 
 
-</head>
+  
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-141253083-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'UA-141253083-1');
+    </script>
+
+<meta name="generator" content="Hexo 4.2.1"></head>
 
   <body>
     <header class="header fixed-header">
@@ -84,7 +81,7 @@
       
         <li class="list-item">
           
-            <a href="https://twitter.com/hiho_karuta" class="item-link">Twitter</a>
+            <a href="https://twitter.com/hiho_karuta" target="_blank" rel="noopener" class="item-link">Twitter</a>
           
         </li>
       
@@ -96,7 +93,7 @@
       
         <li class="list-item">
           
-            <a href="https://github.com/Hiroshiba" class="item-link">Github</a>
+            <a href="https://github.com/Hiroshiba" target="_blank" rel="noopener" class="item-link">Github</a>
           
         </li>
       
@@ -111,7 +108,7 @@
         
           <li class="menu-item">
             
-              <a href="https://twitter.com/hiho_karuta" class="menu-link">Twitter</a>
+              <a href="https://twitter.com/hiho_karuta" target="_blank" rel="noopener" class="menu-link">Twitter</a>
             
           </li>
         
@@ -123,7 +120,7 @@
         
           <li class="menu-item">
             
-              <a href="https://github.com/Hiroshiba" class="menu-link">Github</a>
+              <a href="https://github.com/Hiroshiba" target="_blank" rel="noopener" class="menu-link">Github</a>
             
           </li>
         
@@ -195,21 +192,21 @@
 </figure>
 
 <h3 id="ディープラーニング周りの紹介"><a href="#ディープラーニング周りの紹介" class="headerlink" title="ディープラーニング周りの紹介"></a>ディープラーニング周りの紹介</h3><p>　音声合成エンジンの作成にはディープラーニング、つまり機械学習を用いています。ここでは、今回用いた用いディープラーニング手法や、学習データの前処理を紹介します。ここはちょっと技術寄りの説明になります。</p>
-<h4 id="end-to-end音声合成"><a href="#end-to-end音声合成" class="headerlink" title="end-to-end音声合成"></a>end-to-end音声合成</h4><p>　機械学習を用いて音声合成する手法は、音声波形を直接生成するのではなく、音響特徴量を生成したあと、ボコーダーと呼ばれる変換器を使って音声波形にする手法が主流でした。この方法は、声に関連する特徴量だけを生成すれば良いため、少ないデータ数で機械学習することができます。しかし、一度特徴量にすると、呼吸音などの情報が欠け落ちてしまいます。呼吸音は尊いので、なんとしてでも救いたいです。そのために、ラベルから音声波形を直接生成する手法（end-to-end音声合成）に挑戦してみました。</p>
+<h4 id="end-to-end音声合成"><a href="#end-to-end音声合成" class="headerlink" title="end-to-end音声合成"></a>end-to-end音声合成</h4><p>　機械学習を用いて音声合成する手法は、音声波形を直接生成するのではなく、音響特徴量を生成したあと、ボコーダーと呼ばれる変換器を使って音声波形にする手法が主流でした。この方法は、声に関連する特徴量だけを生成すれば良いため、少ないデータ数で機械学習することができます。しかし、一度特徴量にすると、呼吸音などの情報が欠け落ちてしまいます<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup>。呼吸音は尊いので、なんとしてでも救いたいです。そのために、ラベルから音声波形を直接生成する手法（end-to-end音声合成）に挑戦してみました。</p>
 <p>　音声波形は特徴量に比べて情報量が大きいため、学習するのがより難しくなります。東北きりたん歌唱データベースには約１時間という十分な量の歌唱データがあるため、なんとかなるだろうと思ってこちらの手法にしました。今回は、前々から追実装して手軽に使える環境があったので、WaveRNN（の改造版）を用いました。</p>
 <h4 id="学習に関する詳細"><a href="#学習に関する詳細" class="headerlink" title="学習に関する詳細"></a>学習に関する詳細</h4><p>　学習に用いる音声データは、サンプリングレートを24000Hz、ビット深度を10bitにしました。音素ラベルや音階ラベルは<a href="https://github.com/Hiroshiba/kiritan_singing_label_reader" target="_blank" rel="noopener">自作のリーダー</a>を用いて読み込み、音階ラベルが欠けている箇所を省きました。音素ラベル・音階ラベルはそれぞれone-hotベクトルにし、それぞれのラベルの持続時間を加えたものを入力としました。歌声の周波数は<a href="https://github.com/mmorise/World" target="_blank" rel="noopener">WORLD</a>を用いて推定し、その対数を入力としました。ネットワークは、WaveRNNのdual-softmaxを失くし、ラベルデータを双方向GRUを2層通過させたデータを局所ベクトルとして用いました。バッチサイズを32にし、0.07秒の音声波形を1データとしました。このとき、ラベルデータを前後1秒ずつほど長くサンプルして双方向GRUに通し、音声波形に合わせてトリミングして学習すると、性能が大きく改善しました。20万イテレーション学習したモデルを用いて音声合成しました。学習完了までに、TITAN Xで3日ほどかかりました。</p>
 <h3 id="終わりに"><a href="#終わりに" class="headerlink" title="終わりに"></a>終わりに</h3><p>　今回は実験報告をゴールにしていたので適当にタスクを設計しました。作った歌声音声合成エンジンを誰でも使えるようにしようと考えてみたところ、何を入力にし、何を推定し、何を修正可能にするのか過不足なく設定するのって難しそうだなぁと思いました。例えば先ほど、音量を調整可能にするために音量ラベルを入力する実験を紹介しましたが、音量程度であれば推定後のポストプロセスで正規化しちゃうことも可能だな～と、さっき気づきました。発見が多くて楽しいです。</p>
-</section>
+<div id="footnotes"><hr><div id="footnotelist"><ol style="list-style:none; padding-left: 0;"><li id="fn:1"><span style="display: inline-block; vertical-align: top; padding-right: 10px;">1.</span><span style="display: inline-block; vertical-align: top;">2020/04/28追記：ボコーダーは呼吸音も合成できると<a href="https://twitter.com/ryuuma1826/status/1254998647416053761" target="_blank" rel="noopener">ご指摘いただきました</a>、ありがとうございます。</span><a href="#fnref:1" rev="footnote"> ↩</a></li></ol></div></div></section>
     <!-- Tags START -->
     
     <!-- Tags END -->
     <!-- Share Button START -->
     <ul class="share-list">
       <li>
-        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="hiho_karuta" data-related="hiho_karuta" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" target="_blank" rel="noopener" class="twitter-share-button" data-via="hiho_karuta" data-related="hiho_karuta" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
       </li>
       <li>
-        <a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="basic-label-counter" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/v4/public/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;"></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+        <a href="http://b.hatena.ne.jp/entry/" target="_blank" rel="noopener" class="hatena-bookmark-button" data-hatena-bookmark-layout="basic-label-counter" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/v4/public/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
       </li>
       <li>
         <div id="fb-root"></div><script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v3.3&appId=411014156399099&autoLogAppEvents=1"></script><div class="fb-share-button" data-href="http://blog.hiroshiba.jp/create-singing-engine-with-deep-learning/" data-layout="button_count" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fblog.hiroshiba.jp%2Fcreate-singing-engine-with-deep-learning%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">facebookでシェア</a></div>
@@ -221,13 +218,20 @@
   <div class="nav-container">
     <!-- reverse left and right to put prev and next in a more logic postition -->
     
-      <a class="nav-left" href="/backstage-of-talking-event-with-yuzuki-yukari/">
+      <a class="nav-left" href="/realtime-yukarin-introduction/">
         <span class="nav-arrow">← </span>
         
-          「結月ゆかり」とお喋りできるイベントの舞台裏
+          リアルタイム声質変換ライブラリ「Realtime Yukarin」を公開しました
         
       </a>
     
+    
+      <a class="nav-right" href="/%E3%81%A7%E3%81%8D%E3%82%8B%E9%99%90%E3%82%8A%E3%82%B3%E3%82%B9%E3%83%88%E3%82%92%E6%8A%91%E3%81%88%E3%81%A6GCP%E3%81%A7%E3%83%87%E3%82%A3%E3%83%BC%E3%83%97%E3%83%A9%E3%83%BC%E3%83%8B%E3%83%B3%E3%82%B0/">
+        
+          GCPでできるだけ安くディープラーニング
+        
+        <span class="nav-arrow"> →</span>
+      </a>
     
   </div>
 
@@ -250,7 +254,7 @@
     }
     $('.header').removeClass('fixed-header')
 
-     // error image
+    // error image
     $(".markdown-content img").on('error', function() {
       $(this).attr('src', 'http://file.muyutech.com/error-img.png')
       $(this).css({
@@ -292,7 +296,7 @@
 </div>
     <footer class="app-footer">
   <p class="copyright">
-    &copy; 2019 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    &copy; 2020 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
   </p>
 </footer>
 
@@ -307,31 +311,14 @@
   }
 </script>
 <script>
-  async("/js/fastclick-1.0.6.min.js", function(){
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
     FastClick.attach(document.body);
   })
 </script>
 
-<script>
-  var hasLine = 'true';
-  async("/js/highlight-9.12.0.min.js", function(){
-    $('figure pre').each(function(i, block) {
-      var figure = $(this).parents('figure');
-      if (hasLine === 'false') {
-        figure.find('.gutter').hide();
-      }
-      var lang = figure.attr('class').split(' ')[1] || 'code';
-      var codeHtml = $(this).html();
-      var codeTag = document.createElement('code');
-      codeTag.className = lang;
-      codeTag.innerHTML = codeHtml;
-      $(this).attr('class', '').empty().html(codeTag);
-      figure.attr('data-lang', lang.toUpperCase());
-      hljs.highlightBlock(block);
-    });
-  })
-</script>
+
 <script src="/js/script.js"></script>
+
 
   </body>
 </html>

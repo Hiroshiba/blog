@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html>
-  <head><meta name="generator" content="Hexo 3.8.0">
+  <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
   <meta name="description" content="この記事はChainer Advent Calendar 2017の23日目の記事です。僕は普段、Chainerを使って研究開発しています。このとき、クラスをどう分けるべきかよく悩みます。いろいろやってみてある程度固まってきたので、自分なりにまとめてみました。">
-  <meta name="keyword" content>
+  <meta name="keyword" content="">
   
-    <link rel="shortcut icon" type="image/ico" href="/images/favicon.png">
+    <link rel="shortcut icon" type="image/ico" href="/images/favicon.png"/>
   
   <title>Chainerを使った研究開発時のクラス設計 | Hiho&#39;s Blog</title>
   <meta name="description" content="この記事はChainer Advent Calendar 2017の23日目の記事です。僕は普段、Chainerを使って研究開発しています。このとき、クラスをどう分けるべきかよく悩みます。いろいろやってみてある程度固まってきたので、自分なりにまとめてみました。">
@@ -15,33 +15,20 @@
 <meta property="og:url" content="http://blog.hiroshiba.jp/class-design-at-research-and-development-using-chainer/index.html">
 <meta property="og:site_name" content="Hiho&#39;s Blog">
 <meta property="og:description" content="この記事はChainer Advent Calendar 2017の23日目の記事です。僕は普段、Chainerを使って研究開発しています。このとき、クラスをどう分けるべきかよく悩みます。いろいろやってみてある程度固まってきたので、自分なりにまとめてみました。">
-<meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-02-12T03:44:59.900Z">
+<meta property="article:published_time" content="2017-12-22T19:14:42.000Z">
+<meta property="article:modified_time" content="2018-02-12T03:44:59.900Z">
+<meta property="article:author" content="Kazuyuki Hiroshiba">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Chainerを使った研究開発時のクラス設計">
-<meta name="twitter:description" content="この記事はChainer Advent Calendar 2017の23日目の記事です。僕は普段、Chainerを使って研究開発しています。このとき、クラスをどう分けるべきかよく悩みます。いろいろやってみてある程度固まってきたので、自分なりにまとめてみました。">
 <meta name="twitter:creator" content="@hiho_karuta">
-  <link rel="stylesheet" href="/css/style.css">
-<link rel="stylesheet" href="/css/plugins/font-awesome-4.7.0.min.css">
-<link rel="stylesheet" href="/css/plugins/highlight.js-9.12.0.min.css">
-<link rel="stylesheet" href="/css/plugins/nprogress-0.2.0.min.css">
-  <script src="/js/jquery-3.4.1.min.js"></script>
-<script src="/js/geopattern-1.2.3.min.js"></script>
-<script src="/js/nprogress-0.2.0.min.js"></script>
-  <!-- https://github.com/hexojs/hexo-theme-landscape/blob/master/layout/_partial/google-analytics.ejs -->
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/a11y-dark.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
 
-
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-141253083-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'UA-141253083-1');
-</script>
-<!-- End Google Analytics -->
-
-
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
   
   
     <!-- MathJax support START -->
@@ -68,7 +55,17 @@
   
 
 
-</head>
+  
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-141253083-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'UA-141253083-1');
+    </script>
+
+<meta name="generator" content="Hexo 4.2.1"></head>
 
   <body>
     <header class="header fixed-header">
@@ -81,7 +78,7 @@
       
         <li class="list-item">
           
-            <a href="https://twitter.com/hiho_karuta" class="item-link">Twitter</a>
+            <a href="https://twitter.com/hiho_karuta" target="_blank" rel="noopener" class="item-link">Twitter</a>
           
         </li>
       
@@ -93,7 +90,7 @@
       
         <li class="list-item">
           
-            <a href="https://github.com/Hiroshiba" class="item-link">Github</a>
+            <a href="https://github.com/Hiroshiba" target="_blank" rel="noopener" class="item-link">Github</a>
           
         </li>
       
@@ -108,7 +105,7 @@
         
           <li class="menu-item">
             
-              <a href="https://twitter.com/hiho_karuta" class="menu-link">Twitter</a>
+              <a href="https://twitter.com/hiho_karuta" target="_blank" rel="noopener" class="menu-link">Twitter</a>
             
           </li>
         
@@ -120,7 +117,7 @@
         
           <li class="menu-item">
             
-              <a href="https://github.com/Hiroshiba" class="menu-link">Github</a>
+              <a href="https://github.com/Hiroshiba" target="_blank" rel="noopener" class="menu-link">Github</a>
             
           </li>
         
@@ -178,11 +175,28 @@
 <h2 id="Dataset"><a href="#Dataset" class="headerlink" title="Dataset"></a>Dataset</h2><p>データをChainer用にまとめるクラスです。<code>DatasetMixin</code>を継承して作るのが一般的です。
 <code>DataProcess</code>にも書いたとおり、<strong>ここに記述した処理は後で流用しづらいので、なるべく簡単なことしか書かないほうが良い</strong>と思います。
 僕は<code>DataProcess</code>を１つだけ受け取ってデータ加工する<code>Dataset</code>クラスをよく使っています。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Dataset</span><span class="params">(chainer.dataset.DatasetMixin)</span>:</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, inputs, data_process)</span>:</span></span><br><span class="line">    self._inputs = inputs</span><br><span class="line">    self._data_process = data_process</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__len__</span><span class="params">(self)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> len(self._inputs)</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">get_example</span><span class="params">(self, i)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> self._data_process(self._inputs[i])</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs python"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Dataset</span><span class="hljs-params">(chainer.dataset.DatasetMixin)</span>:</span>
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, inputs, data_process)</span>:</span>
+    self._inputs = inputs
+    self._data_process = data_process
+
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__len__</span><span class="hljs-params">(self)</span>:</span>
+    <span class="hljs-keyword">return</span> len(self._inputs)
+
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">get_example</span><span class="hljs-params">(self, i)</span>:</span>
+    <span class="hljs-keyword">return</span> self._data_process(self._inputs[i])</code></pre>
 
 <h2 id="Network"><a href="#Network" class="headerlink" title="Network"></a>Network</h2><p>汎用のネットワークを書きます。簡単なモデルの場合はなくても良いと思います。
 僕はよくBatchNormalizationとConvolution2Dをまとめたのを流用しています。</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BNConvolution2D</span><span class="params">(chainer.link.Chain)</span>:</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, in_channels, out_channels, ksize, stride=<span class="number">1</span>, pad=<span class="number">0</span>, **kwargs)</span>:</span></span><br><span class="line">    super().__init__()</span><br><span class="line">    <span class="keyword">with</span> super().init_scope():</span><br><span class="line">      self.conv = chainer.links.Convolution2D(in_channels, out_channels, ksize, stride, pad, nobias=<span class="literal">True</span>, **kwargs)</span><br><span class="line">      self.bn = chainer.links.BatchNormalization(out_channels)</span><br><span class="line"></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">__call__</span><span class="params">(self, x)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> chainer.functions.relu(self.bn(self.conv(x)))</span><br></pre></td></tr></table></figure>
+<pre><code class="hljs python"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">BNConvolution2D</span><span class="hljs-params">(chainer.link.Chain)</span>:</span>
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__init__</span><span class="hljs-params">(self, in_channels, out_channels, ksize, stride=<span class="hljs-number">1</span>, pad=<span class="hljs-number">0</span>, **kwargs)</span>:</span>
+    super().__init__()
+    <span class="hljs-keyword">with</span> super().init_scope():
+      self.conv = chainer.links.Convolution2D(in_channels, out_channels, ksize, stride, pad, nobias=<span class="hljs-literal">True</span>, **kwargs)
+      self.bn = chainer.links.BatchNormalization(out_channels)
+
+  <span class="hljs-function"><span class="hljs-keyword">def</span> <span class="hljs-title">__call__</span><span class="hljs-params">(self, x)</span>:</span>
+    <span class="hljs-keyword">return</span> chainer.functions.relu(self.bn(self.conv(x)))</code></pre>
 
 <h2 id="Loss"><a href="#Loss" class="headerlink" title="Loss"></a>Loss</h2><p>損失関数を実装します。簡単なモデルの場合はなくても良いと思います。
 Chainerの<code>Trainer</code>とloss周りの扱いはややこしく、<code>chainer.report</code>を使ったりする必要があります。
@@ -213,10 +227,10 @@ Chainerの<code>Trainer</code>とloss周りの扱いはややこしく、<code>c
     <!-- Share Button START -->
     <ul class="share-list">
       <li>
-        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-via="hiho_karuta" data-related="hiho_karuta" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" target="_blank" rel="noopener" class="twitter-share-button" data-via="hiho_karuta" data-related="hiho_karuta" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
       </li>
       <li>
-        <a href="http://b.hatena.ne.jp/entry/" class="hatena-bookmark-button" data-hatena-bookmark-layout="basic-label-counter" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/v4/public/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;"></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+        <a href="http://b.hatena.ne.jp/entry/" target="_blank" rel="noopener" class="hatena-bookmark-button" data-hatena-bookmark-layout="basic-label-counter" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/v4/public/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
       </li>
       <li>
         <div id="fb-root"></div><script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v3.3&appId=411014156399099&autoLogAppEvents=1"></script><div class="fb-share-button" data-href="http://blog.hiroshiba.jp/class-design-at-research-and-development-using-chainer/" data-layout="button_count" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fblog.hiroshiba.jp%2Fclass-design-at-research-and-development-using-chainer%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">facebookでシェア</a></div>
@@ -264,7 +278,7 @@ Chainerの<code>Trainer</code>とloss周りの扱いはややこしく、<code>c
     }
     $('.header').removeClass('fixed-header')
 
-     // error image
+    // error image
     $(".markdown-content img").on('error', function() {
       $(this).attr('src', 'http://file.muyutech.com/error-img.png')
       $(this).css({
@@ -306,7 +320,7 @@ Chainerの<code>Trainer</code>とloss周りの扱いはややこしく、<code>c
 </div>
     <footer class="app-footer">
   <p class="copyright">
-    &copy; 2019 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    &copy; 2020 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
   </p>
 </footer>
 
@@ -321,31 +335,14 @@ Chainerの<code>Trainer</code>とloss周りの扱いはややこしく、<code>c
   }
 </script>
 <script>
-  async("/js/fastclick-1.0.6.min.js", function(){
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
     FastClick.attach(document.body);
   })
 </script>
 
-<script>
-  var hasLine = 'true';
-  async("/js/highlight-9.12.0.min.js", function(){
-    $('figure pre').each(function(i, block) {
-      var figure = $(this).parents('figure');
-      if (hasLine === 'false') {
-        figure.find('.gutter').hide();
-      }
-      var lang = figure.attr('class').split(' ')[1] || 'code';
-      var codeHtml = $(this).html();
-      var codeTag = document.createElement('code');
-      codeTag.className = lang;
-      codeTag.innerHTML = codeHtml;
-      $(this).attr('class', '').empty().html(codeTag);
-      figure.attr('data-lang', lang.toUpperCase());
-      hljs.highlightBlock(block);
-    });
-  })
-</script>
+
 <script src="/js/script.js"></script>
+
 
   </body>
 </html>

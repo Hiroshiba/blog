@@ -3,31 +3,31 @@
   <head>
   <meta http-equiv="content-type" content="text/html; charset=utf-8">
   <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
-  <meta name="description" content="Hiroshibaのブログです。">
+  <meta name="description" content="私は仕事でも趣味でもディープラーニングをしています。趣味ではいつもGoogle Colaboratoryを使ってお金をかけずにディープラーニングしていたのですが、Colabは1日12時間ほどしかGPUを使えず、しかも頻繁に学習タスクを回していると弱いGPUしか利用できなくなるので、進捗があまりよくありませんでした。そこで、お金を使って進捗を出すことを考えました。Google Cloud Platform（GCP）なら、ちょっと弱めのGPU（Tesla T4）を1時間あたり約12円で借りられます。これならまあ趣味の予算で可能だと感じたので実際にやってみたのですが、GCPは思った以上に複雑で、わかりづらい点が多くありました。そこでこのブログでは、GCPに登録するところから、１コマンドでディープラーニングできる環境を構築するまでの方法を紹介します。">
   <meta name="keyword" content="">
   
     <link rel="shortcut icon" type="image/ico" href="/images/favicon.png"/>
   
   <title>GCPでできるだけ安くディープラーニング | Hiho&#39;s Blog</title>
-  <meta name="description" content="私は仕事でも趣味でもディープラーニングをしています。趣味ではいつもGoogle Colaboratoryを使ってお金をかけずにディープラーニングしていたのですが、Colabは1日12時間ほどしかGPUを使えず、しかも頻繁に学習タスクを回していると弱いGPUしか利用できなくなるので、進捗があまりよくありませんでした。そこで、お金を使って進捗を出すことを考えました。 　Google Cloud Pl">
+  <meta name="description" content="私は仕事でも趣味でもディープラーニングをしています。趣味ではいつもGoogle Colaboratoryを使ってお金をかけずにディープラーニングしていたのですが、Colabは1日12時間ほどしかGPUを使えず、しかも頻繁に学習タスクを回していると弱いGPUしか利用できなくなるので、進捗があまりよくありませんでした。そこで、お金を使って進捗を出すことを考えました。Google Cloud Platf">
 <meta property="og:type" content="article">
 <meta property="og:title" content="GCPでできるだけ安くディープラーニング">
-<meta property="og:url" content="http://blog.hiroshiba.jp/%E3%81%A7%E3%81%8D%E3%82%8B%E9%99%90%E3%82%8A%E3%82%B3%E3%82%B9%E3%83%88%E3%82%92%E6%8A%91%E3%81%88%E3%81%A6GCP%E3%81%A7%E3%83%87%E3%82%A3%E3%83%BC%E3%83%97%E3%83%A9%E3%83%BC%E3%83%8B%E3%83%B3%E3%82%B0/index.html">
+<meta property="og:url" content="http://blog.hiroshiba.jp/gcp-low-cost-deeplearning/index.html">
 <meta property="og:site_name" content="Hiho&#39;s Blog">
-<meta property="og:description" content="私は仕事でも趣味でもディープラーニングをしています。趣味ではいつもGoogle Colaboratoryを使ってお金をかけずにディープラーニングしていたのですが、Colabは1日12時間ほどしかGPUを使えず、しかも頻繁に学習タスクを回していると弱いGPUしか利用できなくなるので、進捗があまりよくありませんでした。そこで、お金を使って進捗を出すことを考えました。 　Google Cloud Pl">
-<meta property="og:image" content="http://blog.hiroshiba.jp/%E3%81%A7%E3%81%8D%E3%82%8B%E9%99%90%E3%82%8A%E3%82%B3%E3%82%B9%E3%83%88%E3%82%92%E6%8A%91%E3%81%88%E3%81%A6GCP%E3%81%A7%E3%83%87%E3%82%A3%E3%83%BC%E3%83%97%E3%83%A9%E3%83%BC%E3%83%8B%E3%83%B3%E3%82%B0/screen-quota-gpu.png">
-<meta property="og:image" content="http://blog.hiroshiba.jp/%E3%81%A7%E3%81%8D%E3%82%8B%E9%99%90%E3%82%8A%E3%82%B3%E3%82%B9%E3%83%88%E3%82%92%E6%8A%91%E3%81%88%E3%81%A6GCP%E3%81%A7%E3%83%87%E3%82%A3%E3%83%BC%E3%83%97%E3%83%A9%E3%83%BC%E3%83%8B%E3%83%B3%E3%82%B0/screen-quota-t4.png">
-<meta property="og:image" content="http://blog.hiroshiba.jp/%E3%81%A7%E3%81%8D%E3%82%8B%E9%99%90%E3%82%8A%E3%82%B3%E3%82%B9%E3%83%88%E3%82%92%E6%8A%91%E3%81%88%E3%81%A6GCP%E3%81%A7%E3%83%87%E3%82%A3%E3%83%BC%E3%83%97%E3%83%A9%E3%83%BC%E3%83%8B%E3%83%B3%E3%82%B0/screen-disk.png">
-<meta property="og:image" content="http://blog.hiroshiba.jp/%E3%81%A7%E3%81%8D%E3%82%8B%E9%99%90%E3%82%8A%E3%82%B3%E3%82%B9%E3%83%88%E3%82%92%E6%8A%91%E3%81%88%E3%81%A6GCP%E3%81%A7%E3%83%87%E3%82%A3%E3%83%BC%E3%83%97%E3%83%A9%E3%83%BC%E3%83%8B%E3%83%B3%E3%82%B0/screen-instance-dataset.png">
-<meta property="og:image" content="http://blog.hiroshiba.jp/%E3%81%A7%E3%81%8D%E3%82%8B%E9%99%90%E3%82%8A%E3%82%B3%E3%82%B9%E3%83%88%E3%82%92%E6%8A%91%E3%81%88%E3%81%A6GCP%E3%81%A7%E3%83%87%E3%82%A3%E3%83%BC%E3%83%97%E3%83%A9%E3%83%BC%E3%83%8B%E3%83%B3%E3%82%B0/screen-storage.png">
-<meta property="og:image" content="http://blog.hiroshiba.jp/%E3%81%A7%E3%81%8D%E3%82%8B%E9%99%90%E3%82%8A%E3%82%B3%E3%82%B9%E3%83%88%E3%82%92%E6%8A%91%E3%81%88%E3%81%A6GCP%E3%81%A7%E3%83%87%E3%82%A3%E3%83%BC%E3%83%97%E3%83%A9%E3%83%BC%E3%83%8B%E3%83%B3%E3%82%B0/screen-image.png">
-<meta property="og:image" content="http://blog.hiroshiba.jp/%E3%81%A7%E3%81%8D%E3%82%8B%E9%99%90%E3%82%8A%E3%82%B3%E3%82%B9%E3%83%88%E3%82%92%E6%8A%91%E3%81%88%E3%81%A6GCP%E3%81%A7%E3%83%87%E3%82%A3%E3%83%BC%E3%83%97%E3%83%A9%E3%83%BC%E3%83%8B%E3%83%B3%E3%82%B0/screen-result.png">
-<meta property="og:image" content="http://blog.hiroshiba.jp/%E3%81%A7%E3%81%8D%E3%82%8B%E9%99%90%E3%82%8A%E3%82%B3%E3%82%B9%E3%83%88%E3%82%92%E6%8A%91%E3%81%88%E3%81%A6GCP%E3%81%A7%E3%83%87%E3%82%A3%E3%83%BC%E3%83%97%E3%83%A9%E3%83%BC%E3%83%8B%E3%83%B3%E3%82%B0/screen-log.png">
+<meta property="og:description" content="私は仕事でも趣味でもディープラーニングをしています。趣味ではいつもGoogle Colaboratoryを使ってお金をかけずにディープラーニングしていたのですが、Colabは1日12時間ほどしかGPUを使えず、しかも頻繁に学習タスクを回していると弱いGPUしか利用できなくなるので、進捗があまりよくありませんでした。そこで、お金を使って進捗を出すことを考えました。Google Cloud Platf">
+<meta property="og:image" content="http://blog.hiroshiba.jp/gcp-low-cost-deeplearning/screen-quota-gpu.png">
+<meta property="og:image" content="http://blog.hiroshiba.jp/gcp-low-cost-deeplearning/screen-quota-t4.png">
+<meta property="og:image" content="http://blog.hiroshiba.jp/gcp-low-cost-deeplearning/screen-disk.png">
+<meta property="og:image" content="http://blog.hiroshiba.jp/gcp-low-cost-deeplearning/screen-instance-dataset.png">
+<meta property="og:image" content="http://blog.hiroshiba.jp/gcp-low-cost-deeplearning/screen-storage.png">
+<meta property="og:image" content="http://blog.hiroshiba.jp/gcp-low-cost-deeplearning/screen-image.png">
+<meta property="og:image" content="http://blog.hiroshiba.jp/gcp-low-cost-deeplearning/screen-result.png">
+<meta property="og:image" content="http://blog.hiroshiba.jp/gcp-low-cost-deeplearning/screen-log.png">
 <meta property="article:published_time" content="2020-07-16T15:31:25.000Z">
-<meta property="article:modified_time" content="2020-07-16T15:31:38.012Z">
+<meta property="article:modified_time" content="2020-07-16T15:38:30.726Z">
 <meta property="article:author" content="Kazuyuki Hiroshiba">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://blog.hiroshiba.jp/%E3%81%A7%E3%81%8D%E3%82%8B%E9%99%90%E3%82%8A%E3%82%B3%E3%82%B9%E3%83%88%E3%82%92%E6%8A%91%E3%81%88%E3%81%A6GCP%E3%81%A7%E3%83%87%E3%82%A3%E3%83%BC%E3%83%97%E3%83%A9%E3%83%BC%E3%83%8B%E3%83%B3%E3%82%B0/screen-quota-gpu.png">
+<meta name="twitter:image" content="http://blog.hiroshiba.jp/gcp-low-cost-deeplearning/screen-quota-gpu.png">
 <meta name="twitter:creator" content="@hiho_karuta">
   <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
   <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
@@ -308,7 +308,7 @@ python train.py --batch-size BATCHSIZE --save-model</code></pre>
         <a href="http://b.hatena.ne.jp/entry/" target="_blank" rel="noopener" class="hatena-bookmark-button" data-hatena-bookmark-layout="basic-label-counter" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/v4/public/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
       </li>
       <li>
-        <div id="fb-root"></div><script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v3.3&appId=411014156399099&autoLogAppEvents=1"></script><div class="fb-share-button" data-href="http://blog.hiroshiba.jp/できる限りコストを抑えてGCPでディープラーニング/" data-layout="button_count" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fblog.hiroshiba.jp%2F%E3%81%A7%E3%81%8D%E3%82%8B%E9%99%90%E3%82%8A%E3%82%B3%E3%82%B9%E3%83%88%E3%82%92%E6%8A%91%E3%81%88%E3%81%A6GCP%E3%81%A7%E3%83%87%E3%82%A3%E3%83%BC%E3%83%97%E3%83%A9%E3%83%BC%E3%83%8B%E3%83%B3%E3%82%B0%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">facebookでシェア</a></div>
+        <div id="fb-root"></div><script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v3.3&appId=411014156399099&autoLogAppEvents=1"></script><div class="fb-share-button" data-href="http://blog.hiroshiba.jp/gcp-low-cost-deeplearning/" data-layout="button_count" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fblog.hiroshiba.jp%2Fgcp-low-cost-deeplearning%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">facebookでシェア</a></div>
       </li>
     </ul>
     <!-- Share Button END -->
@@ -337,7 +337,7 @@ python train.py --batch-size BATCHSIZE --save-model</code></pre>
 
 <script>
   (function () {
-    var url = 'http://blog.hiroshiba.jp/できる限りコストを抑えてGCPでディープラーニング/';
+    var url = 'http://blog.hiroshiba.jp/gcp-low-cost-deeplearning/';
     var banner = ''
     if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
       $('#article-banner').css({

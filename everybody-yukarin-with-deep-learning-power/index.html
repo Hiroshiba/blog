@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+  <head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport">
+  <meta name="description" content="2年ほど前に、自分の声を結月ゆかりにする声質変換技術を作り、動画を投稿しました。この技術には利用者の音声データが大量に必要であるという欠点があり、ゆかりさんになりたいというみなさんの願いを叶えるのが難しい状態でした。そこで、この技術を利用者の音声データが不要になるように改良し、誰でも簡単に使えるようにしました。ここではその技術について解説します。">
+  <meta name="keyword" content="">
+  
+    <link rel="shortcut icon" type="image/ico" href="/images/favicon.png"/>
+  
+  <title>ディープラーニングの力で誰でもゆかりさんの声になれる声変換技術を作ってみた | Hiho&#39;s Blog</title>
+  <meta name="description" content="2年ほど前に、自分の声を結月ゆかりにする声質変換技術を作り、動画を投稿しました。この技術には利用者の音声データが大量に必要であるという欠点があり、ゆかりさんになりたいというみなさんの願いを叶えるのが難しい状態でした。そこで、この技術を利用者の音声データが不要になるように改良し、誰でも簡単に使えるようにしました。ここではその技術について解説します。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ディープラーニングの力で誰でもゆかりさんの声になれる声変換技術を作ってみた">
+<meta property="og:url" content="http://blog.hiroshiba.jp/everybody-yukarin-with-deep-learning-power/index.html">
+<meta property="og:site_name" content="Hiho&#39;s Blog">
+<meta property="og:description" content="2年ほど前に、自分の声を結月ゆかりにする声質変換技術を作り、動画を投稿しました。この技術には利用者の音声データが大量に必要であるという欠点があり、ゆかりさんになりたいというみなさんの願いを叶えるのが難しい状態でした。そこで、この技術を利用者の音声データが不要になるように改良し、誰でも簡単に使えるようにしました。ここではその技術について解説します。">
+<meta property="og:image" content="http://blog.hiroshiba.jp/everybody-yukarin-with-deep-learning-power/2.png">
+<meta property="og:image" content="http://blog.hiroshiba.jp/everybody-yukarin-with-deep-learning-power/3.png">
+<meta property="article:published_time" content="2020-12-27T18:57:01.000Z">
+<meta property="article:modified_time" content="2020-12-27T18:57:01.174Z">
+<meta property="article:author" content="Kazuyuki Hiroshiba">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://blog.hiroshiba.jp/everybody-yukarin-with-deep-learning-power/2.png">
+<meta name="twitter:creator" content="@hiho_karuta">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.css" rel="stylesheet">
+  <link href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/a11y-dark.min.css" rel="stylesheet">
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/geopattern/1.2.3/js/geopattern.min.js"></script>
+  <script src="//cdnjs.cloudflare.com/ajax/libs/nprogress/0.2.0/nprogress.min.js"></script>
+  
+  
+    <!-- MathJax support START -->
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Config({
+        tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+        }
+      });
+    </script>
+
+    <script type="text/x-mathjax-config">
+      MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for (i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+      });
+    </script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- MathJax support END -->
+  
+
+
+  
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-141253083-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'UA-141253083-1');
+    </script>
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+  <body>
+    <header class="header fixed-header">
+  <div class="header-container">
+    <a class="home-link" href="/">
+      <div class="logo"></div>
+      <span>Hiho's Blog</span>
+    </a>
+    <ul class="right-list">
+      
+        <li class="list-item">
+          
+            <a href="https://twitter.com/hiho_karuta" target="_blank" rel="noopener" class="item-link">Twitter</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="/archives/" class="item-link">Archives</a>
+          
+        </li>
+      
+        <li class="list-item">
+          
+            <a href="https://github.com/Hiroshiba" target="_blank" rel="noopener" class="item-link">Github</a>
+          
+        </li>
+      
+    </ul>
+    <div class="menu">
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </div>
+    <div class="menu-mask">
+      <ul class="menu-list">
+        
+          <li class="menu-item">
+            
+              <a href="https://twitter.com/hiho_karuta" target="_blank" rel="noopener" class="menu-link">Twitter</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="/archives/" class="menu-link">Archives</a>
+            
+          </li>
+        
+          <li class="menu-item">
+            
+              <a href="https://github.com/Hiroshiba" target="_blank" rel="noopener" class="menu-link">Github</a>
+            
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</header>
+
+    <div id="article-banner">
+  <h2>ディープラーニングの力で誰でもゆかりさんの声になれる声変換技術を作ってみた</h2>
+  <p class="post-date">2020-12-28</p>
+  <div class="arrow-down">
+    <a href="javascript:;"></a>
+  </div>
+</div>
+<main class="app-body flex-box">
+  <!-- Article START -->
+  <article class="post-article">
+    <section class="markdown-content"><p>　2年ほど前に、自分の声を<a href="https://www.ah-soft.com/voiceroid/yukari/" target="_blank" rel="noopener">結月ゆかり</a>にする声質変換技術を作り、動画を投稿しました。この技術には利用者の音声データが大量に必要であるという欠点があり、ゆかりさんになりたいというみなさんの願いを叶えるのが難しい状態でした。そこで、この技術を利用者の音声データが不要になるように改良し、誰でも簡単に使えるようにしました。ここではその技術について解説します。</p>
+<a id="more"></a>
+
+<h3 id="手法"><a href="#手法" class="headerlink" title="手法"></a>手法</h3><p>　音声を直接変換しようとすると、利用者の音声データが必要になってしまいます。そこで、音声を直接変換するのをやめて、①音声を構成する要素である音素と音高に分解し、②音素と音高を目標の声（ゆかりさん）に再合成することを考えました。</p>
+<figure>
+  <img src="2.png" style="max-height: 18em">
+</figure>
+
+<p>　①は、音素の抽出に音声認識と<a href="http://open-jtalk.sp.nitech.ac.jp/" target="_blank" rel="noopener">OpenJTalk</a>と<a href="https://julius.osdn.jp/" target="_blank" rel="noopener">Julius</a>を、音高の抽出に<a href="http://www.kki.yamanashi.ac.jp/~mmorise/world/english/index.html" target="_blank" rel="noopener">WORLD</a>を用いれば簡単に実現できます。そのため、<strong>②さえ実現できれば、利用者の声のデータを用意することなく、誰でもゆかりさんの声に変換することができるようになります。</strong></p>
+<p>　音素と音高からゆかりさんの声を再合成する部分は、入出力データを大量に用意してから、ディープラーニング技術を用いて実現します。</p>
+<figure>
+  <img src="3.png" style="max-height: 16em">
+</figure>
+
+<p>　まず、VOICEROID2結月ゆかりを用いて、ゆかりさんの音声データを大量に用意します。ゆかりさんの音声から先程の方法を使って音素と音高を抽出します。音声データは約15,000ほど用意しました。今回はゆかりさんの音声データのみを用いたので1万超えの大量のデータが必要でしたが、<a href="https://dmv.nico/ja/articles/seiren_voice/" target="_blank" rel="noopener">Seiren Voice</a>のように色んな人の声を用いれば、1人あたりのデータ量はもっと少なくできると思います。</p>
+<p>　音素と音高を入力データに、音声データを出力データとして、ディープラーニングを行います。今回はディープラーニングモデルとして<a href="https://arxiv.org/abs/1802.08435" target="_blank" rel="noopener">WaveRNN</a>を用いました。</p>
+<h3 id="結果"><a href="#結果" class="headerlink" title="結果"></a>結果</h3><h4 id="「ということで、結月ゆかり実況でした。ばいばい！」"><a href="#「ということで、結月ゆかり実況でした。ばいばい！」" class="headerlink" title="「ということで、結月ゆかり実況でした。ばいばい！」"></a>「ということで、結月ゆかり実況でした。ばいばい！」</h4><p>入力話者: 著者</p>
+<figure>
+  <figcaption>入力音声</figcaption>
+  <audio src="2-hiho.wav" controls></audio>
+</figure>
+<figure>
+  <figcaption>変換結果</figcaption>
+  <audio src="2-yukari.wav" controls></audio>
+</figure>
+
+<h4 id="「初見さんいらっしゃい、ゆっくりしていってね」"><a href="#「初見さんいらっしゃい、ゆっくりしていってね」" class="headerlink" title="「初見さんいらっしゃい、ゆっくりしていってね」"></a>「初見さんいらっしゃい、ゆっくりしていってね」</h4><p>入力話者: <a href="https://www.a-quest.com/index.html" target="_blank" rel="noopener">AquesTalk 女性1</a></p>
+<figure>
+  <figcaption>入力音声</figcaption>
+  <audio src="3-yukkuri.wav" controls></audio>
+</figure>
+<figure>
+  <figcaption>変換結果</figcaption>
+  <audio src="3-yukari.wav" controls></audio>
+</figure>
+
+<h4 id="「トースト２枚と、オレンジジュースをお願いします。」"><a href="#「トースト２枚と、オレンジジュースをお願いします。」" class="headerlink" title="「トースト２枚と、オレンジジュースをお願いします。」"></a>「トースト２枚と、オレンジジュースをお願いします。」</h4><p>入力話者: <a href="https://sites.google.com/site/shinnosuketakamichi/research-topics/jvs_corpus" target="_blank" rel="noopener">JVS001</a></p>
+<figure>
+  <figcaption>入力音声</figcaption>
+  <audio src="4-jvs.wav" controls></audio>
+</figure>
+<figure>
+  <figcaption>変換結果</figcaption>
+  <audio src="4-yukari.wav" controls></audio>
+</figure>
+
+<h4 id="「ゼロをダイヤルして、オペレーターを呼んでください。」"><a href="#「ゼロをダイヤルして、オペレーターを呼んでください。」" class="headerlink" title="「ゼロをダイヤルして、オペレーターを呼んでください。」"></a>「ゼロをダイヤルして、オペレーターを呼んでください。」</h4><p>入力話者: <a href="https://sites.google.com/site/shinnosuketakamichi/research-topics/jvs_corpus" target="_blank" rel="noopener">JVS010</a></p>
+<figure>
+  <figcaption>入力音声</figcaption>
+  <audio src="5-jvs.wav" controls></audio>
+</figure>
+<figure>
+  <figcaption>変換結果</figcaption>
+  <audio src="5-yukari.wav" controls></audio>
+</figure>
+
+<h3 id="終わりに"><a href="#終わりに" class="headerlink" title="終わりに"></a>終わりに</h3><p>　この技術はエンタメ分野などでいろんな面白いことに使えるかもしれません。なにかお手伝い・ご協力できることがあれば、ツイッター（<a href="https://twitter.com/hiho_karuta" target="_blank" rel="noopener">@hiho_karuta</a>）等でぜひお気軽にお声掛けください。</p>
+</section>
+    <!-- Tags START -->
+    
+    <!-- Tags END -->
+    <!-- Share Button START -->
+    <ul class="share-list">
+      <li>
+        <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" target="_blank" rel="noopener" class="twitter-share-button" data-via="hiho_karuta" data-related="hiho_karuta" data-show-count="false">Tweet</a><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+      </li>
+      <li>
+        <a href="http://b.hatena.ne.jp/entry/" target="_blank" rel="noopener" class="hatena-bookmark-button" data-hatena-bookmark-layout="basic-label-counter" data-hatena-bookmark-lang="ja" title="このエントリーをはてなブックマークに追加"><img src="https://b.st-hatena.com/images/v4/public/entry-button/button-only@2x.png" alt="このエントリーをはてなブックマークに追加" width="20" height="20" style="border: none;" /></a><script type="text/javascript" src="https://b.st-hatena.com/js/bookmark_button.js" charset="utf-8" async="async"></script>
+      </li>
+      <li>
+        <div id="fb-root"></div><script async defer crossorigin="anonymous" src="https://connect.facebook.net/ja_JP/sdk.js#xfbml=1&version=v3.3&appId=411014156399099&autoLogAppEvents=1"></script><div class="fb-share-button" data-href="http://blog.hiroshiba.jp/everybody-yukarin-with-deep-learning-power/" data-layout="button_count" data-size="small"><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Fblog.hiroshiba.jp%2Feverybody-yukarin-with-deep-learning-power%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">facebookでシェア</a></div>
+      </li>
+    </ul>
+    <!-- Share Button END -->
+    <!-- NAV START -->
+    
+  <div class="nav-container">
+    <!-- reverse left and right to put prev and next in a more logic postition -->
+    
+      <a class="nav-left" href="/gcp-low-cost-deeplearning/">
+        <span class="nav-arrow">← </span>
+        
+          GCPでできるだけ安くディープラーニング
+        
+      </a>
+    
+    
+  </div>
+
+    <!-- NAV END -->
+  </article>
+  <!-- Article END -->
+  <!-- Catalog START -->
+  
+  <!-- Catalog END -->
+</main>
+
+<script>
+  (function () {
+    var url = 'http://blog.hiroshiba.jp/everybody-yukarin-with-deep-learning-power/';
+    var banner = ''
+    if (banner !== '' && banner !== 'undefined' && banner !== 'null') {
+      $('#article-banner').css({
+        'background-image': 'url(' + banner + ')'
+      })
+    }
+    $('.header').removeClass('fixed-header')
+
+    // error image
+    $(".markdown-content img").on('error', function() {
+      $(this).attr('src', 'http://file.muyutech.com/error-img.png')
+      $(this).css({
+        'cursor': 'default'
+      })
+    })
+
+    // zoom image
+    $(".markdown-content img").on('click', function() {
+      var src = $(this).attr('src')
+      if (src !== 'http://file.muyutech.com/error-img.png') {
+        var imageW = $(this).width()
+        var imageH = $(this).height()
+
+        var zoom = ($(window).width() * 0.95 / imageW).toFixed(2)
+        zoom = zoom < 1 ? 1 : zoom
+        zoom = zoom > 2 ? 2 : zoom
+        var transY = (($(window).height() - imageH) / 2).toFixed(2)
+
+        $('body').append('<div class="image-view-wrap"><div class="image-view-inner"><img src="'+ src +'" /></div></div>')
+        $('.image-view-wrap').addClass('wrap-active')
+        $('.image-view-wrap img').css({
+          'width': `${imageW}`,
+          'transform': `translate3d(0, ${transY}px, 0) scale3d(${zoom}, ${zoom}, 1)`
+        })
+        $('html').css('overflow', 'hidden')
+
+        $('.image-view-wrap').on('click', function() {
+          $(this).remove()
+          $('html').attr('style', '')
+        })
+      }
+    })
+  })();
+</script>
+
+    <div class="scroll-top">
+  <span class="arrow-icon"></span>
+</div>
+    <footer class="app-footer">
+  <p class="copyright">
+    &copy; 2020 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+  </p>
+</footer>
+
+<script>
+  function async(u, c) {
+    var d = document, t = 'script',
+      o = d.createElement(t),
+      s = d.getElementsByTagName(t)[0];
+    o.src = u;
+    if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+    s.parentNode.insertBefore(o, s);
+  }
+</script>
+<script>
+  async("//cdnjs.cloudflare.com/ajax/libs/fastclick/1.0.6/fastclick.min.js", function(){
+    FastClick.attach(document.body);
+  })
+</script>
+
+
+<script src="/js/script.js"></script>
+
+
+  </body>
+</html>

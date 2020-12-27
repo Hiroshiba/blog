@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://blog.hiroshiba.jp/everybody-yukarin-with-deep-learning-power/</loc>
+    
+    <lastmod>2020-12-27T18:57:01.174Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://blog.hiroshiba.jp/gcp-low-cost-deeplearning/</loc>
     
     <lastmod>2020-07-16T15:38:30.726Z</lastmod>

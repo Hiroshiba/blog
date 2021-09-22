@@ -59,6 +59,10 @@ sudo mount -o discard,defaults /dev/sdb [永続ディスクの名前]
 ```bash
 gcloud compute scp --recurse [データセットのパス] [VMインスタンスの名前]:[永続ディスクの名前]
 ```
+全てのインストールが完了したら、VMインスタンスを終了しておきます。
+```bash
+sudo shutdown now
+```
 
 　続いて、Cloud Storageで、学習結果を保存するためのストレージ（バケット）を作成します。バケットは、GCPコンソールの「[ストレージ ブラウザ](https://console.cloud.google.com/storage/browser)」から作成できます。「バケットを作成」を押すと、バケット作成のための入力欄が表示されます。入力欄の「バケットに名前を付ける」に好きな名前を書き、「ロケーションタイプ」を「Region」にして、「ロケーション」に`gcloud`で設定したリージョンを入力します。あとは「アクセス制御」を「均一」に設定し、それ以外はデフォルトのままにして、作成ボタンを押します。このときのページ画面はこんな感じです。<img src="screen-storage.png" border="1" style="max-height: 22em">
 

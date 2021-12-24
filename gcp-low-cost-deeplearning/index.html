@@ -24,7 +24,7 @@
 <meta property="og:image" content="http://blog.hiroshiba.jp/gcp-low-cost-deeplearning/screen-result.png">
 <meta property="og:image" content="http://blog.hiroshiba.jp/gcp-low-cost-deeplearning/screen-log.png">
 <meta property="article:published_time" content="2020-07-16T15:31:25.000Z">
-<meta property="article:modified_time" content="2020-07-16T15:38:30.726Z">
+<meta property="article:modified_time" content="2021-09-22T15:28:32.979Z">
 <meta property="article:author" content="Kazuyuki Hiroshiba">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://blog.hiroshiba.jp/gcp-low-cost-deeplearning/screen-quota-gpu.png">
@@ -177,6 +177,8 @@ sudo mount -o discard,defaults /dev/sdb [永続ディスクの名前]</code></pr
 
 <p>　マウントが完了したら、手元のパソコンから<code>gcloud compute scp</code>でデータセットを転送することができます。転送後、VMインスタンス内で<code>ls [永続ディスクの名前]</code>することで、ファイルが転送できたことを確認できます。</p>
 <pre><code class="hljs bash">gcloud compute scp --recurse [データセットのパス] [VMインスタンスの名前]:[永続ディスクの名前]</code></pre>
+<p>全てのインストールが完了したら、VMインスタンスを終了しておきます。</p>
+<pre><code class="hljs bash">sudo shutdown now</code></pre>
 
 <p>　続いて、Cloud Storageで、学習結果を保存するためのストレージ（バケット）を作成します。バケットは、GCPコンソールの「<a href="https://console.cloud.google.com/storage/browser" target="_blank" rel="noopener">ストレージ ブラウザ</a>」から作成できます。「バケットを作成」を押すと、バケット作成のための入力欄が表示されます。入力欄の「バケットに名前を付ける」に好きな名前を書き、「ロケーションタイプ」を「Region」にして、「ロケーション」に<code>gcloud</code>で設定したリージョンを入力します。あとは「アクセス制御」を「均一」に設定し、それ以外はデフォルトのままにして、作成ボタンを押します。このときのページ画面はこんな感じです。<img src="screen-storage.png" border="1" style="max-height: 22em"></p>
 <p>　以上でストレージの準備は完了です。</p>
@@ -395,7 +397,7 @@ python train.py --batch-size BATCHSIZE --save-model</code></pre>
 </div>
     <footer class="app-footer">
   <p class="copyright">
-    &copy; 2020 | Proudly powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+    &copy; 2021 Hiroshiba Kazuyuki
   </p>
 </footer>
 

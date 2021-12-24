@@ -585,13 +585,17 @@ h2.article-head {
   padding: 5px 0;
 }
 .markdown-content img,
-.article-summary img,
+.article-summary img {
+  max-width: 100%;
+  display: block;
+  margin: 20px auto;
+  cursor: zoom-in;
+}
 .markdown-content video,
 .article-summary video {
   max-width: 100%;
   display: block;
   margin: 20px auto;
-  cursor: zoom-in;
 }
 .markdown-content figure,
 .article-summary figure {

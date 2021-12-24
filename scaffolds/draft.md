@@ -19,8 +19,12 @@ description:
 </figure>
 
 <figure>
+  <img src="2.png" style="max-height: 18em">
+</figure>
+
+<figure>
   <figcaption></figcaption>
-  <audio src=" controls></audio>
+  <audio src="" controls></audio>
 </figure>
 
 <!-- more -->
